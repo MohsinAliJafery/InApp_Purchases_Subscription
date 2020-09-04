@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "908573784472",
+    "firebase_url": "https://bestkalyangame.firebaseio.com",
+    "project_id": "bestkalyangame",
+    "storage_bucket": "bestkalyangame.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908573784472:android:58d8fd6c3146b8233613ed",
+        "android_client_info": {
+          "package_name": "com.bhjbestkalyangame.adminapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARynRXWOxPRUeuE0AbxzdXAkxC-6h13jc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908573784472:android:0578f18042aad44f3613ed",
+        "android_client_info": {
+          "package_name": "com.bhjbestkalyangame.realapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARynRXWOxPRUeuE0AbxzdXAkxC-6h13jc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
