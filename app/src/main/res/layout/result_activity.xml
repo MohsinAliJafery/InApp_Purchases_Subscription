@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Result"
-    android:orientation="vertical">
-
+    tools:context=".Result">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/lucky_numbers"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        android:src="@drawable/lucky_numbers"/>
 
     
 
@@ -27,10 +22,6 @@
         android:layout_height="match_parent"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+        android:layout_below="@+id/imageView"/>
 
-</LinearLayout>
+</RelativeLayout>
