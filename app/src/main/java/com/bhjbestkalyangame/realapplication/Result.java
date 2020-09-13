@@ -25,6 +25,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Result extends AppCompatActivity {
 
@@ -62,9 +64,11 @@ public class Result extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 Numbers = (HashMap<String, String>) snapshot.getValue();
-                Collection<String> HashMapValues = Numbers.values();
+                SortedSet<String> values = new TreeSet<String>(Numbers.values());
 
-                Values =  new ArrayList<>(HashMapValues);
+                Values =  new ArrayList<>();
+                Values.addAll(values);
+
                 populateGrid(Values);
                 progressBar.setVisibility(View.GONE);
             }
