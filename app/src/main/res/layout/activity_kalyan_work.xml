@@ -3,81 +3,165 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorAccent"
+    android:id="@+id/kalyan_work_activity"
+    android:background="@color/noColor"
+    android:padding="10dp"
     android:layout_height="match_parent"
     tools:context=".KalyanWorkActivity">
 
-    <Button
-        android:id="@+id/PanelButtonID"
-        android:layout_width="290dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="16dp"
-        android:text="Panel Free Game"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="250dp"
+        android:layout_height="190dp"
+        android:background="@drawable/idea"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/JoriButtonID"
-        app:layout_constraintVertical_bias="0.079" />
+        app:layout_constraintTop_toBottomOf="@+id/ResultViewNameID"
+        app:layout_constraintVertical_bias="0.049">
 
-    <Button
-        android:id="@+id/JoriButtonID"
-        android:layout_width="290dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="40dp"
-        android:text="Jori Free Game"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SingleButtonID" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/dateFieldID"
-        android:layout_width="194dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:autoText="false"
-        android:inputType="date"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/DateTextID"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/DateTextID"
-        android:layout_width="88dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:text="Today Date :"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/updated_on"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@color/noColor"
+        android:gravity="center"
+        android:text="Updated every day at 12pm &amp; 7pm"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.031" />
+        app:layout_constraintTop_toBottomOf="@+id/ResultViewNameID" />
+
+
 
     <TextView
         android:id="@+id/ResultViewNameID"
-        android:layout_width="225dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:text="Today Kalyan Free Game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#fff"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateFieldID" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/SingleButtonID"
-        android:layout_width="290dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="16dp"
-        android:text="Single Free Game"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@layout/button_background"
+        android:text="Single Bet Game"
+        android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+
+    <Button
+        android:id="@+id/PanelButtonID"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@layout/button_background"
+        android:bottomRightRadius="10dp"
+        android:text="Panel Bet Game"
+        android:textColor="@color/noColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/JoriButtonID" />
+
+    <Button
+        android:id="@+id/JoriButtonID"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@layout/button_background"
+        android:text="Jodi Bet Game"
+        android:textColor="@color/noColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SingleButtonID" />
+
+    <Button
+        android:id="@+id/get_gold_coins"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@layout/button_background_golden"
+        android:text="Get More Coins"
+        android:textColor="@color/noColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PanelButtonID" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/important_cost_notice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_gold_coins"
+        app:layout_constraintVertical_bias="0.234" />
+
+    <TextView
+        android:id="@+id/coins_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/noColor"
+        android:gravity="center"
+        android:text="Coins: "
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/total_coins"
         app:layout_constraintTop_toBottomOf="@+id/ResultViewNameID" />
+
+    <TextView
+        android:id="@+id/total_coins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/noColor"
+        android:gravity="center"
+        android:text="3"
+        android:textColor="@color/colorGolden"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ResultViewNameID" />
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

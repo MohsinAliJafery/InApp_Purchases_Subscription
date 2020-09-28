@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/opps_no_coins_layout"
+    android:background="@color/noColor"
+    tools:context=".WatchVideoToGetReward">
+
+
+    <ImageView
+        android:id="@+id/oops_no_coins"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:src="@drawable/oops_no_coins"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+
+    <Button
+        android:id="@+id/get_gold_coins"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGolden"
+        android:text="Watch"
+        android:textColor="@color/noColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/oops_no_coins"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/oops_no_coins"
+        app:layout_constraintTop_toTopOf="@+id/oops_no_coins"
+        app:layout_constraintVertical_bias="0.728" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/get_gold_coins"
+        app:layout_constraintEnd_toEndOf="@+id/get_gold_coins"
+        app:layout_constraintStart_toStartOf="@+id/get_gold_coins"
+        app:layout_constraintTop_toTopOf="@+id/get_gold_coins" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

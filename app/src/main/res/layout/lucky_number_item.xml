@@ -2,16 +2,28 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/lucky_background"
+    android:background="@layout/gridview_border"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@layout/button_background"
+        android:id="@+id/luckynumber_gess_number"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:textColor="@color/noColor"/>
 
 <TextView
     android:layout_width="match_parent"
     android:id="@+id/luckynumber_textview"
+    android:padding="5dp"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:text="1"
-    android:textSize="90dp"
-    android:textColor="@color/colorPrimary"/>
+    android:textSize="70dp"
+    android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>

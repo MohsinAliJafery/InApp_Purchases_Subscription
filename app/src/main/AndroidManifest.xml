@@ -9,15 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Result"/>
-        <activity android:name=".KalyanWorkActivity">
-
+        <activity android:name=".GetCoinsActivity"></activity>
+        <activity android:name=".WatchVideoToGetReward" />
+        <activity android:name=".CongratulatingReward" />
+        <activity android:name=".disclaimer" />
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".Result" />
+        <activity android:name=".KalyanWorkActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
     </application>
 
 </manifest>
