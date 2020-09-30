@@ -25,6 +25,7 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class WatchVideoToGetReward extends AppCompatActivity {
@@ -41,12 +42,20 @@ public class WatchVideoToGetReward extends AppCompatActivity {
     int TCoins;
     Button mButton;
 
+    boolean watched;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_video_to_get_reward);
 
         final SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, Context.MODE_PRIVATE);
+
+
+        final Snackbar mSnackbar = Snackbar.make(findViewById(android.R.id.content), "Please watch complete video to get access.", Snackbar.LENGTH_INDEFINITE);
+
+
+        watched = false;
 
         mButton = findViewById(R.id.get_gold_coins);
 
@@ -61,8 +70,11 @@ public class WatchVideoToGetReward extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressbar);
 
-        rewardedAd = new RewardedAd(this,
-                "ca-app-pub-3940256099942544/5224354917");
+
+
+
+
+
 
         final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
@@ -77,7 +89,9 @@ public class WatchVideoToGetReward extends AppCompatActivity {
             }
         };
 
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+        //rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+
+
         adCallback = new RewardedAdCallback() {
             @Override
             public void onRewardedAdOpened() {
@@ -86,17 +100,35 @@ public class WatchVideoToGetReward extends AppCompatActivity {
 
             @Override
             public void onRewardedAdClosed() {
+                progressBar.setVisibility(View.VISIBLE);
+                mButton.setVisibility(View.VISIBLE);
+                if(!watched){
+
+                            mSnackbar.setActionTextColor(getResources().getColor(R.color.noColor))
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            })
+                                    .setActionTextColor(getResources().getColor(R.color.noColor))
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setTextColor(getResources().getColor(R.color.noColor)).show();
+                }
+
+            }
+
+            @Override
+            public void onUserEarnedReward(@NonNull RewardItem reward) {
+                watched = true;
+                int mReward = reward.getAmount();
                 TCoins = TCoins + 3;
                 mSharedPreferences.edit().putInt(Coins, TCoins).apply();
                 Intent sIntent = new Intent(WatchVideoToGetReward.this, Result.class);
                 sIntent.putExtra("mFrom", mFrom);
                 startActivity(sIntent);
                 finish();
-            }
 
-            @Override
-            public void onUserEarnedReward(@NonNull RewardItem reward) {
-                int mReward = reward.getAmount();
 
             }
 
@@ -109,6 +141,10 @@ public class WatchVideoToGetReward extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                rewardedAd = new RewardedAd(WatchVideoToGetReward.this,
+                        "ca-app-pub-3940256099942544/5224354917");
+                mSnackbar.dismiss();
                 rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
                 if (rewardedAd.isLoaded()) {
                     Activity activityContext = WatchVideoToGetReward.this;
@@ -117,8 +153,6 @@ public class WatchVideoToGetReward extends AppCompatActivity {
                     Log.d("TAG", "The rewarded ad wasn't loaded yet.");
                     progressBar.setVisibility(View.VISIBLE);
                 }
-
-
                 mButton.setVisibility(View.GONE);
 
             }
@@ -126,6 +160,11 @@ public class WatchVideoToGetReward extends AppCompatActivity {
 
 
     }
+
+
+
+
+
 
     @Override
     public void onBackPressed() {

@@ -46,10 +46,15 @@ public class GetCoinsActivity extends AppCompatActivity {
     KalyanWorkActivity mKalyanWork;
 
     private AdView mAdView;
+    private boolean Added;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_coins);
+
+
+        Added = false;
 
         mButton = findViewById(R.id.get_gold_coins);
 
@@ -58,6 +63,8 @@ public class GetCoinsActivity extends AppCompatActivity {
         mLayout = findViewById(R.id.get_gold_coins_layout);
 
         progressBar = findViewById(R.id.progressbar);
+
+        final Snackbar mSnackbar = Snackbar.make(findViewById(android.R.id.content), "Please watch complete video to get access to result.", Snackbar.LENGTH_INDEFINITE);
 
         mKalyanWork = new KalyanWorkActivity();
 
@@ -115,21 +122,31 @@ public class GetCoinsActivity extends AppCompatActivity {
 
             @Override
             public void onRewardedAdClosed() {
-                rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
-                TCoins = TCoins + 3;
-                newCoins = newCoins +3;
-                mSharedPreferences.edit().putInt(Coins, TCoins).apply();
+                mButton.setVisibility(View.VISIBLE);
 
-                Snackbar.make(mLayout, "You earned "+ newCoins+ " new coins.", Snackbar.LENGTH_LONG)
+                if(Added) {
+                    Snackbar.make(mLayout, "You earned 3" + " new coins.", Snackbar.LENGTH_LONG)
 
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
-                        .show();
+                            .setTextColor(getResources().getColor(R.color.noColor))
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .show();
+                }else{
+                    Snackbar.make(mLayout, "Please watch complete video to earn coins!", Snackbar.LENGTH_LONG)
+
+                            .setTextColor(getResources().getColor(R.color.noColor))
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .show();
+                }
             }
 
             @Override
             public void onUserEarnedReward(@NonNull RewardItem reward) {
                 int mReward = reward.getAmount();
+                rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+                TCoins = TCoins + 3;
+                newCoins = newCoins +3;
+                mSharedPreferences.edit().putInt(Coins, TCoins).apply();
+                Added = true;
 
             }
 
@@ -141,6 +158,10 @@ public class GetCoinsActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                rewardedAd = new RewardedAd(GetCoinsActivity.this,
+                        "ca-app-pub-3940256099942544/5224354917");
+                mSnackbar.dismiss();
                 rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
                 if (rewardedAd.isLoaded()) {
                     rewardedAd.show(GetCoinsActivity.this, adCallback);
@@ -159,6 +180,8 @@ public class GetCoinsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent mIntent = new Intent(GetCoinsActivity.this, KalyanWorkActivity.class);
+        mIntent.putExtra("NewCoins", newCoins);
+        mIntent.putExtra("areNewCoinsAdded", Added);
         startActivity(mIntent);
         finish();
         mInterstitialAd.show();
