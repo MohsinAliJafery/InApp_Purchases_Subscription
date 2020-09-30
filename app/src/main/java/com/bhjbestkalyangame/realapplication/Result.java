@@ -159,21 +159,21 @@ public class Result extends AppCompatActivity {
         Intent mIntent = getIntent();
         mFrom = mIntent.getStringExtra("mFrom");
 
-
-        NotificationManager mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-
-        String mTitles = "New Bets Available";
-        String mMessages = "Checkout new bets now";
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, App.CHANNEL_ONE_ID);
-
-        mBuilder.setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle(mTitles)
-                .setContentText(mMessages)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-            mManager.notify(1, mBuilder.build());
+//        Notification Code
+//        NotificationManager mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//
+//
+//        String mTitles = "New Bets Available";
+//        String mMessages = "Checkout new bets now";
+//
+//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, App.CHANNEL_ONE_ID);
+//
+//        mBuilder.setSmallIcon(R.drawable.ic_launcher_background)
+//                .setContentTitle(mTitles)
+//                .setContentText(mMessages)
+//                .setPriority(NotificationCompat.PRIORITY_HIGH);
+//
+//            mManager.notify(1, mBuilder.build());
 
 
         mTitle.setText(mFrom + " Bet Game");
