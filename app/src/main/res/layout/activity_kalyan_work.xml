@@ -107,7 +107,7 @@
         android:layout_marginTop="12dp"
         android:background="@layout/button_background_golden"
         android:text="Get More Coins"
-        android:textColor="@color/noColor"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"

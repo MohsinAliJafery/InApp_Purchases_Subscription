@@ -12,9 +12,6 @@ import android.os.Looper;
 
 import com.google.android.material.snackbar.Snackbar;
 
-
-
-
 public class CongratulatingReward extends AppCompatActivity {
 
 
@@ -52,7 +49,7 @@ public class CongratulatingReward extends AppCompatActivity {
         Snackbar.make(mLayout, "You got 3 gold coins!", Snackbar.LENGTH_LONG)
 
                 .setTextColor(getResources().getColor(R.color.noColor))
-                .setBackgroundTint(getResources().getColor(R.color.colorGolden))
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
                 .show();
 
     }

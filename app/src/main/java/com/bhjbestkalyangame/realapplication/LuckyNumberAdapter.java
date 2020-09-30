@@ -68,6 +68,8 @@ class LuckyNumberAdapter extends BaseAdapter {
 
         }
 
+
+
         return view;
 
     }
