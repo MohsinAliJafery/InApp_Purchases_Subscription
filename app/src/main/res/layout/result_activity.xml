@@ -60,7 +60,7 @@
         android:background="@color/noColor"
         android:gravity="center"
         android:text="3"
-        android:textColor="@color/colorGolden"
+        android:textColor="@color/colorOrange"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

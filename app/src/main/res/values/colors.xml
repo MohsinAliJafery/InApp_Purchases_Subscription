@@ -6,4 +6,5 @@
     <color name="colorBackground">#FBEFF6</color>
     <color name="noColor">#FFF</color>
     <color name="colorGolden">#FFDF00</color>
+    <color name="colorOrange">#FFC000</color>
 </resources>
