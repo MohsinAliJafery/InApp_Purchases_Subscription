@@ -144,7 +144,7 @@ public class Result extends AppCompatActivity {
                     public void run() {
                         mInterstitialAd.show();
                     }
-                }, 5000);
+                }, 9000);
 
             }
             });
@@ -176,7 +176,7 @@ public class Result extends AppCompatActivity {
 //            mManager.notify(1, mBuilder.build());
 
 
-        mTitle.setText(mFrom + " Bet Game");
+        mTitle.setText(mFrom + " Kalyan Game");
         Numbers = new HashMap<String, String>();
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("current_lucky_numbers").child(mFrom);
