@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/noColor"
+    android:background="@layout/box_shadow_with_radius"
+    android:elevation="8dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@drawable/box_shadow"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:textAlignment="center"
+            android:text="1 Day Game"
+            android:textFontWeight="600"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp"
+            android:gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:src="@drawable/subscription"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="100dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:src="@drawable/price_tag_in_orange"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Rs 1000/-"
+                android:textFontWeight="900"
+                android:textColor="@color/colorGolden"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@layout/orange_background_with_slight_border_radius"
+            android:text="Buy Now"
+            android:padding="5dp"
+            android:textColor="@color/colorGray"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
+
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="The discription goes here!"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

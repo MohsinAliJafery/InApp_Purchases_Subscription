@@ -1,35 +1,22 @@
 package com.bhjbestkalyangame.realapplication;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NotificationCompat;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,35 +27,27 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Result extends AppCompatActivity {
+public class KalyanMatkaResults extends AppCompatActivity {
 
-    String mFrom;
+    String KalyanType;
     Map<String, String> Numbers;
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
     List<String> Values;
-    TextView mTitle, TotalCoins, mDate;
+    TextView mTitle, TicketsValidity, mDate;
     ConstraintLayout mLayout;
-    int TCoins;
+    private String ValidOrInvalid;
     ProgressBar progressBar;
     private final String MyCredit = "mycredit";
     public String Coins = "Coins";
-    private AdView mAdView;
-
     boolean mNetwork;
 
-    private InterstitialAd mInterstitialAd;
-
-
-    private TextView dateTimeDisplay;
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
@@ -78,11 +57,11 @@ public class Result extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.result_activity);
+        setContentView(R.layout.activity_kalyan_matka_results);
         final SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, Context.MODE_PRIVATE);
 
 
-        TCoins = mSharedPreferences.getInt(Coins, 0);
+        ValidOrInvalid = mSharedPreferences.getString(ValidOrInvalid, "Valid");
 
         final Handler handler = new Handler(Looper.getMainLooper());
         calendar = Calendar.getInstance();
@@ -94,7 +73,9 @@ public class Result extends AppCompatActivity {
         mDate = findViewById(R.id.today_date);
         mLayout = findViewById(R.id.Resultlayout);
         mDate.setText(date);
+
         progressBar = findViewById(R.id.progressbar);
+
         if(!mNetwork){
             progressBar.setVisibility(View.GONE);
             Snackbar.make(mLayout, "Please check your internet connection", Snackbar.LENGTH_INDEFINITE)
@@ -113,96 +94,35 @@ public class Result extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
         }
 
-        TotalCoins = findViewById(R.id.total_coins);
-        TotalCoins.setText(""+ TCoins);
-        mTitle = findViewById(R.id.ResultViewNameID);
+        TicketsValidity = findViewById(R.id.tickets_validity);
+        TicketsValidity.setText(""+ ValidOrInvalid);
+        mTitle = findViewById(R.id.title);
 
         mTitle.setSelected(true);
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-
-        mInterstitialAd = new InterstitialAd(this);
-
-        //              App ID Admob   Interestial Ad
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mInterstitialAd.show();
-                    }
-                }, 9000);
-
-            }
-            });
-
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-
-
-
         Intent mIntent = getIntent();
-        mFrom = mIntent.getStringExtra("mFrom");
-
-//        Notification Code
-//        NotificationManager mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//
-//
-//        String mTitles = "New Bets Available";
-//        String mMessages = "Checkout new bets now";
-//
-//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, App.CHANNEL_ONE_ID);
-//
-//        mBuilder.setSmallIcon(R.drawable.ic_launcher_background)
-//                .setContentTitle(mTitles)
-//                .setContentText(mMessages)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH);
-//
-//            mManager.notify(1, mBuilder.build());
-
-
-        mTitle.setText(mFrom + " Kalyan Game");
+        KalyanType = mIntent.getStringExtra("KalyanType");
+        
+        mTitle.setText(KalyanType + " Kalyan Matka");
         Numbers = new HashMap<String, String>();
         mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("current_lucky_numbers").child(mFrom);
+        mReference = mDatabase.getReference("current_super_numbers").child(KalyanType);
+
         mReference.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Numbers = (HashMap<String, String>) snapshot.getValue();
-                SortedSet<String> values = new TreeSet<String>(Numbers.values());
+                if(snapshot.exists()) {
+                    Numbers = (HashMap<String, String>) snapshot.getValue();
+                    SortedSet<String> values = new TreeSet<String>(Numbers.values());
 
-                Values =  new ArrayList<>();
-                Values.addAll(values);
-                populateGrid(Values);
-                progressBar.setVisibility(View.GONE);
-
-                TCoins = mSharedPreferences.getInt(Coins, 0);
-                TCoins = TCoins - 2;
-                mSharedPreferences.edit().putInt(Coins, TCoins).apply();
-
-                Snackbar.make(mLayout, "You spent 2 coins", Snackbar.LENGTH_LONG)
-
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
-                        .show();
-                TotalCoins.setText("" + TCoins);
-
+                    Values = new ArrayList<>();
+                    Values.addAll(values);
+                    populateGrid(Values);
+                    progressBar.setVisibility(View.GONE);
+                }
+                
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -215,36 +135,27 @@ public class Result extends AppCompatActivity {
     private void populateGrid(List<String> values) {
         int i = 2;
         GridView mGridView = findViewById(R.id.gridview_success);
-        if(mFrom.equals("Panel")) {
+        if(KalyanType.equals("Panel")) {
             mGridView.setNumColumns(i);
 
         }else{
             i = 3;
             mGridView.setNumColumns(i);
         }
-        mGridView.setAdapter(new LuckyNumberAdapter(this, values));
+        mGridView.setAdapter(new SuperNoAdapter(this, values));
 
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent mIntent = new Intent(Result.this, KalyanWorkActivity.class);
-        startActivity(mIntent);
-        finish();
-    }
-
-
+    
     @Override
     protected void onRestart() {
         super.onRestart();
-        TotalCoins.setText("" + TCoins);
+        TicketsValidity.setText("" + ValidOrInvalid);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        TotalCoins.setText("" + TCoins);
+        TicketsValidity.setText("" + ValidOrInvalid);
     }
 
     private boolean haveNetworkConnection() {

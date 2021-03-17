@@ -19,7 +19,7 @@ public class CongratulatingReward extends AppCompatActivity {
     final Handler handler = new Handler(Looper.getMainLooper());
     private final String MyCredit = "mycredit";
     public String Coins = "Coins";
-    public int TotalCoins = 3;
+    public int TotalCoins = 30;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,17 +39,17 @@ public class CongratulatingReward extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mIntent = new Intent(CongratulatingReward.this, KalyanWorkActivity.class);
+                Intent mIntent = new Intent(CongratulatingReward.this, KalyanMatkaInterface.class);
                 startActivity(mIntent);
                 finish();
             }
         }, 1000);
 
 
-        Snackbar.make(mLayout, "You got 3 gold coins!", Snackbar.LENGTH_LONG)
+        Snackbar.make(mLayout, "You got 30 gold coins!", Snackbar.LENGTH_LONG)
 
-                .setTextColor(getResources().getColor(R.color.noColor))
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                .setTextColor(getResources().getColor(R.color.colorPrimary))
+                .setBackgroundTint(getResources().getColor(R.color.colorGolden))
                 .show();
 
     }

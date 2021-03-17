@@ -3,7 +3,6 @@ package com.bhjbestkalyangame.realapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,10 +16,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -29,7 +25,6 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class WatchVideoToGetReward extends AppCompatActivity {
@@ -122,7 +117,7 @@ public class WatchVideoToGetReward extends AppCompatActivity {
                 int mReward = reward.getAmount();
                 TCoins = TCoins + 3;
                 mSharedPreferences.edit().putInt(Coins, TCoins).apply();
-                Intent sIntent = new Intent(WatchVideoToGetReward.this, Result.class);
+                Intent sIntent = new Intent(WatchVideoToGetReward.this, KalyanMatkaResults.class);
                 sIntent.putExtra("mFrom", mFrom);
                 startActivity(sIntent);
                 finish();
@@ -144,6 +139,9 @@ public class WatchVideoToGetReward extends AppCompatActivity {
                     //              App ID Admob   Rewarded Ad
                     rewardedAd = new RewardedAd(WatchVideoToGetReward.this,
                             "ca-app-pub-3940256099942544/5224354917");
+
+//                    rewardedAd = new RewardedAd(WatchVideoToGetReward.this,
+//                            "ca-app-pub-4453843474169453/7139873867");
                     mSnackbar.dismiss();
                     rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
                     if (rewardedAd.isLoaded()) {
@@ -178,7 +176,7 @@ public class WatchVideoToGetReward extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent mIntent = new Intent(WatchVideoToGetReward.this, KalyanWorkActivity.class);
+        Intent mIntent = new Intent(WatchVideoToGetReward.this, KalyanMatkaInterface.class);
         startActivity(mIntent);
         finish();
     }

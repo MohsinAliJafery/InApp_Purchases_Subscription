@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,7 +46,7 @@ public class GetCoinsActivity extends AppCompatActivity {
     ProgressBar progressBar;
     private InterstitialAd mInterstitialAd;
 
-    KalyanWorkActivity mKalyanWork;
+    KalyanMatkaInterface mKalyanWork;
 
     boolean mNetwork;
 
@@ -75,7 +73,7 @@ public class GetCoinsActivity extends AppCompatActivity {
 
         final Snackbar mSnackbar = Snackbar.make(findViewById(android.R.id.content), "Please watch complete video to get access to result.", Snackbar.LENGTH_INDEFINITE);
 
-        mKalyanWork = new KalyanWorkActivity();
+        mKalyanWork = new KalyanMatkaInterface();
 
         final SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, Context.MODE_PRIVATE);
 
@@ -94,6 +92,7 @@ public class GetCoinsActivity extends AppCompatActivity {
 
         //              App ID Admob   Interestial Ad
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+//        mInterstitialAd.setAdUnitId("ca-app-pub-4453843474169453/3590499332");
 
 
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -118,6 +117,8 @@ public class GetCoinsActivity extends AppCompatActivity {
 //              App ID Admob   rewarded Ad
         rewardedAd = new RewardedAd(this,
                 "ca-app-pub-3940256099942544/5224354917");
+//        rewardedAd = new RewardedAd(this,
+//                "ca-app-pub-4453843474169453/7139873867");
 
         final RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
@@ -198,6 +199,9 @@ public class GetCoinsActivity extends AppCompatActivity {
                     rewardedAd = new RewardedAd(GetCoinsActivity.this,
                             "ca-app-pub-3940256099942544/5224354917");
 
+//                    rewardedAd = new RewardedAd(GetCoinsActivity.this,
+//                            "ca-app-pub-4453843474169453/7139873867");
+
 
 
                     mSnackbar.dismiss();
@@ -233,7 +237,7 @@ public class GetCoinsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent mIntent = new Intent(GetCoinsActivity.this, KalyanWorkActivity.class);
+        Intent mIntent = new Intent(GetCoinsActivity.this, KalyanMatkaInterface.class);
         mIntent.putExtra("NewCoins", newCoins);
         mIntent.putExtra("areNewCoinsAdded", Added);
         startActivity(mIntent);

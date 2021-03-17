@@ -5,31 +5,85 @@
     android:layout_width="match_parent"
     android:background="@color/noColor"
     android:layout_height="match_parent"
-    tools:context=".disclaimer">
+    tools:context=".Disclaimer">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/disclaimer"
+        android:layout_marginTop="72dp"
+        android:gravity="center"
+        android:text="DISCLAIMER"
+        android:textColor="@color/colorGray"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:lineHeight="30dp"
+        android:paddingLeft="20dp"
+        android:justificationMode="inter_word"
+        android:paddingRight="20dp"
+        android:paddingBottom="7dp"
+        android:inputType="textMultiLine"
+        android:text="Viewing this app is at your own risk. All of the content shown in this app is based on Numerology and Astrology for information purposes only. We are not associated with any illegal business or Gamblers. We warn you that Matka or Gambling may be banned in your country or illegal. Also we are not responsible for any loss or scams. We respect all countries rules and laws. If you don't agree with this; Please quit our application."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:inputType="textMultiLine"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:lineHeight="30dp"
+        android:text="Note: "
+        android:textSize="17dp"
+        android:textColor="@color/colorGolden"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:inputType="textMultiLine"
+        android:justificationMode="inter_word"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:lineHeight="30dp"
+        android:text="Copying/Promoting/Publishing any of our content in any type of media or other sources is illegal."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note" />
 
     <Button
         android:id="@+id/continue_click"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@layout/button_background"
+        android:layout_marginBottom="80dp"
+        android:background="@layout/primary_background_for_button"
         android:text="Continue"
         android:textColor="@color/noColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.271" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bhjbestkalyangame.realapplication">
 
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GetCoinsActivity"></activity>
+        <activity
+            android:name=".SubscriptionPurchaseCongratulations"
+            android:label="@string/title_activity_subscription_purchase_congratulations"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ProductPurchaseCongratulations" />
+        <activity android:name=".GetNewTicket" />
+        <activity android:name=".UsersLogin" />
+        <activity android:name=".InAppSubscription" />
+        <activity android:name=".InAppProducts" />
+        <activity android:name=".GetCoinsActivity" />
         <activity android:name=".WatchVideoToGetReward" />
         <activity android:name=".CongratulatingReward" />
-        <activity android:name=".disclaimer" />
+        <activity android:name=".Disclaimer" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,17 +31,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Result" />
-        <activity android:name=".KalyanWorkActivity" />
-
-
-
-<!--        App ID Admob     -->
+        <activity android:name=".KalyanMatkaResults" />
+        <activity android:name=".KalyanMatkaInterface" /> <!-- App ID Admob -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-
-            android:value="ca-app-pub-3940256099942544~3347511713" />
-
+            android:value="ca-app-pub-4453843474169453~8814631813" />
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:background="@layout/button_background"
+        android:background="@layout/primary_background_for_button"
         android:id="@+id/luckynumber_gess_number"
         android:layout_height="wrap_content"
         android:padding="5dp"

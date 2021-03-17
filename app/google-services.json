@@ -44,6 +44,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "908573784472-3v0t5gp4gg58u5ojhcb6j79j80tl6oef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bhjbestkalyangame.realapplication",
+            "certificate_hash": "c239a8025ca90668593860999dece8de7cee773c"
+          }
+        },
+        {
           "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
           "client_type": 3
         }
