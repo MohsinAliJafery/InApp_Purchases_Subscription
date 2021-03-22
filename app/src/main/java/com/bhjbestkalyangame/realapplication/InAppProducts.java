@@ -36,8 +36,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.text.SimpleDateFormat;
@@ -59,6 +62,8 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
     private String date;
     private ConstraintLayout mLayout;
     private ContentLoadingProgressBar progressBar;
+    private boolean consumed;
+    private TextView SingleRecyclerViewIndicator;
 
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
@@ -73,10 +78,13 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
         setContentView(R.layout.activity_inapp_products);
 
         RecyclerView = findViewById(R.id.recycler_view);
+        recyclerIndicator = findViewById(R.id.indicator);
 
         mLayout = findViewById(R.id.tickets);
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressbar);
+        SingleRecyclerViewIndicator = findViewById(R.id.single_item_recyclerview_indicator);
+        consumed = false;
 
         date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -89,12 +97,39 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
 
         setUpBillingClient();
 
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (!connected) {
+                    progressBar.setVisibility(View.GONE);
+                    Snackbar.make(mLayout, "Please check your internet connection!", Snackbar.LENGTH_INDEFINITE)
+
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(R.color.noColor))
+                            .setTextColor(getResources().getColor(R.color.noColor))
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
+
     }
 
     private void loadProductsToRecyclerView(List<SkuDetails> list) {
         ProductAdapter productAdapter = new ProductAdapter(this, list, billingClient, "product");
         RecyclerView.setAdapter(productAdapter);
-        recyclerIndicator = findViewById(R.id.indicator);
         recyclerIndicator.attachToRecyclerView(RecyclerView);
     }
 
@@ -107,7 +142,7 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
 
                     Log.d("mytag", "consume Ok");
                     mReference = mDatabase.getReference("users").child(currentUser.getUid());
-                    Toast.makeText(InAppProducts.this, "Consume Ok! "+s, Toast.LENGTH_SHORT).show();
+
 
                     HashMap<String, String> hashMap = new HashMap<String, String>();
                     hashMap.put("ticket_token", s);
@@ -133,6 +168,7 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                 }else{
                     Log.d("mytag", "consume not ok");
                     setUpBillingClient();
+                    consumed = true;
                 }
             }
         };
@@ -142,18 +178,30 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
                 if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
-                    Toast.makeText(InAppProducts.this, "Success to Connect Billing!", Toast.LENGTH_SHORT).show();
-                    Log.d("mytag", "Success!");
-                    //Query
+
+                    Log.d("mytag", "Success to Connect Billing!");
+
                     List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
                             .getPurchasesList();
-                    if(purchases.size() > 0 ){
-                        handleItemsAlreadyPurchased(purchases);
-                    }else{
-                        loadAllTickets();
-                        progressBar.setVisibility(View.INVISIBLE);
+                    if(purchases != null) {
+                        if (purchases.size() > 0) {
+                            handleItemsAlreadyPurchased(purchases);
+                            RecyclerView.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.VISIBLE);
+                            SingleRecyclerViewIndicator.setVisibility(View.INVISIBLE);
+                        } else {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            RecyclerView.setVisibility(View.VISIBLE);
+                            SingleRecyclerViewIndicator.setVisibility(View.VISIBLE);
+                            if(consumed){
+                                Snackbar.make(mLayout, "Your card has been declined! Please try again.", Snackbar.LENGTH_LONG)
+                                        .setTextColor(getResources().getColor(R.color.noColor))
+                                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                                        .show();
+                            }
+                            loadAllTickets();
+                        }
                     }
-
 
                 }else{
                     Log.d("mytag", "Failure to Connect Billing!");
@@ -201,7 +249,7 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                     if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
                         loadProductsToRecyclerView(list);
                     }else{
-                        Toast.makeText(InAppProducts.this, "Error Code: "+billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InAppProducts.this, "Error: "+billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -213,14 +261,44 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
 
             if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null){
                 handleItemsAlreadyPurchased(list);
-                Log.d("mytag", "handleitemalreadypurchased");
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED){
-                Toast.makeText(this, "User Cancelled!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(mLayout, "You Have Cancelled The Purchased!", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
                 Log.d("mytag", "cancelled");
-            }else {
-                Toast.makeText(this, "Error: "+billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
-                Log.d("mytag", "error");
+            }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE){
+                Log.d("mytag", "Service unavailable" + billingResult.getResponseCode());
+                Snackbar.make(mLayout, "Service Currently Unavailable! Please try again.", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
+            }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE){
+                Log.d("mytag", "Billing unavailable" + billingResult.getResponseCode());
+                Snackbar.make(mLayout, "Billing Unavailable! Please try again.", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
+            }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_TIMEOUT){
+                Log.d("mytag", "Service Timeout" + billingResult.getResponseCode());
+                Snackbar.make(mLayout, "Time Out! Please try again.", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
+            }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED){
+                Log.d("mytag", "Service Disconnected" + billingResult.getResponseCode());
+                Snackbar.make(mLayout, "Service Disconnected! Please try again.", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
+            }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR){
+                Log.d("mytag", "An Error Occurred!" + billingResult.getResponseCode());
+                Snackbar.make(mLayout, "An Error Occurred! Please try again.", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
             }
+
     }
 
 }

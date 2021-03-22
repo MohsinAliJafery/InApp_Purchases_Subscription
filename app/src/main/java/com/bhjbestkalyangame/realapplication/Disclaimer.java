@@ -22,7 +22,7 @@ public class Disclaimer extends AppCompatActivity {
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(Disclaimer.this, UsersLogin.class);
+                Intent mIntent = new Intent(Disclaimer.this, KalyanMatkaInterface.class);
                 startActivity(mIntent);
                 finish();
             }

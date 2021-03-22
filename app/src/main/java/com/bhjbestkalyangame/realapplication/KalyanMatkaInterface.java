@@ -3,7 +3,11 @@ package com.bhjbestkalyangame.realapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,16 +32,20 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.bhjbestkalyangame.realapplication.Utils.BillingClientSetup;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +53,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -65,18 +74,20 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private String GoogleAccountName, GoogleAccountEmail, GoogleAccountID;
      private ConstraintLayout MainImage, GettingThingsReadyProgressBar;
      private boolean isLoading;
+     private boolean Ticket, Subscription;
+     private final String MyCredit = "mycredit";
+     private ContentLoadingProgressBar progressBar;
+     private boolean mNetwork;
 
-     private boolean Ticket;
-    private final String MyCredit = "mycredit";
-    public String Coins = "Coins";
+     private FirebaseDatabase mDatabase;
+     private DatabaseReference mReference;
+     private FirebaseAuth mAuth;
+     private FirebaseUser currentUser;
+    String message;
+    private static final int RC_SIGN_IN = 101;
+    GoogleSignInClient mGoogleSignInClient;
 
-    boolean tellMe;
-
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mReference;
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
-
+   ConstraintLayout mLayout;
     BillingClient billingClient;
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
 
@@ -85,20 +96,43 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kalyan_matka_interface);
 
-        final ConstraintLayout mLayout = findViewById(R.id.kalyan_work_activity);
+        mLayout = findViewById(R.id.kalyan_work_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        configureGoogleSignIn();
 
         single_kalyan = findViewById((R.id.single_kalyan_matka));
         jodi_kalyan   = findViewById((R.id.jodi_kalyan_matka));
         panel_kalyan  = findViewById((R.id.panel_kalyan_matka));
         BecomeVipMember = findViewById(R.id.become_a_vip_member);
+        progressBar = findViewById(R.id.progressbar);
+
+        mNetwork = haveNetworkConnection();
+        if(!mNetwork){
+            progressBar.setVisibility(View.GONE);
+            Snackbar.make(mLayout, "Please check your internet connection", Snackbar.LENGTH_INDEFINITE)
+
+                    .setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(R.color.noColor))
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }else{
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
 
         KalyanResult = findViewById(R.id.kalyan_result);
         KalyanNightResult = findViewById(R.id.kalyan_night_result);
 
         isLoading = true;
-
+        Ticket = false;
         ValidOrInvalid = false;
         MainImage = findViewById(R.id.Results);
         GettingThingsReadyProgressBar = findViewById(R.id.getting_things_ready);
@@ -115,51 +149,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         mDatabase = FirebaseDatabase.getInstance();
 
         currentUser = mAuth.getCurrentUser();
-        mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
-
-        mReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()) {
-                    for (DataSnapshot mSnapshot : snapshot.getChildren()) {
-                        Products product = mSnapshot.getValue(Products.class);
-                        if (date.equals(product.getDate())) {
-
-                            isLoading = false;
-
-                            ValidOrInvalid = true;
-                            TicketsValidity.setText("Valid");
-                            Ticket = true;
-
-
-                            MainImage.setVisibility(View.VISIBLE);
-                            GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
-
-                            single_kalyan.setEnabled(true);
-                            jodi_kalyan.setEnabled(true);
-                            panel_kalyan.setEnabled(true);
-
-                            GetTicket.setEnabled(true);
-                            BecomeVipMember.setEnabled(true);
-
-                        } else {
-                            setUpBillingClient();
-                        }
-                    }
-                }
-                else {
-                    setUpBillingClient();
-                }
-
-            }
-
-                @Override
-                public void onCancelled (@NonNull DatabaseError error){
-
-                }
-
-        });
+        message = "Please buy 1 Day Game or Subscription to see Kalyan Matka King results. Thank-you!";
 
 //        Public Information Buy The Owner
 
@@ -229,18 +219,19 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             GoogleAccountEmail = googleSignInAccount.getEmail();
         }
 
+
         single_kalyan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                     if(ValidOrInvalid) {
                         Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
-                        intent.putExtra("KalyanType", "Single");
+                        intent.putExtra("KalyanType", "SingleNew");
                         startActivity(intent);
 
                     }else{
-                        Snackbar.make(mLayout, "You don't have any valid Ticket or Subscription!", Snackbar.LENGTH_LONG)
 
+                        Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
                                 .setTextColor(getResources().getColor(R.color.noColor))
                                 .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
                                 .show();
@@ -254,12 +245,12 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
                 if(ValidOrInvalid) {
                     Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
-                    intent.putExtra("KalyanType","Jodi");
+                    intent.putExtra("KalyanType","JodiNew");
                     startActivity(intent);
 
                 }else{
-                    Snackbar.make(mLayout, "You don't have any valid Ticket or Subscription!", Snackbar.LENGTH_LONG)
-
+                    
+                    Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
                             .setTextColor(getResources().getColor(R.color.noColor))
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
                             .show();
@@ -274,11 +265,12 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             public void onClick(View view) {
                 if(ValidOrInvalid) {
                     Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
-                    intent.putExtra("KalyanType", "Panel");
+                    intent.putExtra("KalyanType", "PanelNew");
                     startActivity(intent);
 
                 }else{
-                    Snackbar.make(mLayout, "You don't have any valid Ticket or Subscription!", Snackbar.LENGTH_LONG)
+
+                    Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
                             .setTextColor(getResources().getColor(R.color.noColor))
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
                             .show();
@@ -289,7 +281,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         GetTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ValidOrInvalid) {
+                if(!ValidOrInvalid) {
                     Intent intent = new Intent(KalyanMatkaInterface.this, InAppProducts.class);
                     startActivity(intent);
                 }else{
@@ -298,7 +290,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     if(Ticket){
                         message = "You already own a valid ticket!";
                     }else{
-                        message = "You already purchased a subscription plan";
+                        message = "You already purchased a subscription plan!";
                     }
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
                             .setTextColor(getResources().getColor(R.color.noColor))
@@ -311,16 +303,15 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         BecomeVipMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ValidOrInvalid) {
+                if(!ValidOrInvalid) {
                     Intent intent = new Intent(KalyanMatkaInterface.this, InAppSubscription.class);
                     startActivity(intent);
                 }else{
-
                     String message;
                     if(Ticket){
                         message = "You already own a valid ticket!";
                     }else{
-                        message = "You already purchased a subscription plan";
+                        message = "You already purchased a subscription plan!";
                     }
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
                             .setTextColor(getResources().getColor(R.color.noColor))
@@ -343,22 +334,10 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         }
 
-
         super.onRestart();
     }
 
-    @Override
-    protected void onResume() {
-        TicketsValidity = findViewById(R.id.tickets_validity);
-        if(!isLoading){
-            if(ValidOrInvalid){
-                TicketsValidity.setText("Valid");
-            }else{
-                TicketsValidity.setText("Invalid");
-            }
-        }
-        super.onResume();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -401,6 +380,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
                     ValidOrInvalid = true;
                     TicketsValidity.setText("Valid");
+                    Subscription = true;
                 }
             }
         };
@@ -410,37 +390,38 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
                 if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
-                    Toast.makeText(KalyanMatkaInterface.this, "Success to Connect Billing!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(KalyanMatkaInterface.this, "Success to Connect Billing!", Toast.LENGTH_SHORT).show();
 
-                    //Query
                     List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.SUBS)
                             .getPurchasesList();
-                    if(purchases.size() > 0){
-                        for(Purchase purchase:purchases){
-                            handleItemsAlreadyPurchased(purchase);
+                    if(purchases != null) {
+                        if (purchases.size() > 0) {
+                            for (Purchase purchase : purchases) {
+                                handleItemsAlreadyPurchased(purchase);
+                            }
+                        } else {
+                            single_kalyan.setEnabled(true);
+                            jodi_kalyan.setEnabled(true);
+                            panel_kalyan.setEnabled(true);
+
+                            GetTicket.setEnabled(true);
+                            BecomeVipMember.setEnabled(true);
+
+                            TicketsValidity.setText("Invalid");
+                            MainImage.setVisibility(View.VISIBLE);
+                            GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
+                            Subscription = false;
                         }
-                    }else{
-                        single_kalyan.setEnabled(true);
-                        jodi_kalyan.setEnabled(true);
-                        panel_kalyan.setEnabled(true);
-
-                        GetTicket.setEnabled(true);
-                        BecomeVipMember.setEnabled(true);
-
-                        TicketsValidity.setText("Invalid");
-                        MainImage.setVisibility(View.VISIBLE);
-                        GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
-                        ValidOrInvalid = false;
                     }
 
                 }else{
-                    Toast.makeText(KalyanMatkaInterface.this, "Error code: " + billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(KalyanMatkaInterface.this, "Error code: " + billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onBillingServiceDisconnected() {
-                Toast.makeText(KalyanMatkaInterface.this, "You are disconnected from billing", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(KalyanMatkaInterface.this, "You are disconnected from billing", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -468,6 +449,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
                 ValidOrInvalid = true;
                 TicketsValidity.setText("Valid");
+                Subscription = true;
             }
         }
     }
@@ -480,9 +462,174 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 handleItemsAlreadyPurchased(purchase);
             }
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED){
-            Toast.makeText(this, "User Cancelled!", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Error: "+billingResult.getResponseCode(), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mLayout, "You Have Cancelled The Purchased!", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+            Log.d("mytag", "cancelled");
+        }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE){
+            Log.d("mytag", "Service unavailable" + billingResult.getResponseCode());
+            Snackbar.make(mLayout, "Service Currently Unavailable! Please try again.", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE){
+            Log.d("mytag", "Billing unavailable" + billingResult.getResponseCode());
+            Snackbar.make(mLayout, "Billing Unavailable! Please try again.", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_TIMEOUT){
+            Log.d("mytag", "Service Timeout" + billingResult.getResponseCode());
+            Snackbar.make(mLayout, "Time Out! Please try again.", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED){
+            Log.d("mytag", "Service Disconnected" + billingResult.getResponseCode());
+            Snackbar.make(mLayout, "Service Disconnected! Please try again.", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR){
+            Log.d("mytag", "An Error Occurred!" + billingResult.getResponseCode());
+            Snackbar.make(mLayout, "An Error Occurred! Please try again.", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.noColor))
+                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }
+
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+
+//    Google Signin
+
+private void configureGoogleSignIn() {
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build();
+
+    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+}
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaInterface.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(KalyanMatkaInterface.this, "Login Error!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            signIn();
+        }else{
+            mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
+            mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    if (snapshot.exists()) {
+                        for (DataSnapshot mSnapshot : snapshot.getChildren()) {
+                            Products product = mSnapshot.getValue(Products.class);
+                            if (date.equals(product.getDate())) {
+
+                                isLoading = false;
+
+                                ValidOrInvalid = true;
+                                TicketsValidity.setText("Valid");
+                                Ticket = true;
+
+                                MainImage.setVisibility(View.VISIBLE);
+                                GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
+
+                                single_kalyan.setEnabled(true);
+                                jodi_kalyan.setEnabled(true);
+                                panel_kalyan.setEnabled(true);
+
+                                GetTicket.setEnabled(true);
+                                BecomeVipMember.setEnabled(true);
+
+                            } else {
+                                setUpBillingClient();
+                            }
+                        }
+                    }
+                    else {
+                        setUpBillingClient();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled (@NonNull DatabaseError error){
+
+                }
+            });
+        }
+
+        TicketsValidity = findViewById(R.id.tickets_validity);
+        if(!isLoading){
+            if(ValidOrInvalid){
+                TicketsValidity.setText("Valid");
+            }else{
+                TicketsValidity.setText("Invalid");
+            }
         }
 
     }

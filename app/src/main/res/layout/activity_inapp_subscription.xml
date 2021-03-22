@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/inapp_subscription"
     android:layout_height="match_parent"
     android:layout_margin="7dp"
     tools:context=".InAppProducts">
@@ -12,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@color/colorGolden"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:padding="10dp"
         android:text="SUBSCRIPTIONS"
         android:fontFamily="sans-serif-thin"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/noColor"
         android:textSize="40sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +52,6 @@
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
-
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progressbar"
         style="?android:attr/progressBarStyle"
@@ -59,11 +59,11 @@
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/colorOrange"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/recycler_view"
-        app:layout_constraintEnd_toEndOf="@+id/recycler_view"
-        app:layout_constraintStart_toStartOf="@+id/recycler_view"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view" />
-
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -87,7 +87,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
 
+
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/colorGolden"

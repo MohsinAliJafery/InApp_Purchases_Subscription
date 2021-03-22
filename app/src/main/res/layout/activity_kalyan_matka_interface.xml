@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffeb00"
+        android:background="@layout/primary_background_for_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,9 +26,9 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/colorGray"
+                android:textColor="@color/colorGolden"
                 android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -37,7 +37,6 @@
 
         android:id="@+id/Results"
         android:layout_width="250dp"
-        android:visibility="invisible"
         android:background="@layout/box_shadow_with_radius"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:background="@color/colorOrange"
+            android:background="#FF7F50"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,16 +59,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="19sp"
-                android:textColor="@color/colorGray"
+                android:textSize="27sp"
+                android:textStyle="bold|italic"
+                android:textColor="#F8F9F9 "
                 android:text="KALYAN"/>
 
             <TextView
                 android:id="@+id/kalyan_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="19sp"
-                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="bold|italic"
+                android:textColor="#F8F9F9"
                 android:text="240-63-247"/>
 
         </LinearLayout>
@@ -78,7 +79,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorGolden"
+            android:background="#E74C3C"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/kalyan">
@@ -87,16 +88,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="KALYAN NIGHT"
-                android:textColor="@color/colorGray"
-                android:textSize="19sp" />
+                android:textStyle="bold|italic"
+                android:textColor="#F8F9F9 "
+                android:textSize="27sp" />
 
             <TextView
                 android:id="@+id/kalyan_night_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="240-63-247"
-                android:textColor="#ffffff"
-                android:textSize="19sp" />
+                android:textColor="#F8F9F9 "
+                android:textStyle="bold|italic"
+                android:textSize="25sp" />
 
         </LinearLayout>
 
@@ -129,7 +132,7 @@
             android:layout_height="wrap_content"
             android:text="Getting things ready..."
             android:textSize="19sp"
-            android:textColor="@color/colorOrange"
+            android:textColor="#FF5733"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:background="@color/noColor"
-        android:backgroundTint="@color/colorGolden"
+        android:backgroundTint="#C70039"
         android:ellipsize="marquee"
         android:gravity="center"
         android:layout_marginTop="12dp"
@@ -153,9 +156,9 @@
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:text="Loading..."
-        android:textColor="@color/colorGray"
-        android:textSize="17sp"
-        android:textStyle="bold"
+        android:textColor="#F8F9F9"
+        android:textSize="21sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/single_kalyan_matka"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +172,8 @@
         android:layout_marginTop="12dp"
         android:background="@layout/primary_background_for_button"
         android:enabled="false"
-        android:text="Single Kalyan Matka"
+        android:text="Single Kalyan Game"
+        android:textStyle="bold"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -184,7 +188,8 @@
         android:layout_marginTop="12dp"
         android:background="@layout/primary_background_for_button"
         android:bottomRightRadius="10dp"
-        android:text="Panel Kalyan Matka"
+        android:text="Panel Kalyan Game"
+        android:textStyle="bold"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -198,7 +203,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@layout/primary_background_for_button"
-        android:text="Jodi Kalyan Matka"
+        android:text="Jodi Kalyan Game"
+        android:textStyle="bold"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -212,8 +218,8 @@
         android:layout_marginTop="12dp"
         android:enabled="false"
         android:background="@layout/golden_background_for_button"
-        android:text="Buy a Ticket"
-        android:textColor="@color/colorGray"
+        android:text="1 Day Game"
+        android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -226,22 +232,12 @@
         android:layout_marginTop="12dp"
         android:enabled="false"
         android:background="@layout/golden_background_for_button"
-        android:text="Become Vip Member"
-        android:textColor="@color/colorGray"
+        android:text=" Vip Membership"
+        android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_a_ticket" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/important_cost_notice"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member"
-        app:layout_constraintVertical_bias="0.234" />
 
     <TextView
         android:id="@+id/tickets_title"
@@ -270,14 +266,18 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="3dp"
         android:background="@color/colorGolden"
         android:fontFamily="sans-serif-thin"
         android:text=""
         android:textColor="@color/colorGray"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="7dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

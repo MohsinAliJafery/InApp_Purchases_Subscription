@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="CONGRATULATIONS"
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/colorPrimary"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +46,7 @@
         android:layout_marginStart="92dp"
         android:layout_marginLeft="92dp"
         android:text="Validity Expires Until: "
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -62,9 +63,9 @@
         android:id="@+id/continue_product"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@layout/golden_background_for_button"
+        android:background="@color/colorPrimary"
         android:text="Continue"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/colorGolden"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

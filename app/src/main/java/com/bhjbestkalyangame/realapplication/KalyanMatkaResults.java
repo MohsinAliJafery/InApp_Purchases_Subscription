@@ -103,11 +103,21 @@ public class KalyanMatkaResults extends AppCompatActivity {
 
         Intent mIntent = getIntent();
         KalyanType = mIntent.getStringExtra("KalyanType");
+        mDatabase = FirebaseDatabase.getInstance();
+        mReference = mDatabase.getReference("current_super_numbers").child(KalyanType);
+
+        if(KalyanType.equals("SingleNew")){
+           KalyanType = "Single";
+        }else if(KalyanType.equals("JodiNew")){
+            KalyanType = "Jodi";
+        }else if(KalyanType.equals("PanelNew")){
+            KalyanType = "Panel";
+        }
         
         mTitle.setText(KalyanType + " Kalyan Matka");
         Numbers = new HashMap<String, String>();
-        mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("current_super_numbers").child(KalyanType);
+
+
 
         mReference.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -135,7 +145,7 @@ public class KalyanMatkaResults extends AppCompatActivity {
     private void populateGrid(List<String> values) {
         int i = 2;
         GridView mGridView = findViewById(R.id.gridview_success);
-        if(KalyanType.equals("Panel")) {
+        if(KalyanType.equals("Panel") || KalyanType.equals("PanelNew")) {
             mGridView.setNumColumns(i);
 
         }else{

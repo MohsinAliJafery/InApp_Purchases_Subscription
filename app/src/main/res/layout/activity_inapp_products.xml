@@ -14,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@color/colorGolden"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="PRODUCTS"
         android:padding="10dp"
         android:fontFamily="sans-serif-thin"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/noColor"
         android:textSize="40sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,15 +65,15 @@
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyle"
-        android:visibility="gone"
         android:indeterminateTint="@color/colorOrange"
-        app:layout_constraintBottom_toBottomOf="@+id/recycler_view"
-        app:layout_constraintEnd_toEndOf="@+id/recycler_view"
-        app:layout_constraintStart_toStartOf="@+id/recycler_view"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
     <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
@@ -82,6 +82,7 @@
         android:layout_height="wrap_content"
         app:spi_dotSelectedColor="@color/colorOrange"
         app:spi_dotSize="10dp"
+        android:visibility="invisible"
         app:spi_dotSelectedSize="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +90,17 @@
         app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
 
     <TextView
+        android:id="@+id/single_item_recyclerview_indicator"
+        android:layout_width="30dp"
+        android:layout_height="3dp"
+        android:background="@color/colorGolden"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator"
+        app:layout_constraintEnd_toEndOf="@+id/indicator"
+        app:layout_constraintStart_toStartOf="@+id/indicator"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/colorGolden"
