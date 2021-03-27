@@ -16,8 +16,7 @@
         android:background="@layout/primary_background_for_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/MenuStyle">
+        app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/title"
@@ -25,20 +24,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
+                android:fontFamily="@font/comic_sans_ms_bold_italic"
                 android:text="@string/app_name"
-                android:textColor="@color/colorGolden"
+                android:textColor="@color/noColor"
                 android:textSize="30dp"
                 android:textStyle="bold|italic" />
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/today_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/noColor"
+        android:gravity="center"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:textColor="@color/colorGolden"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:id="@+id/Results"
         android:layout_width="250dp"
-        android:background="@layout/box_shadow_with_radius"
         android:layout_height="wrap_content"
+        android:background="@layout/box_shadow_with_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +58,13 @@
         app:layout_constraintVertical_bias="0.066">
 
         <LinearLayout
-            android:id="@+id/kalyan"
+            android:id="@+id/live_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorSnackbar"
             android:gravity="center_horizontal"
-            android:background="#FF7F50"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/kalyan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -59,22 +72,44 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="₹ LIVE RESULT ₹"
+                android:fontFamily="@font/comic_sans_ms_bold_italic"
+                android:textColor="@color/colorGolden"
                 android:textSize="27sp"
-                android:textStyle="bold|italic"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/kalyan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF7F50"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/live_result"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KALYAN"
+                android:fontFamily="@font/comic_sans_ms_bold_italic"
                 android:textColor="#F8F9F9 "
-                android:text="KALYAN"/>
+                android:textSize="27sp"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/kalyan_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textStyle="bold|italic"
+                android:text="240-63-247"
                 android:textColor="#F8F9F9"
-                android:text="240-63-247"/>
+                android:textSize="25sp"
+                android:textStyle="bold|italic" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,15 +117,17 @@
             android:background="#E74C3C"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/kalyan">
+            app:layout_constraintTop_toBottomOf="@+id/kalyan"
+            tools:layout_editor_absoluteX="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="KALYAN NIGHT"
-                android:textStyle="bold|italic"
+                android:fontFamily="@font/comic_sans_ms_bold_italic"
                 android:textColor="#F8F9F9 "
-                android:textSize="27sp" />
+                android:textSize="27sp"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/kalyan_night_result"
@@ -98,8 +135,8 @@
                 android:layout_height="wrap_content"
                 android:text="240-63-247"
                 android:textColor="#F8F9F9 "
-                android:textStyle="bold|italic"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textStyle="bold|italic" />
 
         </LinearLayout>
 
@@ -109,11 +146,11 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/getting_things_ready"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/public_information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/Results"
         app:layout_constraintVertical_bias="0.049">
 
         <androidx.core.widget.ContentLoadingProgressBar
@@ -121,7 +158,7 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/colorGray"
+            android:indeterminateTint="@color/colorGolden"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,9 +167,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Getting things ready..."
-            android:textSize="19sp"
-            android:textColor="#FF5733"
+            android:text="Connecting..."
+            android:textSize="23sp"
+            android:fontFamily="@font/comic_sans_ms_bold_italic"
+            android:textStyle="bold|italic"
+            android:textColor="#C70039"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -145,18 +184,18 @@
         android:id="@+id/public_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:background="@color/noColor"
-        android:backgroundTint="#C70039"
+        android:layout_marginBottom="6dp"
+        android:background="@layout/white_background_with_primary_text_color"
         android:ellipsize="marquee"
         android:gravity="center"
-        android:layout_marginTop="12dp"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:layout_marginTop="6dp"
         android:marqueeRepeatLimit="marquee_forever"
         android:padding="5dp"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:text="Loading..."
-        android:textColor="#F8F9F9"
+        android:textColor="#C70039"
         android:textSize="21sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/single_kalyan_matka"
@@ -169,11 +208,13 @@
         android:id="@+id/single_kalyan_matka"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         android:background="@layout/primary_background_for_button"
         android:enabled="false"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:text="Single Kalyan Game"
         android:textStyle="bold"
+        android:textSize="17dp"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -185,10 +226,12 @@
         android:layout_width="300dp"
         android:enabled="false"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:background="@layout/primary_background_for_button"
         android:bottomRightRadius="10dp"
         android:text="Panel Kalyan Game"
+        android:textSize="17dp"
         android:textStyle="bold"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -201,10 +244,12 @@
         android:layout_width="300dp"
         android:enabled="false"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         android:background="@layout/primary_background_for_button"
         android:text="Jodi Kalyan Game"
+        android:textSize="17dp"
         android:textStyle="bold"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -215,10 +260,12 @@
         android:id="@+id/get_a_ticket"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         android:enabled="false"
+        android:textSize="17dp"
         android:background="@layout/golden_background_for_button"
         android:text="1 Day Game"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -229,10 +276,12 @@
         android:id="@+id/become_a_vip_member"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         android:enabled="false"
+        android:textSize="17dp"
         android:background="@layout/golden_background_for_button"
         android:text=" Vip Membership"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textColor="@color/noColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -245,7 +294,8 @@
         android:layout_height="wrap_content"
         android:background="@color/noColor"
         android:gravity="center"
-        android:text="Ticket/Subscription:: "
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:text="Membership: "
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15dp"
         android:textStyle="bold"
@@ -258,8 +308,9 @@
         android:layout_height="wrap_content"
         android:background="@color/noColor"
         android:gravity="center"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:text="loading..."
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/colorGolden"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -269,7 +320,7 @@
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/colorGolden"
+        android:background="@color/colorPrimary"
         android:fontFamily="sans-serif-thin"
         android:text=""
         android:textColor="@color/colorGray"

@@ -53,7 +53,7 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
     private final String MyCredit = "mycredit";
     private String date;
     private ContentLoadingProgressBar progressBar;
-
+    private TextView SingleRecyclerViewIndicator;
     ScrollingPagerIndicator recyclerIndicator;
     private ConstraintLayout mLayout;
     @Override
@@ -68,7 +68,7 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
         LinearLayoutManager LayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.setLayoutManager(LayoutManager);
         recyclerIndicator = findViewById(R.id.indicator);
-
+        SingleRecyclerViewIndicator = findViewById(R.id.single_item_recyclerview_indicator);
         setUpBillingClient();
         date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -87,9 +87,9 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
 
                                 }
                             })
-                            .setActionTextColor(getResources().getColor(R.color.noColor))
-                            .setTextColor(getResources().getColor(R.color.noColor))
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setActionTextColor(getResources().getColor(R.color.colorGolden))
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
                 }
             }
@@ -125,7 +125,7 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
                 if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
-//                    Toast.makeText(InAppSubscription.this, "Success to Connect Billing!", Toast.LENGTH_SHORT).show();
+//      Toast.makeText(InAppSubscription.this, "Success to Connect Billing!", Toast.LENGTH_SHORT).show();
 
                     List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.SUBS)
                             .getPurchasesList();
@@ -133,11 +133,13 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
                         if (purchases.size() > 0) {
                             for (Purchase purchase : purchases) {
                                 handleItemsAlreadyPurchased(purchase);
+                                SingleRecyclerViewIndicator.setVisibility(View.INVISIBLE);
                             }
                         } else {
                             progressBar.setVisibility(View.INVISIBLE);
                             RecyclerView.setVisibility(View.VISIBLE);
                             recyclerIndicator.setVisibility(View.VISIBLE);
+                            SingleRecyclerViewIndicator.setVisibility(View.VISIBLE);
                             loadAllSubscribedPackage();
                         }
                     }
@@ -157,7 +159,7 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
     private void loadAllSubscribedPackage() {
         if(billingClient.isReady()){
             SkuDetailsParams params = SkuDetailsParams.newBuilder()
-                    .setSkusList(Arrays.asList("7_day_subscription", "30_days_subscription"))
+                    .setSkusList(Arrays.asList("7_day_subscription"))
                     .setType(BillingClient.SkuType.SUBS)
                     .build();
 
@@ -165,8 +167,8 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
                 @Override
                 public void onSkuDetailsResponse(@NonNull BillingResult billingResult, @Nullable List<SkuDetails> list) {
                     if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
-                        ProductAdapter productAdapter = new ProductAdapter(InAppSubscription.this, list, billingClient, "subscription");
-                        RecyclerView.setAdapter(productAdapter);
+                        SubscriptionAdapter subscriptionAdapter = new SubscriptionAdapter(InAppSubscription.this, list, billingClient);
+                        RecyclerView.setAdapter(subscriptionAdapter);
 
                         recyclerIndicator.attachToRecyclerView(RecyclerView);
                     }else{
@@ -206,39 +208,39 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
             }
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED){
             Snackbar.make(mLayout, "You Have Cancelled The Purchased!", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
             Log.d("mytag", "cancelled");
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE){
             Log.d("mytag", "Service unavailable" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Service Currently Unavailable! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE){
             Log.d("mytag", "Billing unavailable" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Billing Unavailable! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_TIMEOUT){
             Log.d("mytag", "Service Timeout" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Time Out! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED){
             Log.d("mytag", "Service Disconnected" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Service Disconnected! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR){
             Log.d("mytag", "An Error Occurred!" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "An Error Occurred! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }
 

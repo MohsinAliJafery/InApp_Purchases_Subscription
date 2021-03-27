@@ -19,11 +19,13 @@ class SuperNoAdapter extends BaseAdapter {
 
         Context mContext;
         List<String> values;
+        String kalyanType;
         int j;
 
-    public SuperNoAdapter(Context mContext, List<String> values) {
+    public SuperNoAdapter(Context mContext, List<String> values, String kalyanType) {
         this.mContext = mContext;
         this.values = values;
+        this.kalyanType = kalyanType;
     }
 
     @Override
@@ -51,6 +53,9 @@ class SuperNoAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.lucky_number_item, null);
             TextView LuckyNumber = view.findViewById(R.id.luckynumber_textview);
             TextView mGessNumber = view.findViewById(R.id.luckynumber_gess_number);
+            if(kalyanType.equals("Panel") || kalyanType.equals("PanelNew")){
+                LuckyNumber.setTextSize(50);
+            }
             if(i != values.size()) {
 
 

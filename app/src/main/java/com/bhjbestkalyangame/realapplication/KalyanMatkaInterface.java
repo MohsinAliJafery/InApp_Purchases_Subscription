@@ -39,6 +39,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
@@ -51,6 +52,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.ContentLoadingProgressBar;
@@ -64,10 +67,11 @@ import java.util.Locale;
 
 public class KalyanMatkaInterface extends AppCompatActivity implements PurchasesUpdatedListener{
 
-     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult;
+     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult, mDate;
      private boolean ValidOrInvalid;
      private Calendar calendar;
-     private String date;
+     private SimpleDateFormat dateFormat;
+     private String date, adminDate, Mobiledate;
      private Button single_kalyan, jodi_kalyan, panel_kalyan;
      public Button GetTicket, BecomeVipMember;
      private GoogleSignInAccount googleSignInAccount;
@@ -83,11 +87,13 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private DatabaseReference mReference;
      private FirebaseAuth mAuth;
      private FirebaseUser currentUser;
+     private String Valid;
+
     String message;
     private static final int RC_SIGN_IN = 101;
     GoogleSignInClient mGoogleSignInClient;
-
-   ConstraintLayout mLayout;
+    SimpleDateFormat sfd;
+    ConstraintLayout mLayout;
     BillingClient billingClient;
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
 
@@ -97,10 +103,17 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         setContentView(R.layout.activity_kalyan_matka_interface);
 
         mLayout = findViewById(R.id.kalyan_work_activity);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         configureGoogleSignIn();
+
+        calendar = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("EEE, MMM d");
+
+
+
+        Valid = "valid";
 
         single_kalyan = findViewById((R.id.single_kalyan_matka));
         jodi_kalyan   = findViewById((R.id.jodi_kalyan_matka));
@@ -119,13 +132,32 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                             progressBar.setVisibility(View.VISIBLE);
                         }
                     })
-                    .setActionTextColor(getResources().getColor(R.color.noColor))
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setActionTextColor(getResources().getColor(R.color.colorGolden))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else{
             progressBar.setVisibility(View.VISIBLE);
         }
+
+        mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mRef = mDatabase.getReference("current_super_numbers").child("date");
+
+        mRef.child("date").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                adminDate = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
 
 
         KalyanResult = findViewById(R.id.kalyan_result);
@@ -142,7 +174,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         PublicInformation = findViewById(R.id.public_information);
 
 
-        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         // Firebase Users
         mAuth = FirebaseAuth.getInstance();
@@ -227,13 +258,14 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     if(ValidOrInvalid) {
                         Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
                         intent.putExtra("KalyanType", "SingleNew");
+                        intent.putExtra("date", adminDate);
                         startActivity(intent);
 
                     }else{
 
                         Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                                .setTextColor(getResources().getColor(R.color.noColor))
-                                .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();
                     }
             }
@@ -246,13 +278,14 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 if(ValidOrInvalid) {
                     Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
                     intent.putExtra("KalyanType","JodiNew");
+                    intent.putExtra("date", adminDate);
                     startActivity(intent);
 
                 }else{
                     
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                            .setTextColor(getResources().getColor(R.color.noColor))
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
                 }
 
@@ -266,13 +299,14 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 if(ValidOrInvalid) {
                     Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
                     intent.putExtra("KalyanType", "PanelNew");
+                    intent.putExtra("date", adminDate);
                     startActivity(intent);
 
                 }else{
 
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                            .setTextColor(getResources().getColor(R.color.noColor))
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
                 }
             }
@@ -293,8 +327,8 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                         message = "You already purchased a subscription plan!";
                     }
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                            .setTextColor(getResources().getColor(R.color.noColor))
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
                 }
             }
@@ -314,12 +348,15 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                         message = "You already purchased a subscription plan!";
                     }
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                            .setTextColor(getResources().getColor(R.color.noColor))
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
                 }
             }
         });
+
+
+
 
     }
 
@@ -345,7 +382,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         switch (item.getItemId()) {
             case R.id.logout:
                    FirebaseAuth.getInstance().signOut();
-                   Intent intent = new Intent(KalyanMatkaInterface.this, UsersLogin.class);
+                   Intent intent = new Intent(KalyanMatkaInterface.this, SplashScreenActivity.class);
                    startActivity(intent);
                    finish();
                 return true;
@@ -377,7 +414,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     panel_kalyan.setEnabled(true);
 
                     MainImage.setVisibility(View.VISIBLE);
-                    GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
+                    GettingThingsReadyProgressBar.setVisibility(View.GONE);
                     ValidOrInvalid = true;
                     TicketsValidity.setText("Valid");
                     Subscription = true;
@@ -407,10 +444,12 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                             GetTicket.setEnabled(true);
                             BecomeVipMember.setEnabled(true);
 
+                            ValidOrInvalid = false;
                             TicketsValidity.setText("Invalid");
                             MainImage.setVisibility(View.VISIBLE);
-                            GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
+                            GettingThingsReadyProgressBar.setVisibility(View.GONE);
                             Subscription = false;
+
                         }
                     }
 
@@ -446,7 +485,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 panel_kalyan.setEnabled(true);
 
                 MainImage.setVisibility(View.VISIBLE);
-                GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
+                GettingThingsReadyProgressBar.setVisibility(View.GONE);
                 ValidOrInvalid = true;
                 TicketsValidity.setText("Valid");
                 Subscription = true;
@@ -463,39 +502,39 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED){
             Snackbar.make(mLayout, "You Have Cancelled The Purchased!", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
             Log.d("mytag", "cancelled");
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE){
             Log.d("mytag", "Service unavailable" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Service Currently Unavailable! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE){
             Log.d("mytag", "Billing unavailable" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Billing Unavailable! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_TIMEOUT){
             Log.d("mytag", "Service Timeout" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Time Out! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED){
             Log.d("mytag", "Service Disconnected" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "Service Disconnected! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR){
             Log.d("mytag", "An Error Occurred!" + billingResult.getResponseCode());
             Snackbar.make(mLayout, "An Error Occurred! Please try again.", Snackbar.LENGTH_LONG)
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }
 
@@ -523,7 +562,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
 private void configureGoogleSignIn() {
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("908573784472-jlif64rfu4vgqmaupc0ghlc68kj4td2k.apps.googleusercontent.com")
             .requestEmail()
             .build();
 
@@ -539,18 +578,26 @@ private void configureGoogleSignIn() {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        if(resultCode == RESULT_OK) {
+            if (requestCode == RC_SIGN_IN) {
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    firebaseAuthWithGoogle(account.getIdToken());
+                } catch (ApiException e) {
+                    Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
+        }else {
+            Snackbar.make(mLayout, "Please Sign In To Kalyan Matka King!\nकृपया कल्याण मटका किंग में साइन इन करें!", Snackbar.LENGTH_LONG)
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                    .show();
+            signIn();
+
         }
     }
-
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
 
@@ -572,13 +619,15 @@ private void configureGoogleSignIn() {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        calendar = Calendar.getInstance();
+        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null){
             signIn();
-        }else{
+        }else {
             mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
             mReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -587,16 +636,18 @@ private void configureGoogleSignIn() {
                     if (snapshot.exists()) {
                         for (DataSnapshot mSnapshot : snapshot.getChildren()) {
                             Products product = mSnapshot.getValue(Products.class);
+
                             if (date.equals(product.getDate())) {
 
                                 isLoading = false;
 
+                                Log.d("myTag", "dateExists");
                                 ValidOrInvalid = true;
                                 TicketsValidity.setText("Valid");
                                 Ticket = true;
 
                                 MainImage.setVisibility(View.VISIBLE);
-                                GettingThingsReadyProgressBar.setVisibility(View.INVISIBLE);
+                                GettingThingsReadyProgressBar.setVisibility(View.GONE);
 
                                 single_kalyan.setEnabled(true);
                                 jodi_kalyan.setEnabled(true);
@@ -607,11 +658,13 @@ private void configureGoogleSignIn() {
 
                             } else {
                                 setUpBillingClient();
+                                Log.d("myTag", "dateExists onResume First");
                             }
                         }
                     }
                     else {
                         setUpBillingClient();
+                        Log.d("myTag", "dateExists onResume Last");
                     }
 
                 }
@@ -621,7 +674,75 @@ private void configureGoogleSignIn() {
 
                 }
             });
+
+            TicketsValidity = findViewById(R.id.tickets_validity);
+            if(!isLoading){
+                if(ValidOrInvalid){
+                    TicketsValidity.setText("Valid");
+                }else{
+                    TicketsValidity.setText("Invalid");
+                }
+            }
+            Mobiledate = dateFormat.format(calendar.getTime());
+            mDate = findViewById(R.id.today_date);
+            mDate.setText(Mobiledate);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        calendar = Calendar.getInstance();
+        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+                mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
+                mReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()) {
+                            for (DataSnapshot mSnapshot : snapshot.getChildren()) {
+                                Products product = mSnapshot.getValue(Products.class);
+
+                                if (date.equals(product.getDate())) {
+
+                                    isLoading = false;
+
+                                    Log.d("myTag", "dateExists");
+                                    ValidOrInvalid = true;
+                                    TicketsValidity.setText("Valid");
+                                    Ticket = true;
+
+                                    MainImage.setVisibility(View.VISIBLE);
+                                    GettingThingsReadyProgressBar.setVisibility(View.GONE);
+
+                                    single_kalyan.setEnabled(true);
+                                    jodi_kalyan.setEnabled(true);
+                                    panel_kalyan.setEnabled(true);
+
+                                    GetTicket.setEnabled(true);
+                                    BecomeVipMember.setEnabled(true);
+
+                                } else {
+                                    setUpBillingClient();
+                                    Log.d("myTag", "dateExists onResume First");
+                                }
+                            }
+                        }
+                        else {
+                            setUpBillingClient();
+                            Log.d("myTag", "dateExists onResume Last");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled (@NonNull DatabaseError error){
+
+                    }
+                });
+            }
 
         TicketsValidity = findViewById(R.id.tickets_validity);
         if(!isLoading){
@@ -631,9 +752,12 @@ private void configureGoogleSignIn() {
                 TicketsValidity.setText("Invalid");
             }
         }
-
-    }
+        Mobiledate = dateFormat.format(calendar.getTime());
+        mDate = findViewById(R.id.today_date);
+        mDate.setText(Mobiledate);
+        }
 
 }
+
 
 

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="CONGRATULATIONS"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textColor="@color/colorPrimary"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -20,12 +21,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@drawable/subscription"
+
+    <TextView
+        android:id="@+id/subscription"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@layout/orange_background_with_slight_border_radius"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Subscription"
+        android:textAllCaps="true"
+        android:textColor="@color/noColor"
+        android:textSize="23dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/congratulations" />
 
@@ -33,11 +44,13 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:text="You Bought A Subscription!"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/subscription" />
 
     <TextView
         android:id="@+id/validity_expires_until"
@@ -65,7 +78,8 @@
         android:id="@+id/continue_subscription"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@layout/golden_background_for_button"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:text="Continue"
         android:textColor="@color/noColor"
         app:layout_constraintBottom_toBottomOf="parent"

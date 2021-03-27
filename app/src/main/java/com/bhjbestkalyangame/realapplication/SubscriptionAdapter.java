@@ -17,17 +17,18 @@ import com.bhjbestkalyangame.realapplication.Listener.IRecyclerClickListener;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder>{
+public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapter.MyViewHolder>{
 
     AppCompatActivity appCompatActivity;
     List<SkuDetails> skuDetailsList;
     BillingClient billingClient;
 
 
-    public ProductAdapter(AppCompatActivity appCompatActivity, List<SkuDetails> skuDetailsList, BillingClient billingClient) {
+    public SubscriptionAdapter(AppCompatActivity appCompatActivity, List<SkuDetails> skuDetailsList, BillingClient billingClient) {
         this.appCompatActivity = appCompatActivity;
         this.skuDetailsList = skuDetailsList;
         this.billingClient = billingClient;
+
     }
 
     @NonNull
@@ -35,12 +36,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         return new MyViewHolder(LayoutInflater.from(appCompatActivity.getBaseContext())
-                .inflate(R.layout.layout_product_display_for_adapter, parent, false));
+                .inflate(R.layout.layout_subscription_display_for_adapter, parent, false));
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         holder.Title.setText(skuDetailsList.get(position).getTitle());
         holder.Price.setText(skuDetailsList.get(position).getPrice());
         holder.Description.setText(skuDetailsList.get(position).getDescription());

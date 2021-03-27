@@ -64,7 +64,7 @@
                 android:right="1dp"
                 android:top="1dp" />
 
-            <solid android:color="@color/colorGolden" />
+            <solid android:color="@color/colorPrimary" />
         </shape>
     </item>
 

@@ -40,17 +40,17 @@ public class KalyanMatkaResults extends AppCompatActivity {
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
     List<String> Values;
-    TextView mTitle, TicketsValidity, mDate;
+    TextView mTitle, TicketsValidity, mDate, please_wait_KMG_shall_be_updated_soon;
     ConstraintLayout mLayout;
     private String ValidOrInvalid;
     ProgressBar progressBar;
     private final String MyCredit = "mycredit";
     public String Coins = "Coins";
     boolean mNetwork;
-
+    String AdminDate;
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
-    private String date;
+    private String MobileDate, date;
 
 
     @Override
@@ -61,19 +61,22 @@ public class KalyanMatkaResults extends AppCompatActivity {
         final SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, Context.MODE_PRIVATE);
 
 
-        ValidOrInvalid = mSharedPreferences.getString(ValidOrInvalid, "Valid");
-
         final Handler handler = new Handler(Looper.getMainLooper());
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("EEE, MMM d");
-        date = dateFormat.format(calendar.getTime());
+        MobileDate = dateFormat.format(calendar.getTime());
+
+
+
+
 
         mNetwork = haveNetworkConnection();
 
-        mDate = findViewById(R.id.today_date);
-        mLayout = findViewById(R.id.Resultlayout);
-        mDate.setText(date);
 
+        mLayout = findViewById(R.id.Resultlayout);
+
+        ValidOrInvalid = mSharedPreferences.getString(ValidOrInvalid, "Valid");
+        please_wait_KMG_shall_be_updated_soon = findViewById(R.id.please_wait_KMG_shall_be_updated_soon);
         progressBar = findViewById(R.id.progressbar);
 
         if(!mNetwork){
@@ -86,9 +89,9 @@ public class KalyanMatkaResults extends AppCompatActivity {
                             progressBar.setVisibility(View.VISIBLE);
                         }
                     })
-                    .setActionTextColor(getResources().getColor(R.color.noColor))
-                    .setTextColor(getResources().getColor(R.color.noColor))
-                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                    .setActionTextColor(getResources().getColor(R.color.colorGolden))
+                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                     .show();
         }else{
             progressBar.setVisibility(View.VISIBLE);
@@ -100,50 +103,70 @@ public class KalyanMatkaResults extends AppCompatActivity {
 
         mTitle.setSelected(true);
 
-
         Intent mIntent = getIntent();
         KalyanType = mIntent.getStringExtra("KalyanType");
+        AdminDate = mIntent.getStringExtra("date");
+
         mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("current_super_numbers").child(KalyanType);
+        mReference = mDatabase.getReference("current_super_numbers").child("date");
 
-        if(KalyanType.equals("SingleNew")){
-           KalyanType = "Single";
-        }else if(KalyanType.equals("JodiNew")){
-            KalyanType = "Jodi";
-        }else if(KalyanType.equals("PanelNew")){
-            KalyanType = "Panel";
-        }
-        
-        mTitle.setText(KalyanType + " Kalyan Matka");
-        Numbers = new HashMap<String, String>();
-
-
-
-        mReference.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+        mReference.child("date").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                date = snapshot.getValue(String.class);
 
-                if(snapshot.exists()) {
-                    Numbers = (HashMap<String, String>) snapshot.getValue();
-                    SortedSet<String> values = new TreeSet<String>(Numbers.values());
-
-                    Values = new ArrayList<>();
-                    Values.addAll(values);
-                    populateGrid(Values);
-                    progressBar.setVisibility(View.GONE);
-                }
-                
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
+        DatabaseReference mRef = mDatabase.getReference("current_super_numbers").child(MobileDate).child(KalyanType);
+        Numbers = new HashMap<String, String>();
+
+            mRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    if (snapshot.exists()) {
+                        Numbers = (HashMap<String, String>) snapshot.getValue();
+                        SortedSet<String> values = new TreeSet<String>(Numbers.values());
+
+                        Values = new ArrayList<>();
+                        Values.addAll(values);
+                        populateGrid(Values);
+                        progressBar.setVisibility(View.GONE);
+                        mDate.setVisibility(View.VISIBLE);
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        please_wait_KMG_shall_be_updated_soon.setVisibility(View.VISIBLE);
+//                            mDate.setVisibility(View.INVISIBLE);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        if(KalyanType.equals("SingleNew")){
+            KalyanType = "Single";
+        }else if(KalyanType.equals("JodiNew")){
+            KalyanType = "Jodi";
+        }else if(KalyanType.equals("PanelNew")){
+            KalyanType = "Panel";
+        }
+
+        mTitle.setText(KalyanType + " Kalyan Matka");
+
     }
 
     private void populateGrid(List<String> values) {
-        int i = 2;
+        int i = 3;
         GridView mGridView = findViewById(R.id.gridview_success);
         if(KalyanType.equals("Panel") || KalyanType.equals("PanelNew")) {
             mGridView.setNumColumns(i);
@@ -152,7 +175,7 @@ public class KalyanMatkaResults extends AppCompatActivity {
             i = 3;
             mGridView.setNumColumns(i);
         }
-        mGridView.setAdapter(new SuperNoAdapter(this, values));
+        mGridView.setAdapter(new SuperNoAdapter(this, values, KalyanType));
 
     }
     
@@ -160,12 +183,20 @@ public class KalyanMatkaResults extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         TicketsValidity.setText("" + ValidOrInvalid);
+        calendar = Calendar.getInstance();
+        MobileDate = dateFormat.format(calendar.getTime());
+        mDate = findViewById(R.id.today_date);
+        mDate.setText(MobileDate);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         TicketsValidity.setText("" + ValidOrInvalid);
+        calendar = Calendar.getInstance();
+        MobileDate = dateFormat.format(calendar.getTime());
+        mDate = findViewById(R.id.today_date);
+        mDate.setText(MobileDate);
     }
 
     private boolean haveNetworkConnection() {

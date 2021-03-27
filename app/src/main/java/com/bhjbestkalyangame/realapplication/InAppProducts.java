@@ -112,9 +112,9 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
 
                                 }
                             })
-                            .setActionTextColor(getResources().getColor(R.color.noColor))
-                            .setTextColor(getResources().getColor(R.color.noColor))
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                            .setActionTextColor(getResources().getColor(R.color.colorGolden))
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
                 }
             }
@@ -128,7 +128,7 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
     }
 
     private void loadProductsToRecyclerView(List<SkuDetails> list) {
-        ProductAdapter productAdapter = new ProductAdapter(this, list, billingClient, "product");
+        ProductAdapter productAdapter = new ProductAdapter(this, list, billingClient);
         RecyclerView.setAdapter(productAdapter);
         recyclerIndicator.attachToRecyclerView(RecyclerView);
     }
@@ -154,8 +154,8 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                         public void onComplete(@NonNull Task<Void> task) {
                             Snackbar.make(mLayout, "Product saved!", Snackbar.LENGTH_LONG)
 
-                                    .setTextColor(getResources().getColor(R.color.noColor))
-                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                     .show();
                         }
                     });
@@ -195,8 +195,8 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                             SingleRecyclerViewIndicator.setVisibility(View.VISIBLE);
                             if(consumed){
                                 Snackbar.make(mLayout, "Your card has been declined! Please try again.", Snackbar.LENGTH_LONG)
-                                        .setTextColor(getResources().getColor(R.color.noColor))
-                                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                         .show();
                             }
                             loadAllTickets();
@@ -263,39 +263,39 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                 handleItemsAlreadyPurchased(list);
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED){
                 Snackbar.make(mLayout, "You Have Cancelled The Purchased!", Snackbar.LENGTH_LONG)
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                         .show();
                 Log.d("mytag", "cancelled");
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE){
                 Log.d("mytag", "Service unavailable" + billingResult.getResponseCode());
                 Snackbar.make(mLayout, "Service Currently Unavailable! Please try again.", Snackbar.LENGTH_LONG)
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                         .show();
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE){
                 Log.d("mytag", "Billing unavailable" + billingResult.getResponseCode());
                 Snackbar.make(mLayout, "Billing Unavailable! Please try again.", Snackbar.LENGTH_LONG)
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                         .show();
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_TIMEOUT){
                 Log.d("mytag", "Service Timeout" + billingResult.getResponseCode());
                 Snackbar.make(mLayout, "Time Out! Please try again.", Snackbar.LENGTH_LONG)
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                         .show();
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED){
                 Log.d("mytag", "Service Disconnected" + billingResult.getResponseCode());
                 Snackbar.make(mLayout, "Service Disconnected! Please try again.", Snackbar.LENGTH_LONG)
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                         .show();
             }else if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR){
                 Log.d("mytag", "An Error Occurred!" + billingResult.getResponseCode());
                 Snackbar.make(mLayout, "An Error Occurred! Please try again.", Snackbar.LENGTH_LONG)
-                        .setTextColor(getResources().getColor(R.color.noColor))
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                         .show();
             }
 

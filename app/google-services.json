@@ -13,12 +13,7 @@
           "package_name": "com.bhjbestkalyangame.adminapplication"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyARynRXWOxPRUeuE0AbxzdXAkxC-6h13jc"
@@ -28,7 +23,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
+              "client_id": "908573784472-jlif64rfu4vgqmaupc0ghlc68kj4td2k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -44,16 +39,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "908573784472-3v0t5gp4gg58u5ojhcb6j79j80tl6oef.apps.googleusercontent.com",
+          "client_id": "908573784472-97u24iecnk1i0v826sfp3kr075dccj1p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bhjbestkalyangame.realapplication",
-            "certificate_hash": "c239a8025ca90668593860999dece8de7cee773c"
+            "certificate_hash": "6c52a50635e77389645bc45b0e3bd08cf8268163"
           }
-        },
-        {
-          "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -65,7 +56,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "908573784472-c258hmm1dgc92aocajhe4nabefrhatrt.apps.googleusercontent.com",
+              "client_id": "908573784472-jlif64rfu4vgqmaupc0ghlc68kj4td2k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
