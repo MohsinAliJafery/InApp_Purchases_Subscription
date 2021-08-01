@@ -40,9 +40,9 @@ public class KalyanMatkaResults extends AppCompatActivity {
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
     List<String> Values;
-    TextView mTitle, TicketsValidity, mDate, please_wait_KMG_shall_be_updated_soon;
+    TextView mTitle, mSubTitle, TicketsValidity, mDate, please_wait_KMG_shall_be_updated_soon;
     ConstraintLayout mLayout;
-    private String ValidOrInvalid;
+    private boolean ValidOrInvalid;
     ProgressBar progressBar;
     private final String MyCredit = "mycredit";
     public String Coins = "Coins";
@@ -52,6 +52,7 @@ public class KalyanMatkaResults extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String MobileDate, date;
 
+    DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +62,14 @@ public class KalyanMatkaResults extends AppCompatActivity {
         final SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, Context.MODE_PRIVATE);
 
 
-        final Handler handler = new Handler(Looper.getMainLooper());
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("EEE, MMM d");
         MobileDate = dateFormat.format(calendar.getTime());
 
-
-
-
-
         mNetwork = haveNetworkConnection();
-
-
         mLayout = findViewById(R.id.Resultlayout);
 
-        ValidOrInvalid = mSharedPreferences.getString(ValidOrInvalid, "Valid");
+
         please_wait_KMG_shall_be_updated_soon = findViewById(R.id.please_wait_KMG_shall_be_updated_soon);
         progressBar = findViewById(R.id.progressbar);
 
@@ -100,12 +94,15 @@ public class KalyanMatkaResults extends AppCompatActivity {
         TicketsValidity = findViewById(R.id.tickets_validity);
         TicketsValidity.setText(""+ ValidOrInvalid);
         mTitle = findViewById(R.id.title);
+        mSubTitle = findViewById(R.id.sub_title);
 
         mTitle.setSelected(true);
 
         Intent mIntent = getIntent();
         KalyanType = mIntent.getStringExtra("KalyanType");
         AdminDate = mIntent.getStringExtra("date");
+        ValidOrInvalid = mIntent.getBooleanExtra("ValidOrInvalid", false);
+
 
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("current_super_numbers").child("date");
@@ -123,7 +120,25 @@ public class KalyanMatkaResults extends AppCompatActivity {
             }
         });
 
-        DatabaseReference mRef = mDatabase.getReference("current_super_numbers").child(MobileDate).child(KalyanType);
+        if(KalyanType.equals("SingleOpenKalyan") || KalyanType.equals("SingleCloseKalyan") || KalyanType.equals("JodiKalyan") || KalyanType.equals("PanelKalyan")){
+            mRef = mDatabase.getReference("kalyan_matka_super_numbers").child(MobileDate).child(KalyanType);
+            mTitle.setText("Kalyan");
+        }else{
+            mRef = mDatabase.getReference("kalyan_night_super_numbers").child(MobileDate).child(KalyanType);
+            mTitle.setText("Kalyan Night");
+        }
+
+        if(KalyanType.equals("SingleOpenKalyan") || KalyanType.equals("SingleOpenNight")){
+            mSubTitle.setText("Single Open");
+        }else if(KalyanType.equals("SingleCloseKalyan") || KalyanType.equals("SingleCloseNight")){
+            mSubTitle.setText("Single Close");
+        }else if(KalyanType.equals("JodiKalyan") || KalyanType.equals("JodiNight")){
+            mSubTitle.setText("Jodi");
+        }else if(KalyanType.equals("PanelKalyan") || KalyanType.equals("PanelNight")){
+            mSubTitle.setText("Panel");
+        }
+
+
         Numbers = new HashMap<String, String>();
 
             mRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -139,11 +154,15 @@ public class KalyanMatkaResults extends AppCompatActivity {
                         populateGrid(Values);
                         progressBar.setVisibility(View.GONE);
                         mDate.setVisibility(View.VISIBLE);
+
                     } else {
+
                         progressBar.setVisibility(View.GONE);
                         please_wait_KMG_shall_be_updated_soon.setVisibility(View.VISIBLE);
-//                            mDate.setVisibility(View.INVISIBLE);
+//                      mDate.setVisibility(View.INVISIBLE);
+
                     }
+
 
                 }
 
@@ -153,15 +172,8 @@ public class KalyanMatkaResults extends AppCompatActivity {
                 }
             });
 
-        if(KalyanType.equals("SingleNew")){
-            KalyanType = "Single";
-        }else if(KalyanType.equals("JodiNew")){
-            KalyanType = "Jodi";
-        }else if(KalyanType.equals("PanelNew")){
-            KalyanType = "Panel";
-        }
 
-        mTitle.setText(KalyanType + " Kalyan Matka");
+
 
     }
 
@@ -170,24 +182,13 @@ public class KalyanMatkaResults extends AppCompatActivity {
         GridView mGridView = findViewById(R.id.gridview_success);
         if(KalyanType.equals("Panel") || KalyanType.equals("PanelNew")) {
             mGridView.setNumColumns(i);
-
         }else{
             i = 3;
             mGridView.setNumColumns(i);
         }
         mGridView.setAdapter(new SuperNoAdapter(this, values, KalyanType));
+    }
 
-    }
-    
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        TicketsValidity.setText("" + ValidOrInvalid);
-        calendar = Calendar.getInstance();
-        MobileDate = dateFormat.format(calendar.getTime());
-        mDate = findViewById(R.id.today_date);
-        mDate.setText(MobileDate);
-    }
 
     @Override
     protected void onResume() {
@@ -197,6 +198,13 @@ public class KalyanMatkaResults extends AppCompatActivity {
         MobileDate = dateFormat.format(calendar.getTime());
         mDate = findViewById(R.id.today_date);
         mDate.setText(MobileDate);
+
+            if(ValidOrInvalid){
+                TicketsValidity.setText("Valid");
+            }else{
+                TicketsValidity.setText("Invalid");
+            }
+
     }
 
     private boolean haveNetworkConnection() {

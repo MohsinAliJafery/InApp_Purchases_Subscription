@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/story_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/general_border_with_shadow"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:text="Victory Kalyan Night 21st June 2021"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/story_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:background="@color/colorSnackbar"
+            android:paddingBottom="5dp"
+            android:text="Alot of people won this..."
+            android:textSize="15sp" />
+
+
+        <ImageView
+            android:id="@+id/image_view_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="5dp"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

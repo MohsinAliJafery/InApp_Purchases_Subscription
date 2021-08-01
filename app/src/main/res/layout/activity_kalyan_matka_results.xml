@@ -13,11 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@layout/primary_background_for_button"
+        android:background="@layout/result_top_bar_background"
         android:gravity="center"
         android:textColor="#F8F9F9"
         android:textAllCaps="true"
-        android:text="Kalyan Satta"
+        android:text="Kalyan"
         android:padding="10dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textSize="40sp"
@@ -26,6 +26,27 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Single Close"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textAllCaps="true"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:textColor="@color/colorGolden"
+        android:background="@layout/sub_title_background"
+        android:textSize="27sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
 
     <TextView
         android:id="@+id/today_date"
@@ -38,10 +59,10 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
     <TextView
-        android:id="@+id/tickets_title"
+        android:id="@+id/tickets_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/noColor"
@@ -52,7 +73,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/tickets_validity"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,13 +87,13 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
     <GridView
         android:id="@+id/gridview_success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/sub_title"
         android:stretchMode="columnWidth"
         android:paddingBottom="170dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,11 +119,11 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorGolden"
+        android:indeterminateTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/gridview_success"
         app:layout_constraintStart_toStartOf="@+id/gridview_success"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
     <TextView
         android:id="@+id/textView4"

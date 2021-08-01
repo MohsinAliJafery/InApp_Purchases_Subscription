@@ -1,23 +1,35 @@
 package com.bhjbestkalyangame.realapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -28,9 +40,6 @@ import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
-import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.bhjbestkalyangame.realapplication.Utils.BillingClientSetup;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -39,7 +48,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
@@ -52,28 +60,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.HttpsCallableResult;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.ContentLoadingProgressBar;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class KalyanMatkaInterface extends AppCompatActivity implements PurchasesUpdatedListener{
 
-     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult, mDate;
+     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult, mDate, TotalCoins;
      private boolean ValidOrInvalid;
      private Calendar calendar;
      private SimpleDateFormat dateFormat;
      private String date, adminDate, Mobiledate;
-     private Button single_kalyan, jodi_kalyan, panel_kalyan;
-     public Button GetTicket, BecomeVipMember;
+     private Button KalyanMatka, KalyanNight, panel_kalyan, GetMoreCoins;
+     public Button GetTicket, BecomeVipMember, SucessStories;
      private GoogleSignInAccount googleSignInAccount;
      private String GoogleAccountName, GoogleAccountEmail, GoogleAccountID;
      private ConstraintLayout MainImage, GettingThingsReadyProgressBar;
@@ -82,20 +88,30 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private final String MyCredit = "mycredit";
      private ContentLoadingProgressBar progressBar;
      private boolean mNetwork;
-
+    String KalyanNightMessage;
      private FirebaseDatabase mDatabase;
      private DatabaseReference mReference;
      private FirebaseAuth mAuth;
      private FirebaseUser currentUser;
      private String Valid;
 
-    String message;
-    private static final int RC_SIGN_IN = 101;
-    GoogleSignInClient mGoogleSignInClient;
-    SimpleDateFormat sfd;
-    ConstraintLayout mLayout;
-    BillingClient billingClient;
-    AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
+     private ImageView mFacebook;
+
+
+     private boolean IsProductAvailable, IsKalyanNightPurchasedWithCoins;
+     private AlertDialog.Builder mBuilder;
+
+     String message;
+     private static final int RC_SIGN_IN = 101;
+     GoogleSignInClient mGoogleSignInClient;
+     SimpleDateFormat sfd;
+     ConstraintLayout mLayout;
+     BillingClient billingClient;
+     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
+     SharedPreferences preferences;
+     TextView mAlerttitle;
+     Integer CoinsLimit;
+     int mTotalCoins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,23 +119,43 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         setContentView(R.layout.activity_kalyan_matka_interface);
 
         mLayout = findViewById(R.id.kalyan_work_activity);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         configureGoogleSignIn();
 
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("EEE, MMM d");
-
-
-
+        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         Valid = "valid";
 
-        single_kalyan = findViewById((R.id.single_kalyan_matka));
-        jodi_kalyan   = findViewById((R.id.jodi_kalyan_matka));
-        panel_kalyan  = findViewById((R.id.panel_kalyan_matka));
+        IsKalyanNightPurchasedWithCoins = false;
+        mFacebook = findViewById(R.id.facebook);
+        KalyanMatka = findViewById((R.id.kalyan_matka));
+        KalyanNight   = findViewById((R.id.kalyan_night));
+
         BecomeVipMember = findViewById(R.id.become_a_vip_member);
+        GetMoreCoins = findViewById(R.id.get_more_coins);
         progressBar = findViewById(R.id.progressbar);
+        TotalCoins = findViewById(R.id.total_coins);
+        SucessStories = findViewById(R.id.success_stories);
+        
+        mBuilder = new AlertDialog.Builder(this);
+
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(200);
+        anim.setStartOffset(50);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+
+        SucessStories.startAnimation(anim);
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                anim.setRepeatCount(Animation.ABSOLUTE);
+            }
+        }, 5000);
+
+
 
         mNetwork = haveNetworkConnection();
         if(!mNetwork){
@@ -156,9 +192,35 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         });
 
 
+        DatabaseReference mCoinRef = mDatabase.getReference("coins").child("limit");
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        mCoinRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                CoinsLimit = snapshot.getValue(Integer.class);
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("CoinsLimit", CoinsLimit);
+                editor.apply();
 
 
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //method to get the right URL to use in the intent
+
+        mFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(getOpenFacebookIntent());
+            }
+        });
 
         KalyanResult = findViewById(R.id.kalyan_result);
         KalyanNightResult = findViewById(R.id.kalyan_night_result);
@@ -174,13 +236,62 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         PublicInformation = findViewById(R.id.public_information);
 
 
+         mAlerttitle = new TextView(this);
+
+        mAlerttitle.setText("UNLOCK KALYAN NIGHT");
+        mAlerttitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        mAlerttitle.setPadding(10, 10, 10, 10);
+        mAlerttitle.setGravity(Gravity.CENTER);
+        mAlerttitle.setTextColor(Color.WHITE);
+        mAlerttitle.setTextSize(20);
+
+
+        mBuilder.setMessage("It Will Cost You 10 Gold Coins! If You Don't Have Enough Right Now Then Please Watch Rewarding Videos To Earn More Coins. Thank-you!");
+        mBuilder.setCustomTitle(mAlerttitle);
+
+
+        mBuilder.setPositiveButton("UNLOCK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        DatabaseReference  mReferer = mDatabase.getReference("users_single_game_with_coins").child(currentUser.getUid()).child("kalyan_night");
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("date", date);
+
+                        mReferer.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Snackbar.make(mLayout, "Product saved!", Snackbar.LENGTH_LONG)
+
+                                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                        .show();
+                            }
+                        });
+
+
+
+                    }
+                })
+
+        .setNegativeButton("DISMISS", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        final AlertDialog alert = mBuilder.create();
+
+
 
         // Firebase Users
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
         currentUser = mAuth.getCurrentUser();
-        message = "Please buy 1 Day Game or Subscription to see Kalyan Matka King results. Thank-you!";
+        message = "Please buy 1 Day Game or Subscription To Unlock Kalyan Matka King. Thank-you!";
+        KalyanNightMessage = "Please buy 1 Day Game or Subscription or Earn " + CoinsLimit + " Coins To Unlock Kalyan Matka King. Thank-you!";
 
 //        Public Information Buy The Owner
 
@@ -251,13 +362,14 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         }
 
 
-        single_kalyan.setOnClickListener(new View.OnClickListener() {
+        KalyanMatka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                     if(ValidOrInvalid) {
-                        Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
-                        intent.putExtra("KalyanType", "SingleNew");
+                        Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaDay.class);
+                        intent.putExtra("KalyanType", "KalyanGame");
+                        intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                         intent.putExtra("date", adminDate);
                         startActivity(intent);
 
@@ -267,50 +379,52 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                                 .setTextColor(getResources().getColor(R.color.colorGolden))
                                 .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();
+
+
                     }
+
             }
         });
 
-        jodi_kalyan.setOnClickListener(new View.OnClickListener() {
+        KalyanNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaNight.class);
+                intent.putExtra("CoinsLimit", CoinsLimit);
+                intent.putExtra("ValidOrInvalid", ValidOrInvalid);
 
                 if(ValidOrInvalid) {
-                    Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
-                    intent.putExtra("KalyanType","JodiNew");
+
+                    intent.putExtra("KalyanType","KalyanNightGame");
                     intent.putExtra("date", adminDate);
                     startActivity(intent);
 
                 }else{
-                    
-                    Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                            .setTextColor(getResources().getColor(R.color.colorGolden))
-                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
-                            .show();
+//                  alert.show();  and display here kalyan night message in snackbar
+                    int Coins = preferences.getInt("TotalCoins", 0);
+                    if(Coins >= CoinsLimit){
+                        Coins = Coins - CoinsLimit;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("TotalCoins", Coins);
+                        editor.apply();
+                        startActivity(intent);
+                    }else{
+
+                        Snackbar.make(mLayout, "You don't have enough coins...", Snackbar.LENGTH_LONG)
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                .show();
+
+                    }
+
+
+
                 }
 
 
             }
         });
 
-        panel_kalyan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(ValidOrInvalid) {
-                    Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
-                    intent.putExtra("KalyanType", "PanelNew");
-                    intent.putExtra("date", adminDate);
-                    startActivity(intent);
-
-                }else{
-
-                    Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
-                            .setTextColor(getResources().getColor(R.color.colorGolden))
-                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
-                            .show();
-                }
-            }
-        });
 
         GetTicket.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,24 +470,25 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         });
 
 
-
-
-    }
-
-    @Override
-    protected void onRestart() {
-        TicketsValidity = findViewById(R.id.tickets_validity);
-        if(!isLoading){
-            if(ValidOrInvalid){
-                TicketsValidity.setText("Valid");
-            }else{
-                TicketsValidity.setText("Invalid");
+        GetMoreCoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(KalyanMatkaInterface.this, GetMoreCoins.class);
+                startActivity(intent);
             }
-        }
+        });
 
-        super.onRestart();
+        SucessStories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(KalyanMatkaInterface.this, SuccessStories.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
-
 
 
     @Override
@@ -409,9 +524,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     BecomeVipMember.setEnabled(true);
                     GetTicket.setEnabled(true);
 
-                    single_kalyan.setEnabled(true);
-                    jodi_kalyan.setEnabled(true);
-                    panel_kalyan.setEnabled(true);
+                    KalyanMatka.setEnabled(true);
+                    KalyanNight.setEnabled(true);
+                    
 
                     MainImage.setVisibility(View.VISIBLE);
                     GettingThingsReadyProgressBar.setVisibility(View.GONE);
@@ -437,9 +552,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                                 handleItemsAlreadyPurchased(purchase);
                             }
                         } else {
-                            single_kalyan.setEnabled(true);
-                            jodi_kalyan.setEnabled(true);
-                            panel_kalyan.setEnabled(true);
+                            KalyanMatka.setEnabled(true);
+                            KalyanNight.setEnabled(true);
+                            
 
                             GetTicket.setEnabled(true);
                             BecomeVipMember.setEnabled(true);
@@ -480,9 +595,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 BecomeVipMember.setEnabled(true);
                 GetTicket.setEnabled(true);
 
-                single_kalyan.setEnabled(true);
-                jodi_kalyan.setEnabled(true);
-                panel_kalyan.setEnabled(true);
+                KalyanMatka.setEnabled(true);
+                KalyanNight.setEnabled(true);
+                
 
                 MainImage.setVisibility(View.VISIBLE);
                 GettingThingsReadyProgressBar.setVisibility(View.GONE);
@@ -621,26 +736,48 @@ private void configureGoogleSignIn() {
     @Override
     protected void onStart() {
         super.onStart();
-        calendar = Calendar.getInstance();
-        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null){
             signIn();
-        }else {
-            mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
-            mReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if (snapshot.exists()) {
-                        for (DataSnapshot mSnapshot : snapshot.getChildren()) {
-                            Products product = mSnapshot.getValue(Products.class);
+        }
 
-                            if (date.equals(product.getDate())) {
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        calendar = Calendar.getInstance();
+        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+                mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
+                mReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()) {
+                            IsProductAvailable = false;
+                            for (DataSnapshot mSnapshot : snapshot.getChildren()) {
+                                Products product = mSnapshot.getValue(Products.class);
+
+                                if (date.equals(product.getDate())) {
+
+                                    IsProductAvailable = true;
+
+
+                                } else {
+//                                    setUpBillingClient();
+//                                    Log.d("myTag", "dateExists onResume First");
+                                }
+
+                            }
+
+                            if(IsProductAvailable){
                                 isLoading = false;
-
                                 Log.d("myTag", "dateExists");
                                 ValidOrInvalid = true;
                                 TicketsValidity.setText("Valid");
@@ -649,91 +786,28 @@ private void configureGoogleSignIn() {
                                 MainImage.setVisibility(View.VISIBLE);
                                 GettingThingsReadyProgressBar.setVisibility(View.GONE);
 
-                                single_kalyan.setEnabled(true);
-                                jodi_kalyan.setEnabled(true);
-                                panel_kalyan.setEnabled(true);
+                                KalyanMatka.setEnabled(true);
+                                KalyanNight.setEnabled(true);
+                                
 
                                 GetTicket.setEnabled(true);
                                 BecomeVipMember.setEnabled(true);
+                            }else{
 
-                            } else {
+
+
                                 setUpBillingClient();
                                 Log.d("myTag", "dateExists onResume First");
+
                             }
-                        }
-                    }
-                    else {
-                        setUpBillingClient();
-                        Log.d("myTag", "dateExists onResume Last");
-                    }
 
-                }
-
-                @Override
-                public void onCancelled (@NonNull DatabaseError error){
-
-                }
-            });
-
-            TicketsValidity = findViewById(R.id.tickets_validity);
-            if(!isLoading){
-                if(ValidOrInvalid){
-                    TicketsValidity.setText("Valid");
-                }else{
-                    TicketsValidity.setText("Invalid");
-                }
-            }
-            Mobiledate = dateFormat.format(calendar.getTime());
-            mDate = findViewById(R.id.today_date);
-            mDate.setText(Mobiledate);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        calendar = Calendar.getInstance();
-        date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-                mReference = mDatabase.getReference("users").child(currentUser.getUid()).child("products");
-                mReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        if (snapshot.exists()) {
-                            for (DataSnapshot mSnapshot : snapshot.getChildren()) {
-                                Products product = mSnapshot.getValue(Products.class);
-
-                                if (date.equals(product.getDate())) {
-
-                                    isLoading = false;
-
-                                    Log.d("myTag", "dateExists");
-                                    ValidOrInvalid = true;
-                                    TicketsValidity.setText("Valid");
-                                    Ticket = true;
-
-                                    MainImage.setVisibility(View.VISIBLE);
-                                    GettingThingsReadyProgressBar.setVisibility(View.GONE);
-
-                                    single_kalyan.setEnabled(true);
-                                    jodi_kalyan.setEnabled(true);
-                                    panel_kalyan.setEnabled(true);
-
-                                    GetTicket.setEnabled(true);
-                                    BecomeVipMember.setEnabled(true);
-
-                                } else {
-                                    setUpBillingClient();
-                                    Log.d("myTag", "dateExists onResume First");
-                                }
-                            }
                         }
                         else {
                             setUpBillingClient();
                             Log.d("myTag", "dateExists onResume Last");
                         }
+
+
 
                     }
 
@@ -742,6 +816,11 @@ private void configureGoogleSignIn() {
 
                     }
                 });
+
+
+            mTotalCoins = preferences.getInt("TotalCoins", 0);
+            TotalCoins.setText(""+mTotalCoins);
+            
             }
 
         TicketsValidity = findViewById(R.id.tickets_validity);
@@ -755,9 +834,20 @@ private void configureGoogleSignIn() {
         Mobiledate = dateFormat.format(calendar.getTime());
         mDate = findViewById(R.id.today_date);
         mDate.setText(Mobiledate);
+
         }
 
-}
 
+    public Intent getOpenFacebookIntent() {
+        try {
+            getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.facebook.com/kalyanbestgame"));
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/kalyanbestgame"));
+        }
+    }
+
+
+}
 
 

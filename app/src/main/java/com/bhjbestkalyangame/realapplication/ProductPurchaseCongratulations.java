@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 public class ProductPurchaseCongratulations extends AppCompatActivity {
 
-
     TextView ValidityExpiresUntil;
     Button mContinue;
 
@@ -34,5 +33,6 @@ public class ProductPurchaseCongratulations extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }

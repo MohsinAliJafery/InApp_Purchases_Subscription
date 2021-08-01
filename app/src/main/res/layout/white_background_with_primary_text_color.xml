@@ -6,13 +6,13 @@
 
     <!-- View background color -->
     <solid
-        android:color="@color/noColor" >
+        android:color="@color/colorSnackbar" >
     </solid>
 
     <!-- View border color and width -->
     <stroke
-        android:width="3dp"
-        android:color="#C70039" >
+
+        android:color="@color/colorGolden" >
     </stroke>
 
     <!-- The radius makes the corners rounded -->
