@@ -7,7 +7,7 @@
     android:id="@+id/tickets"
     android:layout_margin="7dp"
     android:layout_height="match_parent"
-    tools:context=".InAppProducts">
+    tools:context=".PurchaseSpecialGame">
 
     <TextView
         android:id="@+id/title"
@@ -16,7 +16,8 @@
         android:layout_marginTop="4dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="PRODUCTS"
+        android:text="Special Game"
+        android:textAllCaps="true"
         android:padding="10dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textColor="@color/noColor"

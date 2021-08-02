@@ -45,16 +45,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+
+    <TextView
+        android:id="@+id/special_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/noColor"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:gravity="center"
+        android:text="Special: "
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_date" />
+
+    <TextView
+        android:id="@+id/special_purchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/noColor"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:gravity="center"
+        android:text="NA"
+        android:textColor="@color/colorGolden"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/special_title"
+        app:layout_constraintTop_toBottomOf="@+id/today_date" />
+
+
        <androidx.constraintlayout.widget.ConstraintLayout
 
         android:id="@+id/Results"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:background="@layout/box_shadow_with_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/total_coins"
         app:layout_constraintVertical_bias="0.066">
 
         <LinearLayout
@@ -252,7 +282,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-
             <Button
                 android:id="@+id/kalyan_night"
                 android:layout_width="250dp"
@@ -271,6 +300,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/kalyan_matka" />
 
             <Button
+                android:id="@+id/rajdhani"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@layout/button_for_rajdhani"
+                android:fontFamily="@font/comic_sans_ms_bold_italic"
+                android:text="Rajdhani"
+                android:enabled="false"
+                android:textColor="@color/noColor"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/kalyan_night" />
+
+
+            <Button
                 android:id="@+id/special_game"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
@@ -278,14 +325,14 @@
                 android:background="@layout/special_game_background_for_button"
                 android:fontFamily="@font/comic_sans_ms_bold_italic"
                 android:text="Special Game"
+                android:visibility="gone"
                 android:textColor="@color/noColor"
                 android:textSize="17sp"
-                android:visibility="gone"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/kalyan_night" />
+                app:layout_constraintTop_toBottomOf="@+id/rajdhani" />
 
             <Button
                 android:id="@+id/get_a_ticket"
@@ -319,6 +366,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/get_a_ticket" />
 
             <Button
+                android:id="@+id/purchase_special_game"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@layout/premium_background_for_button"
+                android:textColor="@color/colorBlack"
+                android:visibility="gone"
+                android:fontFamily="@font/comic_sans_ms_bold_italic"
+                android:text="Get Special Game"
+                android:textSize="17dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member" />
+
+            <Button
                 android:id="@+id/get_more_coins"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
@@ -331,7 +393,7 @@
                 android:textSize="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member" />
+                app:layout_constraintTop_toBottomOf="@+id/purchase_special_game" />
 
 
 

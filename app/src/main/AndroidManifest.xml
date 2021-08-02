@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SuccessStories"></activity>
+        <activity android:name=".SpecialGameCongratulations"></activity>
+        <activity android:name=".PurchaseSpecialGame" />
+        <activity android:name=".SuccessStories" />
         <activity android:name=".GetMoreCoins" />
         <activity android:name=".KalyanMatkaNight" />
         <activity android:name=".KalyanMatkaDay" />

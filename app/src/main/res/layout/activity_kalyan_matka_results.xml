@@ -32,7 +32,7 @@
         android:id="@+id/sub_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Single Close"
+        android:text=""
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -104,12 +104,12 @@
         android:id="@+id/please_wait_KMG_shall_be_updated_soon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:visibility="invisible"
-        android:textColor="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:text="Please wait! Kalyan Matka King shall be updated soon...\nकृपया प्रतीक्षा करें! कल्याण मटका किंग को जल्द ही अपडेट किया जाएगा ..."
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tickets_validity" />
@@ -125,17 +125,17 @@
         app:layout_constraintStart_toStartOf="@+id/gridview_success"
         app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/colorPrimary"
-        android:fontFamily="sans-serif-thin"
-        android:textColor="@color/colorPrimary"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="7dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView4"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="3dp"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:fontFamily="sans-serif-thin"-->
+<!--        android:textColor="@color/colorPrimary"-->
+<!--        android:textSize="40sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        tools:layout_editor_absoluteX="7dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ import java.util.Objects;
 
 public class KalyanMatkaInterface extends AppCompatActivity implements PurchasesUpdatedListener{
 
-     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult, mDate, TotalCoins;
+     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult, mDate, TotalCoins, SpecialPurchase;
      private boolean ValidOrInvalid;
      private Calendar calendar;
      private SimpleDateFormat dateFormat;
@@ -88,9 +89,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private final String MyCredit = "mycredit";
      private ContentLoadingProgressBar progressBar;
      private boolean mNetwork;
-    String KalyanNightMessage;
+     String KalyanNightMessage;
      private FirebaseDatabase mDatabase;
-     private DatabaseReference mReference;
+     private DatabaseReference mReference, SpecialGameReference, SpecialGameInfoReference;
      private FirebaseAuth mAuth;
      private FirebaseUser currentUser;
      private String Valid;
@@ -98,7 +99,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private ImageView mFacebook;
 
 
-     private boolean IsProductAvailable, IsKalyanNightPurchasedWithCoins;
+     private boolean IsProductAvailable, IsSpecialProductAvailable, IsKalyanNightPurchasedWithCoins;
      private AlertDialog.Builder mBuilder;
 
      String message;
@@ -112,6 +113,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      TextView mAlerttitle;
      Integer CoinsLimit;
      int mTotalCoins;
+
+     Button PurchaseSpecialGame, SpecialGame, Rajdhani;
+     String SpecialGameMessage, SpecialGameTitle, SpecialGameSubTitle, SpecialGameVisibility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,12 +134,18 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         mFacebook = findViewById(R.id.facebook);
         KalyanMatka = findViewById((R.id.kalyan_matka));
         KalyanNight   = findViewById((R.id.kalyan_night));
-
+        IsSpecialProductAvailable = false;
         BecomeVipMember = findViewById(R.id.become_a_vip_member);
         GetMoreCoins = findViewById(R.id.get_more_coins);
         progressBar = findViewById(R.id.progressbar);
         TotalCoins = findViewById(R.id.total_coins);
         SucessStories = findViewById(R.id.success_stories);
+        PurchaseSpecialGame = findViewById(R.id.purchase_special_game);
+        SpecialGame = findViewById(R.id.special_game);
+        SpecialPurchase = findViewById(R.id.special_purchase);
+        Rajdhani = findViewById(R.id.rajdhani);
+
+
         
         mBuilder = new AlertDialog.Builder(this);
 
@@ -386,6 +396,27 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         });
 
+        SpecialGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(IsSpecialProductAvailable){
+                    Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
+                    intent.putExtra("KalyanType", "special_game");
+                    intent.putExtra("ValidOrInvalid", ValidOrInvalid);
+                    intent.putExtra("date", adminDate);
+                    intent.putExtra("Title", SpecialGameTitle);
+                    intent.putExtra("SubTitle", SpecialGameSubTitle);
+                    startActivity(intent);
+                }else{
+                    Snackbar.make(mLayout, "You haven't bought special game yet!", Snackbar.LENGTH_LONG)
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                            .show();
+                }
+            }
+        });
+
         KalyanNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -410,7 +441,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                         startActivity(intent);
                     }else{
 
-                        Snackbar.make(mLayout, "You don't have enough coins...", Snackbar.LENGTH_LONG)
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
                                 .setTextColor(getResources().getColor(R.color.colorGolden))
                                 .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();
@@ -426,6 +457,44 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         });
 
 
+        Rajdhani.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
+                intent.putExtra("KalyanType", "Rajdhani");
+                intent.putExtra("date", adminDate);
+                intent.putExtra("ValidOrInvalid", ValidOrInvalid);
+
+                if(ValidOrInvalid) {
+
+                    startActivity(intent);
+
+                }else{
+//                  alert.show();  and display here kalyan night message in snackbar
+                    int Coins = preferences.getInt("TotalCoins", 0);
+                    if(Coins >= CoinsLimit){
+                        Coins = Coins - CoinsLimit;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("TotalCoins", Coins);
+                        editor.apply();
+                        startActivity(intent);
+                    }else{
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                .show();
+
+                    }
+
+
+
+                }
+
+            }
+        });
+
+
         GetTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -436,9 +505,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
                     String message;
                     if(Ticket){
-                        message = "You already own a valid ticket!";
+                        message = "You already own a valid game!";
                     }else{
-                        message = "You already purchased a subscription plan!";
+                        message = "You already own a subscription plan!";
                     }
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
                             .setTextColor(getResources().getColor(R.color.colorGolden))
@@ -462,6 +531,23 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                         message = "You already purchased a subscription plan!";
                     }
                     Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                            .show();
+                }
+            }
+        });
+
+
+        PurchaseSpecialGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!IsSpecialProductAvailable) {
+                    Intent intent = new Intent(KalyanMatkaInterface.this, PurchaseSpecialGame.class);
+                    startActivity(intent);
+                }else{
+
+                    Snackbar.make(mLayout, "You have already purchased the special game!", Snackbar.LENGTH_LONG)
                             .setTextColor(getResources().getColor(R.color.colorGolden))
                             .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                             .show();
@@ -525,6 +611,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     GetTicket.setEnabled(true);
 
                     KalyanMatka.setEnabled(true);
+                    Rajdhani.setEnabled(true);
                     KalyanNight.setEnabled(true);
                     
 
@@ -554,7 +641,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                         } else {
                             KalyanMatka.setEnabled(true);
                             KalyanNight.setEnabled(true);
-                            
+                            Rajdhani.setEnabled(true);
 
                             GetTicket.setEnabled(true);
                             BecomeVipMember.setEnabled(true);
@@ -597,7 +684,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
                 KalyanMatka.setEnabled(true);
                 KalyanNight.setEnabled(true);
-                
+                Rajdhani.setEnabled(true);
 
                 MainImage.setVisibility(View.VISIBLE);
                 GettingThingsReadyProgressBar.setVisibility(View.GONE);
@@ -788,7 +875,7 @@ private void configureGoogleSignIn() {
 
                                 KalyanMatka.setEnabled(true);
                                 KalyanNight.setEnabled(true);
-                                
+                                Rajdhani.setEnabled(true);
 
                                 GetTicket.setEnabled(true);
                                 BecomeVipMember.setEnabled(true);
@@ -820,6 +907,78 @@ private void configureGoogleSignIn() {
 
             mTotalCoins = preferences.getInt("TotalCoins", 0);
             TotalCoins.setText(""+mTotalCoins);
+
+            // For Special Game
+
+            if(currentUser != null){
+
+                SpecialGameReference = mDatabase.getReference("special_game_users").child(currentUser.getUid()).child("products");
+                SpecialGameReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()) {
+                           
+                            for (DataSnapshot mSnapshot : snapshot.getChildren()) {
+                                Products product = mSnapshot.getValue(Products.class);
+
+                                if (date.equals(product.getDate())) {
+
+                                    IsSpecialProductAvailable = true;
+
+                                }
+
+                            }
+
+                            if(IsSpecialProductAvailable){
+
+                                SpecialGameMessage = "You have already purchased the special game!";
+//                                PurchaseSpecialGame.setVisibility(View.GONE);
+                                SpecialPurchase.setText("Purchased");
+                            }
+
+                        }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled (@NonNull DatabaseError error){
+
+                    }
+                });
+            }
+
+
+            SpecialGameInfoReference = mDatabase.getReference("special_game").child("info");
+            SpecialGameInfoReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    SpecialGameInfo specialGameInfo = snapshot.getValue(SpecialGameInfo.class);
+                    SpecialGameTitle = specialGameInfo.getTitle();
+                    SpecialGameSubTitle = specialGameInfo.getType();
+                    SpecialGameVisibility = specialGameInfo.getDisplay();
+
+                    if(SpecialGameVisibility.equals("1")){
+                        SpecialGame.setVisibility(View.VISIBLE);
+                        PurchaseSpecialGame.setVisibility(View.VISIBLE);
+                    }else{
+                        SpecialGame.setVisibility(View.GONE);
+                        PurchaseSpecialGame.setVisibility(View.GONE);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
             
             }
 

@@ -52,6 +52,8 @@ public class KalyanMatkaResults extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private String MobileDate, date;
 
+    private String Title, SubTitle;
+
     DatabaseReference mRef;
 
     @Override
@@ -101,8 +103,10 @@ public class KalyanMatkaResults extends AppCompatActivity {
         Intent mIntent = getIntent();
         KalyanType = mIntent.getStringExtra("KalyanType");
         AdminDate = mIntent.getStringExtra("date");
-        ValidOrInvalid = mIntent.getBooleanExtra("ValidOrInvalid", false);
+        Title = mIntent.getStringExtra("Title");
+        SubTitle = mIntent.getStringExtra("SubTitle");
 
+        ValidOrInvalid = mIntent.getBooleanExtra("ValidOrInvalid", false);
 
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("current_super_numbers").child("date");
@@ -123,6 +127,14 @@ public class KalyanMatkaResults extends AppCompatActivity {
         if(KalyanType.equals("SingleOpenKalyan") || KalyanType.equals("SingleCloseKalyan") || KalyanType.equals("JodiKalyan") || KalyanType.equals("PanelKalyan")){
             mRef = mDatabase.getReference("kalyan_matka_super_numbers").child(MobileDate).child(KalyanType);
             mTitle.setText("Kalyan");
+        }else if(KalyanType.equals("special_game")){
+            mRef = mDatabase.getReference("special_game").child(MobileDate).child(KalyanType);
+            mTitle.setText(Title);
+            mSubTitle.setText(SubTitle);
+        }else if(KalyanType.equals("Rajdhani")){
+            mRef = mDatabase.getReference("rajdhani").child(MobileDate).child(KalyanType);
+            mTitle.setText("Rajdhani");
+            mSubTitle.setText("Single");
         }else{
             mRef = mDatabase.getReference("kalyan_night_super_numbers").child(MobileDate).child(KalyanType);
             mTitle.setText("Kalyan Night");
@@ -137,7 +149,6 @@ public class KalyanMatkaResults extends AppCompatActivity {
         }else if(KalyanType.equals("PanelKalyan") || KalyanType.equals("PanelNight")){
             mSubTitle.setText("Panel");
         }
-
 
         Numbers = new HashMap<String, String>();
 

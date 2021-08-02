@@ -4,7 +4,7 @@
     <color name="colorBackgroundWall">#54FF3F34</color>
     <color name="colorPrimaryDark">#d31244</color>
     <color name="colorAccent">#00173d</color>
-    <color name="colorBackground">#FBEFF6</color>
+    <color name="colorBackground">#e389b9</color>
     <color name="noColor">#FFF</color>
     <color name="specialGame">#FF7F50</color>
     <color name="colorSingle">#4faab3</color>
@@ -19,9 +19,4 @@
     <color name="colorRed">#CB4335</color>
     <color name="colorSnackbar">#FFFF00</color>
 
-<!--    <color name="colorSnackbar">#DFFF00</color>-->
-<!--    <color name="colorPrimary">#621843</color>-->
-<!--    <color name="colorPrimary">#FFFFC000</color>-->
-<!--    <color name="colorPrimaryDark">#521439</color>-->
-<!--    <color name="colorGolden">#FFDF00</color>-->
 </resources>
