@@ -121,8 +121,8 @@ public class PurchaseSpecialGame extends AppCompatActivity implements PurchasesU
     }
 
     private void loadProductsToRecyclerView(List<SkuDetails> list) {
-        ProductAdapter productAdapter = new ProductAdapter(this, list, billingClient);
-        RecyclerView.setAdapter(productAdapter);
+        SpecialProductAdapter specialProductAdapter = new SpecialProductAdapter(this, list, billingClient);
+        RecyclerView.setAdapter(specialProductAdapter);
         recyclerIndicator.attachToRecyclerView(RecyclerView);
     }
 
@@ -140,7 +140,9 @@ public class PurchaseSpecialGame extends AppCompatActivity implements PurchasesU
                     HashMap<String, String> hashMap = new HashMap<String, String>();
                     hashMap.put("ticket_token", s);
                     hashMap.put("date", date);
-                    hashMap.put("validity", "valid");
+                    hashMap.put("name", currentUser.getDisplayName());
+                    hashMap.put("email", currentUser.getEmail());
+
 
                     mReference.child("products").push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

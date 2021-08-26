@@ -133,7 +133,7 @@ public class KalyanMatkaResults extends AppCompatActivity {
             mSubTitle.setText(SubTitle);
         }else if(KalyanType.equals("Rajdhani")){
             mRef = mDatabase.getReference("rajdhani").child(MobileDate).child(KalyanType);
-            mTitle.setText("Rajdhani");
+            mTitle.setText("Rajdhani Night");
             mSubTitle.setText("Single");
         }else{
             mRef = mDatabase.getReference("kalyan_night_super_numbers").child(MobileDate).child(KalyanType);

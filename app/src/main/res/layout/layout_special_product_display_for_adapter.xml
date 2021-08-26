@@ -23,19 +23,18 @@
             android:padding="10dp"
             android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:textAlignment="center"
-            android:text="1 Day Game"
-            android:textFontWeight="600"
+            android:text="Special"
             android:textStyle="bold|italic"
+            android:textFontWeight="600"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:gravity="center_horizontal" />
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:src="@drawable/special_buy"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/subscription"/>
+            android:layout_height="150dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,9 +68,9 @@
             android:text="Buy Now"
             android:textSize="23sp"
             android:padding="5dp"
-            android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:textColor="@color/noColor"
             android:textAlignment="center"
+            android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"/>
 

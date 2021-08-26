@@ -29,8 +29,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class WatchVideoToGetReward extends AppCompatActivity {
 
-
-
     private RewardedAd rewardedAd;
     RewardedAdCallback adCallback;
     ConstraintLayout mLayout;

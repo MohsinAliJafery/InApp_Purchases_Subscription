@@ -24,7 +24,6 @@
             android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:textAlignment="center"
             android:text="1 Day Game"
-
             android:textStyle="bold|italic"
             android:textFontWeight="600"
             android:textColor="@color/colorPrimary"
@@ -32,10 +31,10 @@
             android:gravity="center_horizontal" />
 
         <ImageView
-            android:layout_width="100dp"
-            android:src="@drawable/red_ticket"
+            android:layout_width="150dp"
+            android:src="@drawable/game"
             android:layout_gravity="center_horizontal"
-            android:layout_height="100dp"/>
+            android:layout_height="150dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

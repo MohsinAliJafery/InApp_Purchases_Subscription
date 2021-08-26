@@ -20,10 +20,9 @@
         android:text="Kalyan"
         android:padding="10dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

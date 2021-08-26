@@ -9,30 +9,24 @@
     android:layout_height="match_parent"
     tools:context=".KalyanMatkaDay">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
-        android:background="@layout/primary_background_for_button"
+        android:layout_marginTop="4dp"
+        android:background="@layout/result_top_bar_background"
+        android:gravity="center"
+        android:textColor="#F8F9F9"
+        android:textAllCaps="true"
+        android:text="Kalyan"
+        android:padding="10dp"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:fontFamily="@font/comic_sans_ms_bold_italic"
-            android:text="@string/kalyan"
-            android:textColor="@color/noColor"
-            android:textSize="40sp"
-            android:textStyle="bold|italic" />
-
-    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/today_date"
@@ -46,7 +40,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -57,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintVertical_bias="0.066">
 
         <LinearLayout
@@ -276,7 +270,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/tickets_validity"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/tickets_validity"
@@ -290,7 +284,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
     <TextView

@@ -1,12 +1,14 @@
 package com.bhjbestkalyangame.realapplication;
 
 public class Products {
-    String ticket_token, date, validity;
+    String ticket_token, date, name, email;
 
-    public Products(String ticket_token, String date, String validity) {
+
+    public Products(String ticket_token, String date, String name, String email) {
         this.ticket_token = ticket_token;
         this.date = date;
-        this.validity = validity;
+        this.name = name;
+        this.email = email;
     }
 
     public Products() {
@@ -28,12 +30,23 @@ public class Products {
         this.date = date;
     }
 
-    public String getValidity() {
-        return validity;
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setValidity(String validity) {
-        this.validity = validity;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
 }

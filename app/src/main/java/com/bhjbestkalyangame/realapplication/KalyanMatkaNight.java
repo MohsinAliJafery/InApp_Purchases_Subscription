@@ -155,7 +155,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                     }else{
 
-                        Snackbar.make(mLayout, "You don't have enough coins...", Snackbar.LENGTH_LONG)
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
                                 .setTextColor(getResources().getColor(R.color.colorGolden))
                                 .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();
@@ -191,7 +191,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                     }else{
 
-                        Snackbar.make(mLayout, "You don't have enough coins...", Snackbar.LENGTH_LONG)
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
                                 .setTextColor(getResources().getColor(R.color.colorGolden))
                                 .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();
@@ -228,7 +228,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                     }else{
 
-                        Snackbar.make(mLayout, "You don't have enough coins...", Snackbar.LENGTH_LONG)
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
                                 .setTextColor(getResources().getColor(R.color.colorGolden))
                                 .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();
@@ -264,7 +264,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                     }else{
 
-                        Snackbar.make(mLayout, "You don't have enough coins...", Snackbar.LENGTH_LONG)
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
                                 .setTextColor(getResources().getColor(R.color.colorGolden))
                                 .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
                                 .show();

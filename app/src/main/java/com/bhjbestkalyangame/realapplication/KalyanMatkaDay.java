@@ -90,6 +90,7 @@ public class KalyanMatkaDay extends AppCompatActivity {
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
     SharedPreferences preferences;
     int mTotalCoins;
+    int CoinsLimit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,8 +102,7 @@ public class KalyanMatkaDay extends AppCompatActivity {
         Panel = findViewById(R.id.panel);
         TotalCoins = findViewById(R.id.total_coins);
         mLayout = findViewById(R.id.kalyan_matka_day);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         calendar = Calendar.getInstance();
@@ -113,7 +113,8 @@ public class KalyanMatkaDay extends AppCompatActivity {
         Valid = "valid";
         Intent PreviousActivity = getIntent();
         ValidOrInvalid = PreviousActivity.getBooleanExtra("ValidOrInvalid", false);
-        
+        CoinsLimit = PreviousActivity.getIntExtra("CoinsLimit", 0);
+
         mNetwork = haveNetworkConnection();
         if(!mNetwork){
             progressBar.setVisibility(View.GONE);
@@ -158,9 +159,31 @@ public class KalyanMatkaDay extends AppCompatActivity {
 
                     Intent intent = new Intent(KalyanMatkaDay.this, KalyanMatkaResults.class);
                     intent.putExtra("KalyanType", "SingleOpenKalyan");
-                intent.putExtra("ValidOrInvalid", ValidOrInvalid);
+                    intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                     intent.putExtra("date", adminDate);
+
+                if(ValidOrInvalid){
                     startActivity(intent);
+                }else{
+
+                    int Coins = preferences.getInt("TotalCoins", 0);
+                    if(Coins >= CoinsLimit){
+                        Coins = Coins - CoinsLimit;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("TotalCoins", Coins);
+                        editor.apply();
+                        startActivity(intent);
+
+                    }else{
+
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                .show();
+
+                    }
+
+                }
 
             }
         });
@@ -172,7 +195,29 @@ public class KalyanMatkaDay extends AppCompatActivity {
                 intent.putExtra("KalyanType", "SingleCloseKalyan");
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 intent.putExtra("date", adminDate);
-                startActivity(intent);
+
+                if(ValidOrInvalid){
+                    startActivity(intent);
+                }else{
+
+                    int Coins = preferences.getInt("TotalCoins", 0);
+                    if(Coins >= CoinsLimit){
+                        Coins = Coins - CoinsLimit;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("TotalCoins", Coins);
+                        editor.apply();
+                        startActivity(intent);
+
+                    }else{
+
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                .show();
+
+                    }
+
+                }
             }
         });
 
@@ -183,7 +228,28 @@ public class KalyanMatkaDay extends AppCompatActivity {
                 intent.putExtra("KalyanType", "JodiKalyan");
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 intent.putExtra("date", adminDate);
-                startActivity(intent);
+                if(ValidOrInvalid){
+                    startActivity(intent);
+                }else{
+
+                    int Coins = preferences.getInt("TotalCoins", 0);
+                    if(Coins >= CoinsLimit){
+                        Coins = Coins - CoinsLimit;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("TotalCoins", Coins);
+                        editor.apply();
+                        startActivity(intent);
+
+                    }else{
+
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                .show();
+
+                    }
+
+                }
             }
         });
 
@@ -195,7 +261,28 @@ public class KalyanMatkaDay extends AppCompatActivity {
                 intent.putExtra("KalyanType", "PanelKalyan");
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 intent.putExtra("date", adminDate);
-                startActivity(intent);
+                if(ValidOrInvalid){
+                    startActivity(intent);
+                }else{
+
+                    int Coins = preferences.getInt("TotalCoins", 0);
+                    if(Coins >= CoinsLimit){
+                        Coins = Coins - CoinsLimit;
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("TotalCoins", Coins);
+                        editor.apply();
+                        startActivity(intent);
+
+                    }else{
+
+                        Snackbar.make(mLayout, "You don't have enough coins!", Snackbar.LENGTH_LONG)
+                                .setTextColor(getResources().getColor(R.color.colorGolden))
+                                .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                .show();
+
+                    }
+
+                }
             }
         });
 

@@ -22,21 +22,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
+    <ImageView
         android:id="@+id/subscription"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:background="@layout/orange_background_with_slight_border_radius"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Subscription"
-        android:textAllCaps="true"
-        android:textColor="@color/noColor"
-        android:textSize="23dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/subscription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/congratulations" />
 

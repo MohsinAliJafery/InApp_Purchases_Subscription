@@ -28,8 +28,6 @@ public class SpecialGameCongratulations extends AppCompatActivity {
         mContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SpecialGameCongratulations.this, KalyanMatkaInterface.class);
-                startActivity(intent);
                 finish();
             }
         });

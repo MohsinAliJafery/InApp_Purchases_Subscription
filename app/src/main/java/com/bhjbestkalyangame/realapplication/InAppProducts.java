@@ -136,13 +136,14 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                 if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
 
                     Log.d("mytag", "consume Ok");
-                    mReference = mDatabase.getReference("users").child(currentUser.getUid());
+                    mReference = mDatabase.getReference("all_users").child(currentUser.getUid());
 
 
                     HashMap<String, String> hashMap = new HashMap<String, String>();
                     hashMap.put("ticket_token", s);
                     hashMap.put("date", date);
-                    hashMap.put("validity", "valid");
+                    hashMap.put("name", currentUser.getDisplayName());
+                    hashMap.put("email", currentUser.getEmail());
 
                     mReference.child("products").push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

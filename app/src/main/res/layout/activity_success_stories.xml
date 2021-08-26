@@ -12,18 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@layout/primary_background_for_button"
+        android:background="@layout/result_top_bar_background"
         android:gravity="center"
         android:textColor="#F8F9F9"
         android:textAllCaps="true"
         android:text="Success Stories"
         android:padding="10dp"
-
         android:fontFamily="@font/comic_sans_ms_bold_italic"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -28,8 +28,6 @@ public class ProductPurchaseCongratulations extends AppCompatActivity {
         mContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductPurchaseCongratulations.this, KalyanMatkaInterface.class);
-                startActivity(intent);
                 finish();
             }
         });

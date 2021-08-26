@@ -34,7 +34,7 @@ public class GetMoreCoins extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
 
     ConstraintLayout mLayout;
-
+    int EarnedCoins, AvailableCoins;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,100 +42,122 @@ public class GetMoreCoins extends AppCompatActivity {
 
         GetMoreCoins = findViewById(R.id.get_gold_coins);
         ProgressBar = findViewById(R.id.progressbar);
-
-        adRequest = new AdRequest.Builder().build();
-
-        mRewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917");
+        mLayout = findViewById(R.id.get_more_coins_layout);
 
         final SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
-        mLayout = findViewById(R.id.get_more_coins_layout);
 
         GetMoreCoins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                GetMoreCoins.setVisibility(View.GONE);
-                ProgressBar.setVisibility(View.VISIBLE);
+                AvailableCoins = mSharedPreferences.getInt("TotalCoins", 0);
+                EarnedCoins = 40;
 
-                RewardedAd.load(GetMoreCoins.this, "ca-app-pub-3940256099942544/5224354917",
-                        adRequest, new RewardedAdLoadCallback() {
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                GetMoreCoins.setVisibility(View.VISIBLE);
-                                ProgressBar.setVisibility(View.INVISIBLE);
-                            }
+                EarnedCoins = EarnedCoins + AvailableCoins;
 
-                            @Override
-                            public void onAdLoaded(@NonNull final RewardedAd rewardedAd) {
+                SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+                mEditor.putInt("TotalCoins", EarnedCoins);
+                mEditor.apply();
 
-                                rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback(){
-                                    @Override
-                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
-                                        super.onAdFailedToShowFullScreenContent(adError);
-                                    }
+                Snackbar.make(mLayout, "You Earned " + 40 + " New Coins!", Snackbar.LENGTH_LONG)
 
-                                    @Override
-                                    public void onAdShowedFullScreenContent() {
-
-                                    }
-
-                                    @Override
-                                    public void onAdDismissedFullScreenContent() {
-                                        GetMoreCoins.setVisibility(View.VISIBLE);
-                                        ProgressBar.setVisibility(View.INVISIBLE);
-
-                                        if(Added) {
-                                            Snackbar.make(mLayout, "You Earned " + 3 + " New Coins!", Snackbar.LENGTH_LONG)
-
-                                                    .setTextColor(getResources().getColor(R.color.noColor))
-                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
-                                                    .show();
-                                        }else{
-                                            Snackbar.make(mLayout, "Please Watch Complete Video To Earn A Coin. Thank-you!", Snackbar.LENGTH_LONG)
-
-                                                    .setTextColor(getResources().getColor(R.color.noColor))
-                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
-                                                    .show();
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onAdImpression() {
-                                        super.onAdImpression();
-                                    }
-                                });
-
-                                rewardedAd.show(GetMoreCoins.this, new OnUserEarnedRewardListener() {
-
-                                    @Override
-                                    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-
-                                        int AvailableCoins = mSharedPreferences.getInt("TotalCoins", 0);
-                                        int EarnedCoins = 3;
-
-                                        EarnedCoins = EarnedCoins + AvailableCoins;
-
-                                        GetMoreCoins.setVisibility(View.VISIBLE);
-                                        ProgressBar.setVisibility(View.INVISIBLE);
-
-                                        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-                                        mEditor.putInt("TotalCoins", EarnedCoins);
-                                        mEditor.apply();
-
-                                        Added = true;
-
-                                    }
-
-                                });
-                            }
-                        });
-
+                        .setTextColor(getResources().getColor(R.color.noColor))
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .show();
 
             }
         });
+
+
+
+//        adRequest = new AdRequest.Builder().build();
+
+//        GetMoreCoins.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                GetMoreCoins.setVisibility(View.GONE);
+//                ProgressBar.setVisibility(View.VISIBLE);
+//
+//                RewardedAd.load(GetMoreCoins.this, "ca-app-pub-3940256099942544/5224354917",
+//                        adRequest, new RewardedAdLoadCallback() {
+//                            @Override
+//                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+//                                GetMoreCoins.setVisibility(View.VISIBLE);
+//                                ProgressBar.setVisibility(View.INVISIBLE);
+//                            }
+//
+//                            @Override
+//                            public void onAdLoaded(@NonNull final RewardedAd rewardedAd) {
+//
+//                                rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+//                                    @Override
+//                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+//                                        super.onAdFailedToShowFullScreenContent(adError);
+//                                    }
+//
+//                                    @Override
+//                                    public void onAdShowedFullScreenContent() {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onAdDismissedFullScreenContent() {
+//                                        GetMoreCoins.setVisibility(View.VISIBLE);
+//                                        ProgressBar.setVisibility(View.INVISIBLE);
+//
+//                                        if(Added) {
+//                                            Snackbar.make(mLayout, "You Earned " + 3 + " New Coins!", Snackbar.LENGTH_LONG)
+//
+//                                                    .setTextColor(getResources().getColor(R.color.noColor))
+//                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+//                                                    .show();
+//                                        }else{
+//                                            Snackbar.make(mLayout, "Please Watch Complete Video To Earn A Coin. Thank-you!", Snackbar.LENGTH_LONG)
+//
+//                                                    .setTextColor(getResources().getColor(R.color.noColor))
+//                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+//                                                    .show();
+//                                        }
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onAdImpression() {
+//                                        super.onAdImpression();
+//                                    }
+//                                });
+//
+//                                rewardedAd.show(GetMoreCoins.this, new OnUserEarnedRewardListener() {
+//
+//                                    @Override
+//                                    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+//
+//                                        int AvailableCoins = mSharedPreferences.getInt("TotalCoins", 0);
+//                                        int EarnedCoins = 300;
+//
+//                                        EarnedCoins = EarnedCoins + AvailableCoins;
+//
+//                                        GetMoreCoins.setVisibility(View.VISIBLE);
+//                                        ProgressBar.setVisibility(View.INVISIBLE);
+//
+//                                        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+//                                        mEditor.putInt("TotalCoins", EarnedCoins);
+//                                        mEditor.apply();
+//
+//                                        Added = true;
+//
+//                                    }
+//
+//                                });
+//                            }
+//                        });
+//
+//
+//            }
+//        });
 
 
     }

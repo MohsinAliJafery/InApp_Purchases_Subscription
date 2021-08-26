@@ -9,28 +9,23 @@
     android:layout_height="match_parent"
     tools:context=".KalyanMatkaInterface">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@layout/primary_background_for_button"
+        android:layout_marginTop="4dp"
+        android:background="@layout/result_top_bar_background"
+        android:gravity="center"
+        android:textColor="#F8F9F9"
+        android:textAllCaps="true"
+        android:text="Kalyan Matka King"
+        android:padding="10dp"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="@string/app_name"
-                android:textColor="@color/noColor"
-                android:textSize="30sp"
-                android:textStyle="bold|italic" />
-
-      </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/today_date"
@@ -43,7 +38,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
     <TextView
@@ -306,7 +301,7 @@
                 android:layout_marginTop="6dp"
                 android:background="@layout/button_for_rajdhani"
                 android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Rajdhani"
+                android:text="Rajdhani Night"
                 android:enabled="false"
                 android:textColor="@color/noColor"
                 android:textSize="17sp"
@@ -396,6 +391,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/purchase_special_game" />
 
 
+            <ImageView
+                android:id="@+id/arrowUp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/up_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/kalyan_matka"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/arrowDown"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="140dp"
+                android:src="@drawable/down_arrow"
+                app:layout_constraintEnd_toStartOf="@+id/kalyan_matka"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -413,7 +429,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/tickets_validity"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/tickets_validity"
@@ -427,7 +443,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/coins_title"
