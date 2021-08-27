@@ -50,21 +50,14 @@ class SuperNoAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.lucky_number_item, null);
             TextView LuckyNumber = view.findViewById(R.id.luckynumber_textview);
             TextView mGessNumber = view.findViewById(R.id.luckynumber_gess_number);
-            if(kalyanType.equals("Panel") || kalyanType.equals("PanelNew")){
-                LuckyNumber.setTextSize(50);
-            }
+
             if(i != values.size()) {
 
-
-               // LinearLayout mLayout = view.findViewById(R.id.lucky_background);
+                // LinearLayout mLayout = view.findViewById(R.id.lucky_background);
                 mGessNumber.setText("Super No. " + j);
                 LuckyNumber.setText(values.get(i));
 
-              //Random rnd = new Random();
-             // int currentStrokeColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            //            LuckyNumber.setTextColor(currentStrokeColor);
-           //            mLayout.setBackgroundColor(currentStrokeColor);
-            }else{
+            }else {
                 mGessNumber.setText("End");
                 LuckyNumber.setText("...");
             }
@@ -78,10 +71,6 @@ class SuperNoAdapter extends BaseAdapter {
                 mGessNumber.setText("Super No. " + j);
                 LuckyNumber.setText(values.get(i));
 
-                //Random rnd = new Random();
-                // int currentStrokeColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                //            LuckyNumber.setTextColor(currentStrokeColor);
-                //            mLayout.setBackgroundColor(currentStrokeColor);
             }else{
                 mGessNumber.setText("End");
                 LuckyNumber.setText("...");

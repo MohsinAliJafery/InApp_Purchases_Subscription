@@ -27,8 +27,8 @@ android {
         applicationId "com.bhjbestkalyangame.realapplication"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 13
-        versionName "2.2"
+        versionCode 14
+        versionName "2.2.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

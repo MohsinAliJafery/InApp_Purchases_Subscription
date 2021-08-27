@@ -56,7 +56,7 @@ import java.util.Locale;
 
 public class KalyanMatkaDay extends AppCompatActivity {
 
-    private Button SingleOpen, SingleClose, Jodi, JodiClose, Panel, PanelClose;
+    private Button SingleOpen, SingleClose, Jodi, Panel, GetMoreCoins;
     private String adminDate;
 
 
@@ -101,6 +101,7 @@ public class KalyanMatkaDay extends AppCompatActivity {
         Jodi = findViewById(R.id.jodi);
         Panel = findViewById(R.id.panel);
         TotalCoins = findViewById(R.id.total_coins);
+        GetMoreCoins = findViewById(R.id.get_more_coins);
         mLayout = findViewById(R.id.kalyan_matka_day);
 
 
@@ -286,6 +287,13 @@ public class KalyanMatkaDay extends AppCompatActivity {
             }
         });
 
+        GetMoreCoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(KalyanMatkaDay.this, GetMoreCoins.class);
+                startActivity(intent);
+            }
+        });
 
         KalyanResult = findViewById(R.id.kalyan_result);
         KalyanNightResult = findViewById(R.id.kalyan_night_result);

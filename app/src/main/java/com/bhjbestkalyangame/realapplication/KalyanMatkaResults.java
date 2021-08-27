@@ -191,12 +191,9 @@ public class KalyanMatkaResults extends AppCompatActivity {
     private void populateGrid(List<String> values) {
         int i = 3;
         GridView mGridView = findViewById(R.id.gridview_success);
-        if(KalyanType.equals("Panel") || KalyanType.equals("PanelNew")) {
-            mGridView.setNumColumns(i);
-        }else{
-            i = 3;
-            mGridView.setNumColumns(i);
-        }
+
+        mGridView.setNumColumns(i);
+
         mGridView.setAdapter(new SuperNoAdapter(this, values, KalyanType));
     }
 

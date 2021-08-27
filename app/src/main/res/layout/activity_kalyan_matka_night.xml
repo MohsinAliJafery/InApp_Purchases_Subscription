@@ -45,11 +45,9 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:background="@layout/box_shadow_with_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.066">
+        app:layout_constraintTop_toBottomOf="@+id/total_coins">
 
         <LinearLayout
             android:id="@+id/live_result"
@@ -110,12 +108,10 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/getting_things_ready"
-        app:layout_constraintBottom_toTopOf="@id/public_information"
+        app:layout_constraintBottom_toTopOf="@+id/button_constraint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Results"
-        app:layout_constraintVertical_bias="0.049">
+        app:layout_constraintTop_toBottomOf="@+id/Results">
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progressbar"
@@ -180,6 +176,7 @@
             android:background="@layout/primary_background_for_button"
             android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:text="Single Open"
+            android:layout_marginTop="6dp"
             android:textColor="@color/noColor"
             android:textSize="17sp"
             android:padding="10dp"
@@ -193,7 +190,7 @@
             android:id="@+id/single_close_night"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:background="@layout/black_background_for_button"
             android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:text="Single Close"
@@ -210,9 +207,8 @@
             android:id="@+id/jodi_night"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:background="@layout/special_game_background_for_button"
-            android:bottomRightRadius="10dp"
             android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:text="Jodi"
             android:padding="10dp"
@@ -228,9 +224,8 @@
             android:id="@+id/panel_night"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@layout/get_more_coins_layout"
-            android:bottomRightRadius="10dp"
+            android:layout_marginTop="6dp"
+            android:background="@layout/panel_button_layout"
             android:fontFamily="@font/comic_sans_ms_bold_italic"
             android:text="Panel"
             android:padding="10dp"
@@ -241,6 +236,23 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/jodi_night" />
+
+        <Button
+            android:id="@+id/get_more_coins"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@layout/get_more_coins_layout"
+            android:fontFamily="@font/comic_sans_ms_bold_italic"
+            android:text="Get More Coins"
+            android:layout_marginBottom="12dp"
+            android:textColor="@color/noColor"
+            android:textSize="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/panel_night" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

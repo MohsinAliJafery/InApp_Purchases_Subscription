@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#ff3f34</color>
     <color name="colorBackgroundWall">#54FF3F34</color>
-    <color name="colorPrimaryDark">#d31244</color>
+    <color name="colorPrimaryDark">#ff3f34</color>
+    <color name="colorPrimaryAnother">#d31244</color>
     <color name="colorAccent">#00173d</color>
     <color name="colorBackground">#e389b9</color>
     <color name="noColor">#FFF</color>
@@ -12,7 +14,6 @@
     <color name="colorGolden">#00173d</color>
     <color name="colorBlack">#00173d</color>
     <color name="colorOrange">#FFC000</color>
-
     <color name="colorGoogle">#2B7DE9</color>
     <color name="colorPanel">#3baa15</color>
     <color name="colorGray">#808080</color>

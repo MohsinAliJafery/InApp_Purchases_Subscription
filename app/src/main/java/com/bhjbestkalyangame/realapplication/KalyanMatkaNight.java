@@ -34,7 +34,7 @@ import java.util.Calendar;
 
 public class KalyanMatkaNight extends AppCompatActivity {
 
-    private Button SingleOpenNight, SingleCloseNight, JodiNight, JodiCloseNight, PanelNight, PanelCloseNight;
+    private Button SingleOpenNight, SingleCloseNight, JodiNight, JodiCloseNight, PanelNight, PanelCloseNight, GetMoreCoins;
     private String adminDate;
     
     private TextView TicketsValidity, PublicInformation, KalyanResult, KalyanNightResult, mDate, TotalCoins;
@@ -80,7 +80,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
         SingleCloseNight = findViewById(R.id.single_close_night);
         JodiNight = findViewById(R.id.jodi_night);
         PanelNight = findViewById(R.id.panel_night);
-
+        GetMoreCoins = findViewById(R.id.get_more_coins);
         TotalCoins = findViewById(R.id.total_coins);
         mLayout = findViewById(R.id.kalyan_matka_night);
 
@@ -273,6 +273,14 @@ public class KalyanMatkaNight extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        GetMoreCoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(KalyanMatkaNight.this, GetMoreCoins.class);
+                startActivity(intent);
             }
         });
 
