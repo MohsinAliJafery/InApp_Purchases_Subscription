@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bhjbestkalyangame.realapplication">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,9 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SpecialGameCongratulations"></activity>
+        <activity android:name=".SpecialGameCongratulations" />
+        <activity
+        android:name=".SendNotificationToUsers"
+         />
         <activity android:name=".PurchaseSpecialGame" />
         <activity android:name=".SuccessStories" />
+        <activity android:name=".ChattingActivity" />
         <activity android:name=".GetMoreCoins" />
         <activity android:name=".KalyanMatkaNight" />
         <activity android:name=".KalyanMatkaDay" />
@@ -30,7 +36,8 @@
         <activity android:name=".WatchVideoToGetReward" />
         <activity android:name=".CongratulatingReward" />
         <activity android:name=".Disclaimer" />
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,6 +50,16 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4453843474169453~8814631813" />
+
+        <service
+            android:name=".Service.FirebaseMessagingService"
+            tools:ignore="ExportedService"
+            android:permission="TODO">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

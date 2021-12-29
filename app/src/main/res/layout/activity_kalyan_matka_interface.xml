@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:id="@+id/kalyan_work_activity"
     android:background="@color/noColor"
-    android:padding="7dp"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="7dp"
     android:layout_height="match_parent"
     tools:context=".KalyanMatkaInterface">
 
@@ -14,18 +16,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@layout/result_top_bar_background"
+        android:background="@layout/orange_background_with_slight_border_radius"
         android:gravity="center"
-        android:textColor="#F8F9F9"
+        android:textColor="@color/colorGolden"
         android:textAllCaps="true"
         android:text="Kalyan Matka King"
-        android:padding="10dp"
+        android:padding="17dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
-        android:textSize="30sp"
+        android:textSize="27sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/log_out"
+        android:clickable="true"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title" />
 
     <TextView
         android:id="@+id/today_date"
@@ -68,352 +81,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/special_title"
         app:layout_constraintTop_toBottomOf="@+id/today_date" />
-
-
-       <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:id="@+id/Results"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:background="@layout/box_shadow_with_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_coins">
-
-        <LinearLayout
-            android:id="@+id/live_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorSnackbar"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/kalyan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹ LIVE RESULT ₹"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:textColor="@color/colorGolden"
-                android:textSize="27sp"
-                android:textStyle="bold|italic" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/kalyan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FF7F50"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/live_result"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="KALYAN"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:textColor="#F8F9F9 "
-                android:textSize="27sp"
-                android:textStyle="bold|italic" />
-
-            <TextView
-                android:id="@+id/kalyan_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Loading..."
-                android:textColor="#F8F9F9"
-                android:textSize="25sp"
-                android:textStyle="bold|italic" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#E74C3C"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/kalyan"
-            tools:layout_editor_absoluteX="4dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="KALYAN NIGHT"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:textColor="#F8F9F9 "
-                android:textSize="27sp"
-                android:textStyle="bold|italic" />
-
-            <TextView
-                android:id="@+id/kalyan_night_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Loading..."
-                android:textColor="#F8F9F9 "
-                android:textSize="25sp"
-                android:textStyle="bold|italic" />
-
-        </LinearLayout>
-
-     </androidx.constraintlayout.widget.ConstraintLayout>
-
-     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/getting_things_ready"
-        app:layout_constraintBottom_toTopOf="@id/public_information"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Results"
-        app:layout_constraintVertical_bias="0.049">
-
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/progressbar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/colorGolden"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Connecting..."
-            android:textSize="23sp"
-            android:fontFamily="@font/comic_sans_ms_bold_italic"
-            android:textStyle="bold|italic"
-            android:textColor="#C70039"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressbar" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <TextView
-        android:id="@+id/public_information"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@layout/white_background_with_primary_text_color"
-        android:ellipsize="marquee"
-        android:fontFamily="@font/comic_sans_ms_bold_italic"
-        android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:padding="10dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text="Loading..."
-        android:textAllCaps="true"
-        android:textColor="@color/colorGolden"
-        android:textSize="23sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Results" />
-
-       <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:id="@+id/button_constraint"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/public_information"
-        tools:layout_editor_absoluteX="7dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/public_information"
-            android:paddingBottom="10dp"
-            tools:layout_editor_absoluteX="7dp">
-
-            <Button
-                android:id="@+id/success_stories"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/yellow_background_for_button"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:textColor="@color/noColor"
-                android:text="Success Stories"
-                android:textSize="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/special_game"/>
-
-            <Button
-                android:id="@+id/kalyan_matka"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:background="@layout/primary_background_for_button"
-                android:enabled="false"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Kalyan Matka"
-                android:layout_marginTop="6dp"
-                android:textColor="@color/noColor"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <Button
-                android:id="@+id/kalyan_night"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/black_background_for_button"
-                android:enabled="false"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Kalyan Night"
-                android:textColor="@color/noColor"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/kalyan_matka" />
-
-            <Button
-                android:id="@+id/rajdhani"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/button_for_rajdhani"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Rajdhani Night"
-                android:enabled="false"
-                android:textColor="@color/noColor"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/kalyan_night" />
-
-
-            <Button
-                android:id="@+id/special_game"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/special_game_background_for_button"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Special Game"
-                android:visibility="gone"
-                android:textColor="@color/noColor"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rajdhani" />
-
-            <Button
-                android:id="@+id/get_a_ticket"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/premium_background_for_button"
-                android:enabled="false"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="1 Day Game"
-                android:textSize="17sp"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/success_stories" />
-
-            <Button
-                android:id="@+id/become_a_vip_member"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/premium_background_for_button"
-                android:enabled="false"
-                android:textColor="@color/colorBlack"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Vip Membership"
-                android:textSize="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/get_a_ticket" />
-
-            <Button
-                android:id="@+id/purchase_special_game"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/premium_background_for_button"
-                android:textColor="@color/colorBlack"
-                android:visibility="gone"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Get Special Game"
-                android:textSize="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member" />
-
-            <Button
-                android:id="@+id/get_more_coins"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@layout/get_more_coins_layout"
-                android:fontFamily="@font/comic_sans_ms_bold_italic"
-                android:text="Get More Coins"
-                android:layout_marginBottom="12dp"
-                android:textColor="@color/noColor"
-                android:textSize="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/purchase_special_game" />
-
-
-            <ImageView
-                android:id="@+id/arrowUp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="70dp"
-                android:src="@drawable/up_arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/kalyan_matka"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/arrowDown"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="140dp"
-                android:src="@drawable/down_arrow"
-                app:layout_constraintEnd_toStartOf="@+id/kalyan_matka"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
 
     <TextView
         android:id="@+id/tickets_title"
@@ -471,14 +138,412 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tickets_title" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:id="@+id/facebook"
-        android:layout_height="wrap_content"
-        android:src="@drawable/facebook"
-        app:layout_constraintBottom_toBottomOf="@+id/Results"
-        app:layout_constraintEnd_toStartOf="@+id/Results"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/today_date" />
+        app:layout_constraintTop_toBottomOf="@id/special_title"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/button_constraint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/middle_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="7dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/Results"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:background="@layout/box_shadow_with_radius"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/live_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorSnackbar"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@id/kalyan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comic_sans_ms_bold_italic"
+                            android:text="₹ LIVE RESULT ₹"
+                            android:textColor="@color/colorGolden"
+                            android:textSize="27sp"
+                            android:textStyle="bold|italic" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/kalyan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FF7F50"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/live_result">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comic_sans_ms_bold_italic"
+                            android:text="KALYAN"
+                            android:textColor="#F8F9F9 "
+                            android:textSize="27sp"
+                            android:textStyle="bold|italic" />
+
+                        <TextView
+                            android:id="@+id/kalyan_result"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loading..."
+                            android:textColor="#F8F9F9"
+                            android:textSize="25sp"
+                            android:textStyle="bold|italic" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#E74C3C"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/kalyan"
+                        tools:layout_editor_absoluteX="4dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/comic_sans_ms_bold_italic"
+                            android:text="KALYAN NIGHT"
+                            android:textColor="#F8F9F9 "
+                            android:textSize="27sp"
+                            android:textStyle="bold|italic" />
+
+                        <TextView
+                            android:id="@+id/kalyan_night_result"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loading..."
+                            android:textColor="#F8F9F9 "
+                            android:textSize="25sp"
+                            android:textStyle="bold|italic" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/getting_things_ready"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:layout_constraintBottom_toTopOf="@id/all_buttons"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Results">
+
+                    <TextView
+                        android:id="@+id/public_information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@layout/white_background_with_primary_text_color"
+                        android:ellipsize="marquee"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:gravity="center"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:padding="10dp"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="Loading..."
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorGolden"
+                        android:textSize="23sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/progressbar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/colorGolden"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/public_information" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Connecting..."
+                        android:textColor="#C70039"
+                        android:textSize="23sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/progressbar" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/all_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/getting_things_ready">
+
+                    <Button
+                        android:id="@+id/success_stories"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/yellow_background_for_button"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Success Stories"
+                        android:textColor="@color/noColor"
+                        android:textSize="17dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/special_game" />
+
+
+                    <Button
+                        android:id="@+id/special_game"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/orange_background_with_slight_border_radius"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Special Game"
+                        android:textColor="@color/colorGolden"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.495"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <Button
+                        android:id="@+id/kalyan_matka"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/primary_background_for_button"
+                        android:enabled="false"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Kalyan Matka"
+                        android:textColor="@color/noColor"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/special_game"/>
+
+                    <Button
+                        android:id="@+id/kalyan_night"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/black_background_for_button"
+                        android:enabled="false"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Kalyan Night"
+                        android:textColor="@color/noColor"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/kalyan_matka" />
+
+                    <Button
+                        android:id="@+id/rajdhani"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/button_for_rajdhani"
+                        android:enabled="false"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Rajdhani Night"
+                        android:textColor="@color/noColor"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/kalyan_night" />
+
+
+
+                    <Button
+                        android:id="@+id/get_a_ticket"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/premium_background_for_button"
+                        android:enabled="false"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Buy 1 Day Game"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="17sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rajdhani" />
+
+                    <Button
+                        android:id="@+id/become_a_vip_member"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/premium_background_for_button"
+                        android:enabled="false"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Vip Membership"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/get_a_ticket" />
+
+                    <Button
+                        android:id="@+id/purchase_special_game"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@layout/premium_background_for_button"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Buy Special Game"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="17dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member" />
+
+                    <Button
+                        android:id="@+id/get_more_coins"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@layout/get_more_coins_layout"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Get More Coins"
+                        android:textColor="@color/noColor"
+                        android:textSize="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/purchase_special_game" />
+
+                    <Button
+                        android:id="@+id/only_for_bhj"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@layout/get_more_coins_layout"
+                        android:fontFamily="@font/comic_sans_ms_bold_italic"
+                        android:text="Only for BHJ"
+                        android:textColor="@color/noColor"
+                        android:textSize="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/get_more_coins" />
+
+                    <ImageView
+                        android:id="@+id/arrowUp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/up_arrow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/kalyan_matka"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/arrowDown"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="140dp"
+                        android:src="@drawable/down_arrow"
+                        app:layout_constraintEnd_toStartOf="@+id/kalyan_matka"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <ImageView
+                    android:id="@+id/one_day_game"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/one_day_game"
+                    app:layout_constraintBottom_toBottomOf="@+id/Results"
+                    app:layout_constraintEnd_toStartOf="@+id/Results"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/seven_day_game"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/seven_days_game"
+                    app:layout_constraintBottom_toTopOf="@+id/getting_things_ready"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/Results"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemRippleColor="@color/colorPrimary"
+        app:itemTextColor="@color/colorBlack"
+        android:background="?android:attr/windowBackground"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

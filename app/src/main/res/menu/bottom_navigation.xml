@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+<item
+    android:title="GET COINS"
+    android:id="@+id/coins"
+    android:color="#27AAE9"
+    android:icon="@drawable/coins"/>
+
+    <item
+        android:title="FACEBOOK"
+        android:id="@+id/facebook"
+        android:color="#27AAE9"
+        android:icon="@drawable/ic_baseline_thumb_up_24"/>
+
+    <item
+        android:title="SUCCESS STORIES"
+        android:id="@+id/success_stories"
+        android:iconTint="#FFEB3C"
+        android:icon="@drawable/ic_baseline_amp_stories_24"/>
+
+    <item
+        android:title="CHAT"
+        android:id="@+id/chat"
+        android:iconTint="@color/colorPrimary"
+        android:icon="@drawable/ic_chat_black_24dp"/>
+
+</menu>

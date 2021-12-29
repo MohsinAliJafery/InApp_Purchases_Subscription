@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -52,6 +55,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -81,7 +86,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private Calendar calendar;
      private SimpleDateFormat dateFormat;
      private String date, adminDate, Mobiledate;
-     private Button KalyanMatka, KalyanNight, panel_kalyan, GetMoreCoins;
+     private Button KalyanMatka, KalyanNight, GetMoreCoins, OnlyForBHJ;
      public Button GetTicket, BecomeVipMember, SucessStories;
      private GoogleSignInAccount googleSignInAccount;
      private String GoogleAccountName, GoogleAccountEmail, GoogleAccountID;
@@ -98,8 +103,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private FirebaseUser currentUser;
      private String Valid;
 
-     private ImageView mFacebook;
-
+     private ImageView mOneDayGame, mSevenDayGame;
 
      private ScrollView mScrollView;
      private boolean IsProductAvailable, IsSpecialProductAvailable, IsKalyanNightPurchasedWithCoins;
@@ -119,6 +123,8 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
      private ImageView ArrowUp, ArrowDown;
 
+     private ImageView Logout;
+
 
      Button PurchaseSpecialGame, SpecialGame, Rajdhani;
      String SpecialGameMessage, SpecialGameTitle, SpecialGameSubTitle, SpecialGameVisibility;
@@ -127,6 +133,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
      private boolean SpecialGameAvailability;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,12 +148,14 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         Valid = "valid";
 
         IsKalyanNightPurchasedWithCoins = false;
-        mFacebook = findViewById(R.id.facebook);
+        mOneDayGame = findViewById(R.id.one_day_game);
+        mSevenDayGame = findViewById(R.id.seven_day_game);
         KalyanMatka = findViewById((R.id.kalyan_matka));
         KalyanNight   = findViewById((R.id.kalyan_night));
         IsSpecialProductAvailable = false;
         BecomeVipMember = findViewById(R.id.become_a_vip_member);
         GetMoreCoins = findViewById(R.id.get_more_coins);
+        OnlyForBHJ = findViewById(R.id.only_for_bhj);
         progressBar = findViewById(R.id.progressbar);
         TotalCoins = findViewById(R.id.total_coins);
         SucessStories = findViewById(R.id.success_stories);
@@ -156,8 +165,13 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         Rajdhani = findViewById(R.id.rajdhani);
         ArrowUp = findViewById(R.id.arrowUp);
         ArrowDown = findViewById(R.id.arrowDown);
-
         mScrollView = findViewById(R.id.button_constraint);
+        Logout = findViewById(R.id.logout);
+
+        BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
+        mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
+
+
 
         mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -169,13 +183,14 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
         mBuilder = new AlertDialog.Builder(this);
 
-        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+//        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        Animation anim = new RotateAnimation(0, 43);
         anim.setDuration(200);
         anim.setStartOffset(50);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
 
-        SucessStories.startAnimation(anim);
+        SpecialGame.startAnimation(anim);
 
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -184,9 +199,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 anim.setRepeatCount(Animation.ABSOLUTE);
             }
         }, 5000);
-
-
-
 
 
         mNetwork = haveNetworkConnection();
@@ -207,6 +219,8 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         }else{
             progressBar.setVisibility(View.VISIBLE);
         }
+
+
 
         mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mRef = mDatabase.getReference("current_super_numbers").child("date");
@@ -284,10 +298,60 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
         //method to get the right URL to use in the intent
 
-        mFacebook.setOnClickListener(new View.OnClickListener() {
+        mOneDayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(getOpenFacebookIntent());
+                if(!ValidOrInvalid) {
+                    Intent intent = new Intent(KalyanMatkaInterface.this, InAppProducts.class);
+                    startActivity(intent);
+                }else{
+
+                    String message;
+                    if(Ticket){
+                        message = "You've already purchased the game!";
+                    }else{
+                        message = "You've already purchased the subscription plan!";
+                    }
+                    Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                            .show();
+                }
+            }
+        });
+
+          mSevenDayGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!ValidOrInvalid) {
+                    Intent intent = new Intent(KalyanMatkaInterface.this, InAppSubscription.class);
+                    startActivity(intent);
+                }else{
+                    String message;
+                    if(Ticket){
+                        message = "You've already purchased the game!";
+                    }else{
+                        message = "You've already purchased the subscription plan!";
+                    }
+                    Snackbar.make(mLayout, message, Snackbar.LENGTH_LONG)
+                            .setTextColor(getResources().getColor(R.color.colorGolden))
+                            .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                            .show();
+                }
+            }
+        });
+
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        finish();
+                    }
+                });
+
             }
         });
 
@@ -304,9 +368,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         GetTicket = findViewById(R.id.get_a_ticket);
         PublicInformation = findViewById(R.id.public_information);
 
-
-         mAlerttitle = new TextView(this);
-
+        mAlerttitle = new TextView(this);
         mAlerttitle.setText("UNLOCK KALYAN NIGHT");
         mAlerttitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mAlerttitle.setPadding(10, 10, 10, 10);
@@ -314,10 +376,8 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         mAlerttitle.setTextColor(Color.WHITE);
         mAlerttitle.setTextSize(20);
 
-
         mBuilder.setMessage("It Will Cost You 10 Gold Coins! If You Don't Have Enough Right Now Then Please Watch Rewarding Videos To Earn More Coins. Thank-you!");
         mBuilder.setCustomTitle(mAlerttitle);
-
 
         mBuilder.setPositiveButton("UNLOCK", new DialogInterface.OnClickListener() {
                     @Override
@@ -430,7 +490,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             GoogleAccountEmail = googleSignInAccount.getEmail();
         }
 
-
         KalyanMatka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -510,6 +569,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
             }
         });
+
 
 
 
@@ -668,11 +728,18 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         });
 
-
         GetMoreCoins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(KalyanMatkaInterface.this, GetMoreCoins.class);
+                startActivity(intent);
+            }
+        });
+
+        OnlyForBHJ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(KalyanMatkaInterface.this, SendNotificationToUsers.class);
                 startActivity(intent);
             }
         });
@@ -684,8 +751,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 startActivity(intent);
             }
         });
-
-
 
     }
 
@@ -953,7 +1018,25 @@ private void configureGoogleSignIn() {
         date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
+
         if(currentUser != null){
+                SharedPreferences sharedpreferences = getSharedPreferences("RealApp", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("user_id", currentUser.getUid());
+                editor.apply();
+
+                DatabaseReference mSaveUserDataRef = mDatabase.getReference("all_users_data").child(currentUser.getUid());
+                HashMap<String, String> mHashmap = new HashMap();
+                mHashmap.put("ID", currentUser.getUid());
+                mHashmap.put("Username", currentUser.getDisplayName());
+                mHashmap.put("Email", currentUser.getEmail());
+                mHashmap.put("ImageUrl", "default");
+                mHashmap.put("Status", "online");
+
+                mSaveUserDataRef.setValue(mHashmap);
+
                 mReference = mDatabase.getReference("all_users").child(currentUser.getUid()).child("products");
                 mReference.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -1121,6 +1204,36 @@ private void configureGoogleSignIn() {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/kalyanbestgame"));
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mBottomNavigationListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Intent intent;
+                    switch (item.getItemId()){
+
+                        case R.id.facebook:
+                            startActivity(getOpenFacebookIntent());
+                            break;
+
+                        case R.id.success_stories:
+                            intent = new Intent(KalyanMatkaInterface.this, SuccessStories.class);
+                            startActivity(intent);
+                            break;
+
+                        case R.id.chat:
+                            intent = new Intent(KalyanMatkaInterface.this, ChattingActivity.class);
+                            startActivity(intent);
+                            break;
+
+
+                    }
+
+                    return true;
+
+                }
+            };
 
 
 }

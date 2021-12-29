@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -41,6 +42,8 @@ public class Disclaimer extends AppCompatActivity {
         setContentView(R.layout.activity_disclaimer);
 
         Continue = findViewById(R.id.continue_click);
+        mTitle = findViewById(R.id.title);
+
         mTitle = findViewById(R.id.title);
 
         Continue.setOnClickListener(new View.OnClickListener() {
