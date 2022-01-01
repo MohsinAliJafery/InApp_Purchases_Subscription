@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/lucky_background"
+    android:layout_margin="5dp"
+    android:background="@layout/gridview_rajdhani_border"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@layout/rajdhani_lucky_number_title_background"
+        android:id="@+id/luckynumber_gess_number"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:padding="5dp"
+        android:gravity="center"
+        android:textColor="@color/colorSnackbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/luckynumber_textview"
+        android:padding="5dp"
+        android:fontFamily="@font/comic_sans_ms_bold_italic"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="50dp"
+        android:textColor="@color/colorBlack"/>
+
+</LinearLayout>

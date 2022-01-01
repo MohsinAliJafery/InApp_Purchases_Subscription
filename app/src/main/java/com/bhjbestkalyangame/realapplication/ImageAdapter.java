@@ -24,6 +24,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
+        int height = parent.getMeasuredHeight() / 4;
+        v.setMinimumHeight(height);
         return new ImageViewHolder(v);
     }
 
@@ -32,6 +34,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         Upload uploadCurrent = mUploads.get(position);
         holder.Title.setText(uploadCurrent.getTitle());
         holder.Description.setText(uploadCurrent.getDescription());
+
         mPicasso.get()
                 .load(uploadCurrent.getImageUrl())
                 .into(holder.ImageView);

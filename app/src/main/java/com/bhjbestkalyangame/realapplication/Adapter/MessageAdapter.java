@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhjbestkalyangame.realapplication.ChattingActivity;
 import com.bhjbestkalyangame.realapplication.Model.Chat;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +33,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         this.mContext = mContext;
         this.mChat = mChat;
         this.mImageUrl = mImageUrl;
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
 
@@ -43,34 +43,28 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if(viewType == MSG_TYPE_RIGHT) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, parent, false);
-            mImageUrl = "https://firebasestorage.googleapis.com/v0/b/childcareapp-e9675.appspot.com/o/Uploads%2F1604329873197.png?alt=media&token=8de870fa-39e5-44e1-b32d-bb8c41d7f469";
             return new ViewHolder(view);
         }else{
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent, false);
-            mImageUrl = "https://firebasestorage.googleapis.com/v0/b/childcareapp-e9675.appspot.com/o/Uploads%2F1604332064892.png?alt=media&token=dc8829b6-ec8c-46b0-9e06-6c08fd65ba90";
             return new ViewHolder(view);
         }
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Chat chat = mChat.get(position);
-
         holder.ShowMessage.setText(chat.getMessage());
 
-        if(mImageUrl.equals("default")){
-            holder.ProfileImage.setImageResource(R.mipmap.ic_launcher);
-        }else{
-          Glide.with(mContext).load(mImageUrl).into(holder.ProfileImage);
+        if(chat.getSender().equals(mFirebaseUser.getUid())) {
+            Glide.with(mContext).load(mImageUrl).into(holder.ProfileImage);
         }
-
-
         if(position == mChat.size()-1){
             if(chat.isSeen()){
-                holder.TextSeen.setText("seen");
+                holder.TextSeen.setText("Seen");
             }else{
-                holder.TextSeen.setText("delivered");
+                holder.TextSeen.setText("Delivered");
             }
         }else {
             holder.TextSeen.setVisibility(View.GONE);
@@ -85,7 +79,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-
         public TextView ShowMessage;
         public ImageView ProfileImage;
         public TextView TextSeen;
@@ -96,7 +89,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             ProfileImage = itemView.findViewById(R.id.profile_image);
             TextSeen = itemView.findViewById(R.id.text_seen);
         }
-
 
     }
 

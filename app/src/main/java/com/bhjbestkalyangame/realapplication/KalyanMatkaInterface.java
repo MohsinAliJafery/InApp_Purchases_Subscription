@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -48,6 +49,7 @@ import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.bhjbestkalyangame.realapplication.Utils.BillingClientSetup;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -78,6 +80,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class KalyanMatkaInterface extends AppCompatActivity implements PurchasesUpdatedListener{
 
@@ -125,7 +129,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
      private ImageView Logout;
 
-
+    CircleImageView ProfileImage;
      Button PurchaseSpecialGame, SpecialGame, Rajdhani;
      String SpecialGameMessage, SpecialGameTitle, SpecialGameSubTitle, SpecialGameVisibility;
 
@@ -167,6 +171,8 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         ArrowDown = findViewById(R.id.arrowDown);
         mScrollView = findViewById(R.id.button_constraint);
         Logout = findViewById(R.id.logout);
+        ProfileImage = findViewById(R.id.profile_image);
+
 
         BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
         mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
@@ -183,20 +189,29 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
         mBuilder = new AlertDialog.Builder(this);
 
-//        Animation anim = new AlphaAnimation(0.0f, 1.0f);
-        Animation anim = new RotateAnimation(0, 43);
-        anim.setDuration(200);
-        anim.setStartOffset(50);
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        Animation spec = new AlphaAnimation(0.0f, 1.0f);
+
+        anim.setDuration(300);
+        anim.setStartOffset(0);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
 
+        spec.setDuration(300);
+        spec.setStartOffset(300);
+        spec.setRepeatMode(Animation.REVERSE);
+        spec.setRepeatCount(Animation.INFINITE);
+
         SpecialGame.startAnimation(anim);
+        PurchaseSpecialGame.startAnimation(spec);
 
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 anim.setRepeatCount(Animation.ABSOLUTE);
+                spec.setRepeatCount(Animation.ABSOLUTE);
+
             }
         }, 5000);
 
@@ -495,6 +510,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             public void onClick(View view) {
                 Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaDay.class);
                 intent.putExtra("KalyanType", "KalyanGame");
+                intent.putExtra("Game", "Kalyan");
                 intent.putExtra("CoinsLimit", CoinsLimit);
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 intent.putExtra("date", adminDate);
@@ -580,6 +596,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
                 intent.putExtra("KalyanType", "special_game");
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
+                intent.putExtra("Game", "Special");
                 intent.putExtra("date", adminDate);
                 intent.putExtra("Title", SpecialGameTitle);
                 intent.putExtra("SubTitle", SpecialGameSubTitle);
@@ -618,6 +635,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
                 Intent intent = new Intent(KalyanMatkaInterface.this, KalyanMatkaResults.class);
                 intent.putExtra("KalyanType", "Rajdhani");
+                intent.putExtra("Game", "Rajdhani");
                 intent.putExtra("date", adminDate);
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
 
@@ -626,7 +644,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     startActivity(intent);
 
                 }else{
-//                  alert.show();  and display here kalyan night message in snackbar
                     int Coins = preferences.getInt("TotalCoins", 0);
                     if(Coins >= CoinsLimit){
                         Coins = Coins - CoinsLimit;
@@ -1026,13 +1043,14 @@ private void configureGoogleSignIn() {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("user_id", currentUser.getUid());
                 editor.apply();
+                Glide.with(KalyanMatkaInterface.this).load(currentUser.getPhotoUrl()).into(ProfileImage);
 
                 DatabaseReference mSaveUserDataRef = mDatabase.getReference("all_users_data").child(currentUser.getUid());
                 HashMap<String, String> mHashmap = new HashMap();
                 mHashmap.put("ID", currentUser.getUid());
                 mHashmap.put("Username", currentUser.getDisplayName());
                 mHashmap.put("Email", currentUser.getEmail());
-                mHashmap.put("ImageUrl", "default");
+                mHashmap.put("ImageUrl", currentUser.getPhotoUrl().toString());
                 mHashmap.put("Status", "online");
 
                 mSaveUserDataRef.setValue(mHashmap);
@@ -1222,12 +1240,15 @@ private void configureGoogleSignIn() {
                             startActivity(intent);
                             break;
 
-                        case R.id.chat:
+                        case R.id.support:
                             intent = new Intent(KalyanMatkaInterface.this, ChattingActivity.class);
                             startActivity(intent);
                             break;
 
-
+                        case R.id.coins:
+                            intent = new Intent(KalyanMatkaInterface.this, GetMoreCoins.class);
+                            startActivity(intent);
+                            break;
                     }
 
                     return true;

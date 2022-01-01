@@ -16,8 +16,11 @@
     <color name="colorOrange">#FFC000</color>
     <color name="colorGoogle">#2B7DE9</color>
     <color name="colorPanel">#3baa15</color>
-    <color name="colorGray">#808080</color>
+    <color name="colorGray">#C9C0C0</color>
     <color name="colorRed">#CB4335</color>
     <color name="colorSnackbar">#FFFF00</color>
+    <color name="colorGoldish">#FFFFC000</color>
+
+    <color name="colorWhiteTitle">#F8F9F9</color>
 
 </resources>

@@ -58,7 +58,7 @@
         android:lineHeight="30dp"
         android:text="Note: "
         android:textSize="21dp"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:padding="7dp"
+    android:background="@color/noColor"
     android:layout_height="match_parent"
     tools:context=".SuccessStories">
 
@@ -12,11 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@layout/result_top_bar_background"
+        android:background="@layout/kalyan_night_title_bar_layout"
         android:gravity="center"
-        android:textColor="#F8F9F9"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="true"
-        android:text="Success Stories"
+        android:text="Winning History"
         android:padding="10dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textSize="30sp"
@@ -39,11 +40,18 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
+        android:paddingBottom="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="10dp"
+        android:src="@drawable/kalyan_night_three_dots"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

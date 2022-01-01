@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@layout/result_top_bar_background"
+        android:background="@layout/kalyan_topbar_background"
         android:gravity="center"
-        android:textColor="#F8F9F9"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="true"
         android:text="Kalyan"
         android:padding="10dp"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
     <TextView
-        android:id="@+id/tickets_sub_title"
+        android:id="@+id/membership_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/noColor"
@@ -94,6 +94,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sub_title"
         android:paddingBottom="170dp"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="3dp"
         android:stretchMode="columnWidth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,8 +107,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="Please wait! Kalyan Matka King shall be updated soon...\nकृपया प्रतीक्षा करें! कल्याण मटका किंग को जल्द ही अपडेट किया जाएगा ..."
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorOrange"
+        android:textAllCaps="true"
         android:textSize="25sp"
+        android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,16 +122,17 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorPrimaryDark"
+        android:indeterminateTint="@color/colorSnackbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/gridview_success"
         app:layout_constraintStart_toStartOf="@+id/gridview_success"
         app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
     <ImageView
+        android:id="@+id/three_dots"
         android:layout_width="40dp"
         android:layout_height="20dp"
-        android:src="@drawable/three_dots"
+        android:src="@drawable/kalyan_three_dots"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

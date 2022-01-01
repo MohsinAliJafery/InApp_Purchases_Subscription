@@ -1,21 +1,23 @@
 package com.bhjbestkalyangame.realapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -35,12 +37,12 @@ import java.util.TreeSet;
 
 public class KalyanMatkaResults extends AppCompatActivity {
 
-    String KalyanType;
+    String KalyanType, Game;
     Map<String, String> Numbers;
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
     List<String> Values;
-    TextView mTitle, mSubTitle, TicketsValidity, mDate, please_wait_KMG_shall_be_updated_soon;
+    TextView mTitle, mSubTitle, TicketsValidity, mDate, please_wait_KMG_shall_be_updated_soon, MembershipTitle;
     ConstraintLayout mLayout;
     private boolean ValidOrInvalid;
     ProgressBar progressBar;
@@ -51,11 +53,12 @@ public class KalyanMatkaResults extends AppCompatActivity {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String MobileDate, date;
-
+    private ImageView ThreeDots;
     private String Title, SubTitle;
 
     DatabaseReference mRef;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -70,6 +73,8 @@ public class KalyanMatkaResults extends AppCompatActivity {
 
         mNetwork = haveNetworkConnection();
         mLayout = findViewById(R.id.Resultlayout);
+        MembershipTitle = findViewById(R.id.membership_title);
+        ThreeDots = findViewById(R.id.three_dots);
 
 
         please_wait_KMG_shall_be_updated_soon = findViewById(R.id.please_wait_KMG_shall_be_updated_soon);
@@ -102,6 +107,7 @@ public class KalyanMatkaResults extends AppCompatActivity {
 
         Intent mIntent = getIntent();
         KalyanType = mIntent.getStringExtra("KalyanType");
+        Game = mIntent.getStringExtra("Game");
         AdminDate = mIntent.getStringExtra("date");
         Title = mIntent.getStringExtra("Title");
         SubTitle = mIntent.getStringExtra("SubTitle");
@@ -123,6 +129,20 @@ public class KalyanMatkaResults extends AppCompatActivity {
 
             }
         });
+
+        if(Game.equals("KalyanNight")){
+            mTitle.setBackgroundResource(R.layout.kalyan_night_title_bar_layout);
+            ThreeDots.setImageResource(R.drawable.kalyan_night_three_dots);
+            please_wait_KMG_shall_be_updated_soon.setTextColor(R.color.colorPrimary);
+            progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorBlack), PorterDuff.Mode.SRC_IN);
+        }else if(Game.equals("Rajdhani")){
+            mTitle.setBackgroundResource(R.layout.rajdhani_title_bar_layout);
+            ThreeDots.setImageResource(R.drawable.rajdhani_three_dots);
+            please_wait_KMG_shall_be_updated_soon.setTextColor(R.color.colorBackground);
+            progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorBackground), PorterDuff.Mode.SRC_IN);
+
+        }
+
 
         if(KalyanType.equals("SingleOpenKalyan") || KalyanType.equals("SingleCloseKalyan") || KalyanType.equals("JodiKalyan") || KalyanType.equals("PanelKalyan")){
             mRef = mDatabase.getReference("kalyan_matka_super_numbers").child(MobileDate).child(KalyanType);
@@ -194,7 +214,7 @@ public class KalyanMatkaResults extends AppCompatActivity {
 
         mGridView.setNumColumns(i);
 
-        mGridView.setAdapter(new SuperNoAdapter(this, values, KalyanType));
+        mGridView.setAdapter(new SuperNoAdapter(this, values, KalyanType, Game));
     }
 
 

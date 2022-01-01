@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:shape="rectangle" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorGray" /> <!-- border color -->
+        </shape>
+    </item>
 
-    <!-- View background color -->
-    <solid
-        android:color="@color/colorSnackbar" >
-    </solid>
-
-    <!-- View border color and width -->
-    <stroke
-
-        android:color="@color/colorGolden" >
-    </stroke>
-
-    <!-- The radius makes the corners rounded -->
-    <corners
-        android:radius="1dp"   >
-    </corners>
-
-</shape>
+    <item
+        android:top="1dp"
+        android:bottom="1dp">   <!-- adjust borders width here -->
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorSnackbar" />  <!-- background color -->
+        </shape>
+    </item>
+</layer-list>

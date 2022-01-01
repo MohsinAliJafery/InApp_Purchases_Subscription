@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +55,7 @@ public class ChattingActivity extends AppCompatActivity {
         List<Chat> mChat;
 
         RecyclerView mRecyclerView;
+        private ContentLoadingProgressBar progressBar;
 
         FirebaseUser mFirebaseUser;
         DatabaseReference mDatabaseReference;
@@ -75,14 +77,8 @@ public class ChattingActivity extends AppCompatActivity {
             Toolbar mToolbar = findViewById(R.id.my_toolbar);
             setSupportActionBar(mToolbar);
             getSupportActionBar().setTitle("");
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(ChattingActivity.this, ChatActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-//                }
-//            });
 
+            progressBar = findViewById(R.id.progressbar);
             mChat = new ArrayList<>();
 
             SendMessage = findViewById(R.id.send_message);
@@ -113,16 +109,8 @@ public class ChattingActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     User user = snapshot.getValue(User.class);
-                    Username.setText(user.getUsername());
-                    if(user.getImageUrl().equals("default")){
-                        ProfileImage.setImageResource(R.mipmap.ic_launcher);
-                    }else{
-                        Glide.with(getApplicationContext()).load(user.getImageUrl()).into(ProfileImage);
-                    }
-
-                    //readMessage(mFirebaseUser.getUid(), UserId, user.getImageUrl());
                     readMessage(mUserID, AdminId, user.getImageUrl());
-
+                    progressBar.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -130,8 +118,6 @@ public class ChattingActivity extends AppCompatActivity {
 
                 }
             });
-
-            seenMessage(AdminId);
 
             SendMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -277,7 +263,6 @@ public class ChattingActivity extends AppCompatActivity {
         @Override
         protected void onPause() {
             super.onPause();
-            mDatabaseReference.removeEventListener(mSeenListener);
             status("offline");
         }
     }

@@ -138,6 +138,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                 Intent intent = new Intent(KalyanMatkaNight.this, KalyanMatkaResults.class);
                 intent.putExtra("KalyanType", "SingleOpenNight");
+                intent.putExtra("Game", "KalyanNight");
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 intent.putExtra("date", adminDate);
 
@@ -176,6 +177,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                 Intent intent = new Intent(KalyanMatkaNight.this, KalyanMatkaResults.class);
                 intent.putExtra("KalyanType", "SingleCloseNight");
+                intent.putExtra("Game", "KalyanNight");
                 intent.putExtra("date", adminDate);
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 if(ValidOrInvalid){
@@ -212,6 +214,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                 Intent intent = new Intent(KalyanMatkaNight.this, KalyanMatkaResults.class);
                 intent.putExtra("KalyanType", "JodiNight");
+                intent.putExtra("Game", "KalyanNight");
                 intent.putExtra("date", adminDate);
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 if(ValidOrInvalid){
@@ -249,6 +252,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
                 Intent intent = new Intent(KalyanMatkaNight.this, KalyanMatkaResults.class);
                 intent.putExtra("KalyanType", "PanelNight");
+                intent.putExtra("Game", "KalyanNight");
                 intent.putExtra("date", adminDate);
                 intent.putExtra("ValidOrInvalid", ValidOrInvalid);
                 if(ValidOrInvalid){
