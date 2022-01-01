@@ -354,20 +354,12 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/paid_content"
+                        android:src="@drawable/debit_card"
                         android:layout_marginLeft="20dp"
                         app:layout_constraintBottom_toBottomOf="@+id/special_game"
                         app:layout_constraintStart_toStartOf="@+id/special_game"
                         app:layout_constraintTop_toTopOf="@+id/special_game" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/debit_card"
-                        app:layout_constraintBottom_toBottomOf="@+id/purchase_special_game"
-                        app:layout_constraintEnd_toStartOf="@+id/purchase_special_game"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/purchase_special_game" />
 
                     <Button
                         android:id="@+id/special_game"
@@ -420,7 +412,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/paid_content"
+                        android:src="@drawable/debit_card"
                         app:layout_constraintBottom_toBottomOf="@+id/kalyan_matka"
                         app:layout_constraintEnd_toStartOf="@+id/kalyan_matka"
                         app:layout_constraintStart_toStartOf="parent"
@@ -494,14 +486,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/rajdhani" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/debit_card2"
-                        app:layout_constraintBottom_toBottomOf="@+id/get_a_ticket"
-                        app:layout_constraintEnd_toStartOf="@+id/get_a_ticket"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/get_a_ticket" />
 
                     <Button
                         android:id="@+id/become_a_vip_member"
@@ -517,15 +501,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/get_a_ticket" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/debit_card2"
-                        app:layout_constraintBottom_toBottomOf="@+id/become_a_vip_member"
-                        app:layout_constraintEnd_toStartOf="@+id/become_a_vip_member"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/become_a_vip_member" />
 
                     <Button
                         android:id="@+id/get_more_coins"

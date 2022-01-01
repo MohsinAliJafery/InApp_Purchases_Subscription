@@ -1,6 +1,7 @@
 
 package com.bhjbestkalyangame.realapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -70,6 +71,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import androidx.core.widget.ContentLoadingProgressBar;
 
@@ -1053,7 +1056,18 @@ private void configureGoogleSignIn() {
                 mHashmap.put("ImageUrl", currentUser.getPhotoUrl().toString());
                 mHashmap.put("Status", "online");
 
-                mSaveUserDataRef.setValue(mHashmap);
+            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                @Override
+                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                    if(task.isSuccessful()){
+                        String token = Objects.requireNonNull(task.getResult()).getToken();
+                        mHashmap.put("Token", "default");
+                        mSaveUserDataRef.setValue(mHashmap);
+                    }
+                }
+            });
+
+
 
                 mReference = mDatabase.getReference("all_users").child(currentUser.getUid()).child("products");
                 mReference.addValueEventListener(new ValueEventListener() {
@@ -1225,6 +1239,7 @@ private void configureGoogleSignIn() {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mBottomNavigationListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @SuppressLint("ResourceAsColor")
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -1232,7 +1247,17 @@ private void configureGoogleSignIn() {
                     switch (item.getItemId()){
 
                         case R.id.facebook:
-                            startActivity(getOpenFacebookIntent());
+                            Snackbar.make(mLayout, "Do you want to visit our Facebook page?", Snackbar.LENGTH_LONG)
+                                    .setTextColor(getResources().getColor(R.color.colorGolden))
+                                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                    .setAction("Yes", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(getOpenFacebookIntent());
+                                        }
+                                    })
+                                    .setActionTextColor(R.color.colorGoogle)
+                                    .show();
                             break;
 
                         case R.id.success_stories:
@@ -1246,8 +1271,12 @@ private void configureGoogleSignIn() {
                             break;
 
                         case R.id.coins:
-                            intent = new Intent(KalyanMatkaInterface.this, GetMoreCoins.class);
-                            startActivity(intent);
+                            if(!currentUser.getEmail().equals("mohsinalijafery@gmail.com") || !currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
+                                    !currentUser.getEmail().equals("haiderg123355@gmail.com") || !currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                                intent = new Intent(KalyanMatkaInterface.this, GetMoreCoins.class);
+                                startActivity(intent);
+                            }
+
                             break;
                     }
 
