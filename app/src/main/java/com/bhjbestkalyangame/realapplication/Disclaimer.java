@@ -1,11 +1,13 @@
 package com.bhjbestkalyangame.realapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.bhjbestkalyangame.realapplication.Service.FcmNotificationsSender;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -25,6 +29,10 @@ import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.Objects;
 
 public class Disclaimer extends AppCompatActivity {
 
@@ -35,6 +43,9 @@ public class Disclaimer extends AppCompatActivity {
     private ConstraintLayout mDisclaimer;
     TextView mTitle;
     FirebaseFunctions firebaseFunctions;
+    String token, title, message;
+    private final String MyCredit = "mycredit";
+    int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +54,39 @@ public class Disclaimer extends AppCompatActivity {
 
         Continue = findViewById(R.id.continue_click);
         mTitle = findViewById(R.id.title);
+        SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, MODE_PRIVATE);
+
+        counter = mSharedPreferences.getInt("count", 1);
 
         mTitle = findViewById(R.id.title);
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<InstanceIdResult> task) {
+                if(task.isSuccessful()){
+                    token = Objects.requireNonNull(task.getResult()).getToken();
+                }
+            }
+        });
+
+        title = "Kalyan Matka King";
+        message = "Welcome to our new app. Now you get to play Kalyan Night & Rajdhani for free." +
+                " Simply watch a video & earn coins. Win! Win! Win!";
+
+        FcmNotificationsSender mFcmNotificationSender = new FcmNotificationsSender(token,
+                title, message, getApplicationContext(), Disclaimer.this);
 
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(counter <= 1) {
+                    mFcmNotificationSender.SendNotifications();
+                }
+
+                counter = counter + 1;
+                mSharedPreferences.edit().putInt("count", counter).apply();
+
                 Intent mIntent = new Intent(Disclaimer.this, KalyanMatkaInterface.class);
                 startActivity(mIntent);
                 finish();

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/kalyan_matka_day"
-    android:background="@color/noColor"
     android:padding="7dp"
     android:layout_height="match_parent"
     tools:context=".KalyanMatkaDay">
@@ -277,7 +276,7 @@
         android:background="?android:attr/windowBackground"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation" />
+        app:menu="@menu/kalyan_game_bottom_navigation" />
 
 
     <TextView

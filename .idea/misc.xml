@@ -32,7 +32,7 @@
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_special_game.xml" value="0.18518518518518517" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_special_game_congratulations.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_subscription_purchase_congratulations.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_success_stories.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_success_stories.xml" value="0.18" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/background_for_input_type_message.xml" value="0.18" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/box_shadow_with_radius.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/button_for_rajdhani.xml" value="0.20416666666666666" />
@@ -64,6 +64,8 @@
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/white_background_with_primary_text_color.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/yellow_background_with_two_pointed_sides.xml" value="0.1" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/menu/bottom_navigation.xml" value="0.25" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/menu/kalyan_game_bottom_navigation.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/menu/main_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2203125" />
       </map>
     </option>

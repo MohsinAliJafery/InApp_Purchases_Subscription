@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.ContentLoadingProgressBar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -96,6 +99,9 @@ public class KalyanMatkaNight extends AppCompatActivity {
         CoinsLimit = PreviousActivity.getIntExtra("CoinsLimit", 0);
         ValidOrInvalid = PreviousActivity.getBooleanExtra("ValidOrInvalid", false);
 
+
+        BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
+        mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
 
         mNetwork = haveNetworkConnection();
         if(!mNetwork){
@@ -395,4 +401,34 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mBottomNavigationListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @SuppressLint("ResourceAsColor")
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Intent intent;
+                    switch (item.getItemId()){
+
+                        case R.id.success_stories:
+                            intent = new Intent(KalyanMatkaNight.this, SuccessStories.class);
+                            startActivity(intent);
+                            break;
+
+
+                        case R.id.coins:
+                            if(!currentUser.getEmail().equals("mohsinalijafery@gmail.com") || !currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
+                                    !currentUser.getEmail().equals("haiderg123355@gmail.com") || !currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                                intent = new Intent(KalyanMatkaNight.this, GetMoreCoins.class);
+                                startActivity(intent);
+                            }
+
+                            break;
+                    }
+
+                    return true;
+
+                }
+            };
 }

@@ -367,7 +367,7 @@
                         android:layout_height="wrap_content"
                         android:background="@layout/yellow_background_with_two_pointed_sides"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
-                        android:text="Special Game"
+                        android:text="Loading..."
                         android:textColor="@color/colorGolden"
                         android:textSize="17sp"
 
@@ -385,7 +385,7 @@
                         android:layout_marginTop="6dp"
                         android:background="@layout/special_game_bottom_left_pointed_layout"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
-                        android:text="Buy Special Game"
+                        android:text="Buy..."
                         android:textColor="@color/colorSnackbar"
                         android:textSize="17dp"
                         app:layout_constraintEnd_toEndOf="parent"

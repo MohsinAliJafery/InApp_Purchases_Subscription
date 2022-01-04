@@ -109,7 +109,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private FirebaseAuth mAuth;
      private FirebaseUser currentUser;
      private String Valid;
-
+    ValueEventListener mSeenListener;
      private ImageView mOneDayGame, mSevenDayGame;
 
      private ScrollView mScrollView;
@@ -132,9 +132,9 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
      private ImageView Logout;
 
-    CircleImageView ProfileImage;
+     CircleImageView ProfileImage;
      Button PurchaseSpecialGame, SpecialGame, Rajdhani;
-     String SpecialGameMessage, SpecialGameTitle, SpecialGameSubTitle, SpecialGameVisibility;
+     String SpecialGameMessage, SpecialGameTitle, SpecialGameSubTitle, SpecialGameVisibility, SpecialGameName;
 
      private boolean Free, SpecialGameIncludedWithSubscription;
 
@@ -499,8 +499,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
         PublicInformation.setSelected(true);
 
-        SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, Context.MODE_PRIVATE);
-
         googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(googleSignInAccount != null){
             GoogleAccountID = googleSignInAccount.getId();
@@ -728,10 +726,12 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                                     .show();
                         }else{
                             Intent intent = new Intent(KalyanMatkaInterface.this, PurchaseSpecialGame.class);
+                            intent.putExtra("SpecialGameName", SpecialGameName);
                             startActivity(intent);
                         }
                     }else{
                         Intent intent = new Intent(KalyanMatkaInterface.this, PurchaseSpecialGame.class);
+                        intent.putExtra("SpecialGameName", SpecialGameName);
                         startActivity(intent);
                     }
 
@@ -1033,7 +1033,7 @@ private void configureGoogleSignIn() {
     @Override
     protected void onResume() {
         super.onResume();
-
+        status("online");
         calendar = Calendar.getInstance();
         date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -1049,12 +1049,18 @@ private void configureGoogleSignIn() {
                 Glide.with(KalyanMatkaInterface.this).load(currentUser.getPhotoUrl()).into(ProfileImage);
 
                 DatabaseReference mSaveUserDataRef = mDatabase.getReference("all_users_data").child(currentUser.getUid());
-                HashMap<String, String> mHashmap = new HashMap();
+                HashMap<String, Object> mHashmap = new HashMap();
                 mHashmap.put("ID", currentUser.getUid());
                 mHashmap.put("Username", currentUser.getDisplayName());
                 mHashmap.put("Email", currentUser.getEmail());
                 mHashmap.put("ImageUrl", currentUser.getPhotoUrl().toString());
                 mHashmap.put("Status", "online");
+
+                long timeStamp = sharedpreferences.getLong("timestamp", 0);
+                String newMessage = sharedpreferences.getString("newMessage", "old");
+
+                mHashmap.put("newMessage", newMessage);
+                mHashmap.put("timestamp", timeStamp);
 
             FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                 @Override
@@ -1189,6 +1195,10 @@ private void configureGoogleSignIn() {
                     SpecialGameTitle = specialGameInfo.getTitle();
                     SpecialGameSubTitle = specialGameInfo.getType();
                     SpecialGameVisibility = specialGameInfo.getDisplay();
+                    SpecialGameName = specialGameInfo.getName();
+
+                    SpecialGame.setText(SpecialGameName);
+                    PurchaseSpecialGame.setText("BUY "+ SpecialGameName);
 
                     if(SpecialGameVisibility.equals("1")){
                         SpecialGame.setVisibility(View.VISIBLE);
@@ -1285,7 +1295,20 @@ private void configureGoogleSignIn() {
                 }
             };
 
+    private void status(String status){
 
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(currentUser.getUid());
+        HashMap<String, Object> mHashmap = new HashMap<>();
+        mHashmap.put("Status", status);
+        mDatabaseReference.updateChildren(mHashmap);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    }
 }
 
 

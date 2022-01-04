@@ -3,10 +3,10 @@ package com.bhjbestkalyangame.realapplication.Model;
 
 public class User {
 
-    private String ID, Username, Email, Status, ImageUrl, Token;
+    private String ID, Username, Email, Status, ImageUrl, Token, newMessage;
     private long timestamp;
 
-    public User(String ID, String Username, String Status, String Email, String ImageUrl, String Token, long timestamp) {
+    public User(String ID, String Username, String Status, String Email, String ImageUrl, String Token, long timestamp, String newMessage) {
         this.ID = ID;
         this.Username = Username;
         this.Email = Email;
@@ -14,6 +14,7 @@ public class User {
         this.ImageUrl = ImageUrl;
         this.Token = Token;
         this.timestamp = timestamp;
+        this.newMessage = newMessage;
 
     }
 
@@ -74,5 +75,13 @@ public class User {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getNewMessage() {
+        return newMessage;
+    }
+
+    public void setNewMessage(String newMessage) {
+        this.newMessage = newMessage;
     }
 }

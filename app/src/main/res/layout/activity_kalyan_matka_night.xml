@@ -266,7 +266,7 @@
         android:background="?android:attr/windowBackground"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation" />
+        app:menu="@menu/kalyan_game_bottom_navigation"/>
 
     <TextView
         android:id="@+id/tickets_title"

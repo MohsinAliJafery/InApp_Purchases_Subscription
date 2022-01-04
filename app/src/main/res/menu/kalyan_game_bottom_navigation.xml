@@ -9,22 +9,11 @@
     android:color="#27AAE9"
     android:icon="@drawable/coins"/>
 
-    <item
-        android:title="FACEBOOK"
-        android:id="@+id/facebook"
-        android:color="#27AAE9"
-        android:icon="@drawable/ic_baseline_thumb_up_24"/>
 
     <item
         android:title="HISTORY"
         android:id="@+id/success_stories"
         android:iconTint="#FFEB3C"
         android:icon="@drawable/ic_baseline_amp_stories_24"/>
-
-    <item
-        android:title="SUPPORT"
-        android:id="@+id/support"
-        android:iconTint="@color/colorPrimary"
-        android:icon="@drawable/ic_chat_black_24dp"/>
 
 </menu>

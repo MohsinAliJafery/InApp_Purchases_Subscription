@@ -55,7 +55,7 @@ public class ChattingActivity extends AppCompatActivity {
         TextView Username;
 
         Intent mIntent;
-
+    private final String MyCredit = "RealApp";
         Button SendMessage;
         EditText TypeAMessage;
 
@@ -70,7 +70,7 @@ public class ChattingActivity extends AppCompatActivity {
 
         ValueEventListener mSeenListener;
         private String AdminId;
-
+    FirebaseUser currentUser;
 //        ApiService mApiService;
         String mUserID;
         boolean notify = false;
@@ -86,7 +86,7 @@ public class ChattingActivity extends AppCompatActivity {
             Toolbar mToolbar = findViewById(R.id.my_toolbar);
             setSupportActionBar(mToolbar);
             getSupportActionBar().setTitle("");
-
+            SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, MODE_PRIVATE);
             progressBar = findViewById(R.id.progressbar);
             mChat = new ArrayList<>();
 
@@ -101,8 +101,7 @@ public class ChattingActivity extends AppCompatActivity {
             mIntent = getIntent();
 
             mDatabase = FirebaseDatabase.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-
+            currentUser = mAuth.getCurrentUser();
 
             mRecyclerView = findViewById(R.id.recyclerview_message_activity);
             mRecyclerView.setHasFixedSize(true);
@@ -110,7 +109,6 @@ public class ChattingActivity extends AppCompatActivity {
             mLinearLayoutManager.setStackFromEnd(true);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-            // mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             SharedPreferences sharedpreferences = getSharedPreferences("RealApp", Context.MODE_PRIVATE);
 
             AdminId = "VYHYRTfHiscUVIKNz3sN4I1LrWn1";
@@ -118,14 +116,12 @@ public class ChattingActivity extends AppCompatActivity {
 
             mDatabaseReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
 
-            mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
                         readMessage(mUserID, AdminId, user.getImageUrl());
                         progressBar.setVisibility(View.GONE);
-                    }
                 }
 
                 @Override
@@ -134,10 +130,7 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             });
 
-
-
-            // Change Id From ADmin to UserID
-
+            // Change Id From Admin to UserID
 
             SendMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,13 +138,14 @@ public class ChattingActivity extends AppCompatActivity {
                     notify = true;
                     String typeAMessage = TypeAMessage.getText().toString();
                     if(!typeAMessage.equals("")){
+
                         sendMessage(mUserID, AdminId, typeAMessage);
-                        Long TimeStampLong = System.currentTimeMillis()/1000;
-                        String ts = TimeStampLong.toString();
 
-                        DatabaseReference mTimeStampRef = mDatabase.getReference("all_users_data").child(currentUser.getUid());
-
-                        mTimeStampRef.child("timestamp").setValue(TimeStampLong);
+                      Long TimeStampLong = System.currentTimeMillis()/1000;
+                      DatabaseReference mTimeStampRef = mDatabase.getReference("all_users_data").child(currentUser.getUid());
+                      mTimeStampRef.child("timestamp").setValue(TimeStampLong);
+                      mTimeStampRef.child("newMessage").setValue("new");
+                      mSharedPreferences.edit().putString("newMessage", "new").putLong("timestamp", TimeStampLong).apply();
 
                     }else{
                         Toast.makeText(ChattingActivity.this, "You can't send empty messages", Toast.LENGTH_SHORT).show();
@@ -201,21 +195,6 @@ public class ChattingActivity extends AppCompatActivity {
 
             mReference.child("Chats").push().setValue(mHashmap);
 
-
-
-            mReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
             final DatabaseReference ChatReference = FirebaseDatabase.getInstance().getReference("Chatlist")
                     .child(mUserID).child(AdminId);
 
@@ -233,26 +212,25 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             });
 
-            final String msg = Message;
-
-            mReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
-
-            mReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    if(notify){
-//                        sendNotification(Receiver, user.getUsername(), msg);
-                    }
-                    notify = false;
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
+//            final String msg = Message;
+//
+//            mReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
+//
+//            mReference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    User user = snapshot.getValue(User.class);
+//                    if(notify){
+//                       sendNotification(Receiver, user.getUsername(), msg);
+//                    }
+//                    notify = false;
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
 
 
 
@@ -262,7 +240,7 @@ public class ChattingActivity extends AppCompatActivity {
 
 
             mDatabaseReference = FirebaseDatabase.getInstance().getReference("Chats");
-            mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -276,7 +254,6 @@ public class ChattingActivity extends AppCompatActivity {
                         }
                         mMessageAdapter = new MessageAdapter(ChattingActivity.this, mChat, ImageUrl);
                         mRecyclerView.setAdapter(mMessageAdapter);
-
 
                     }
                 }

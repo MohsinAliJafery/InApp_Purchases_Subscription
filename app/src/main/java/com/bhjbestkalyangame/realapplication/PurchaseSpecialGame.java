@@ -57,7 +57,7 @@ public class PurchaseSpecialGame extends AppCompatActivity implements PurchasesU
     private ConstraintLayout mLayout;
     private ContentLoadingProgressBar progressBar;
     private boolean consumed;
-    private TextView SingleRecyclerViewIndicator;
+    private TextView SingleRecyclerViewIndicator, mTitle;
 
     FirebaseDatabase mDatabase;
     DatabaseReference mReference;
@@ -78,6 +78,12 @@ public class PurchaseSpecialGame extends AppCompatActivity implements PurchasesU
         progressBar = findViewById(R.id.progressbar);
         SingleRecyclerViewIndicator = findViewById(R.id.single_item_recyclerview_indicator);
         consumed = false;
+        mTitle = findViewById(R.id.title);
+
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("SpecialGameName");
+
+        mTitle.setText("BUY " + title);
 
         date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.ContentLoadingProgressBar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +37,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -104,6 +106,8 @@ public class KalyanMatkaDay extends AppCompatActivity {
         GetMoreCoins = findViewById(R.id.get_more_coins);
         mLayout = findViewById(R.id.kalyan_matka_day);
 
+        BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
+        mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         calendar = Calendar.getInstance();
@@ -408,5 +412,35 @@ public class KalyanMatkaDay extends AppCompatActivity {
 
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mBottomNavigationListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @SuppressLint("ResourceAsColor")
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Intent intent;
+                    switch (item.getItemId()){
+
+                        case R.id.success_stories:
+                            intent = new Intent(KalyanMatkaDay.this, SuccessStories.class);
+                            startActivity(intent);
+                            break;
+
+
+                        case R.id.coins:
+                            if(!currentUser.getEmail().equals("mohsinalijafery@gmail.com") || !currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
+                                    !currentUser.getEmail().equals("haiderg123355@gmail.com") || !currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                                intent = new Intent(KalyanMatkaDay.this, GetMoreCoins.class);
+                                startActivity(intent);
+                            }
+
+                            break;
+                    }
+
+                    return true;
+
+                }
+            };
 
 }
