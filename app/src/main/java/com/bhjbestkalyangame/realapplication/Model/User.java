@@ -1,16 +1,19 @@
 package com.bhjbestkalyangame.realapplication.Model;
 
+
 public class User {
 
     private String ID, Username, Email, Status, ImageUrl, Token;
+    private long timestamp;
 
-    public User(String ID, String Username, String Status, String Email, String ImageUrl, String Token) {
+    public User(String ID, String Username, String Status, String Email, String ImageUrl, String Token, long timestamp) {
         this.ID = ID;
         this.Username = Username;
         this.Email = Email;
         this.Status = Status;
         this.ImageUrl = ImageUrl;
         this.Token = Token;
+        this.timestamp = timestamp;
 
     }
 
@@ -63,5 +66,13 @@ public class User {
 
     public void setToken(String token) {
         Token = token;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

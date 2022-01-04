@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_baseline_thumb_up_24"/>
 
     <item
-        android:title="WINNGING"
+        android:title="WINNING"
         android:id="@+id/success_stories"
         android:iconTint="#FFEB3C"
         android:icon="@drawable/ic_baseline_amp_stories_24"/>

@@ -1061,7 +1061,7 @@ private void configureGoogleSignIn() {
                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
                     if(task.isSuccessful()){
                         String token = Objects.requireNonNull(task.getResult()).getToken();
-                        mHashmap.put("Token", "default");
+                        mHashmap.put("Token", token);
                         mSaveUserDataRef.setValue(mHashmap);
                     }
                 }
@@ -1256,7 +1256,7 @@ private void configureGoogleSignIn() {
                                             startActivity(getOpenFacebookIntent());
                                         }
                                     })
-                                    .setActionTextColor(R.color.colorGoogle)
+                                    .setActionTextColor(getResources().getColor(R.color.colorRed))
                                     .show();
                             break;
 

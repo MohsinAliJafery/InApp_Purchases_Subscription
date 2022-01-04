@@ -25,18 +25,26 @@ import com.bhjbestkalyangame.realapplication.Adapter.MessageAdapter;
 import com.bhjbestkalyangame.realapplication.Model.Chat;
 import com.bhjbestkalyangame.realapplication.Model.User;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.grpc.Server;
 
 
 public class ChattingActivity extends AppCompatActivity {
@@ -66,7 +74,8 @@ public class ChattingActivity extends AppCompatActivity {
 //        ApiService mApiService;
         String mUserID;
         boolean notify = false;
-
+        private FirebaseDatabase mDatabase;
+    private FirebaseAuth mAuth;
         @SuppressLint("WrongViewCast")
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
@@ -81,6 +90,8 @@ public class ChattingActivity extends AppCompatActivity {
             progressBar = findViewById(R.id.progressbar);
             mChat = new ArrayList<>();
 
+            mAuth = FirebaseAuth.getInstance();
+
             SendMessage = findViewById(R.id.send_message);
             TypeAMessage = findViewById(R.id.type_a_message);
 
@@ -88,6 +99,9 @@ public class ChattingActivity extends AppCompatActivity {
             Username = findViewById(R.id.Username);
 
             mIntent = getIntent();
+
+            mDatabase = FirebaseDatabase.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
             mRecyclerView = findViewById(R.id.recyclerview_message_activity);
@@ -102,15 +116,16 @@ public class ChattingActivity extends AppCompatActivity {
             AdminId = "VYHYRTfHiscUVIKNz3sN4I1LrWn1";
             mUserID = sharedpreferences.getString("user_id", "");
 
-            // Change Id From ADmin to UserID
             mDatabaseReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
 
             mDatabaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    readMessage(mUserID, AdminId, user.getImageUrl());
-                    progressBar.setVisibility(View.GONE);
+                    if(snapshot.exists()) {
+                        User user = snapshot.getValue(User.class);
+                        readMessage(mUserID, AdminId, user.getImageUrl());
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -119,6 +134,11 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             });
 
+
+
+            // Change Id From ADmin to UserID
+
+
             SendMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -126,6 +146,13 @@ public class ChattingActivity extends AppCompatActivity {
                     String typeAMessage = TypeAMessage.getText().toString();
                     if(!typeAMessage.equals("")){
                         sendMessage(mUserID, AdminId, typeAMessage);
+                        Long TimeStampLong = System.currentTimeMillis()/1000;
+                        String ts = TimeStampLong.toString();
+
+                        DatabaseReference mTimeStampRef = mDatabase.getReference("all_users_data").child(currentUser.getUid());
+
+                        mTimeStampRef.child("timestamp").setValue(TimeStampLong);
+
                     }else{
                         Toast.makeText(ChattingActivity.this, "You can't send empty messages", Toast.LENGTH_SHORT).show();
                     }
@@ -173,6 +200,21 @@ public class ChattingActivity extends AppCompatActivity {
             mHashmap.put("seen", false);
 
             mReference.child("Chats").push().setValue(mHashmap);
+
+
+
+            mReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             final DatabaseReference ChatReference = FirebaseDatabase.getInstance().getReference("Chatlist")
                     .child(mUserID).child(AdminId);
@@ -230,10 +272,11 @@ public class ChattingActivity extends AppCompatActivity {
                                 || chat.getReceiver().equals(AdminId) && chat.getSender().equals(MyID)){
                             mChat.add(chat);
                             Log.d("chat", "yes");
-
+                            seenMessage(AdminId);
                         }
                         mMessageAdapter = new MessageAdapter(ChattingActivity.this, mChat, ImageUrl);
                         mRecyclerView.setAdapter(mMessageAdapter);
+
 
                     }
                 }

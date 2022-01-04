@@ -21,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class SuccessStories extends AppCompatActivity {
@@ -51,7 +53,9 @@ public class SuccessStories extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
 
         mProgressCircle = findViewById(R.id.progress_circle);
         mUploads = new ArrayList<>();
@@ -65,6 +69,7 @@ public class SuccessStories extends AppCompatActivity {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     mUploads.add(upload);
                 }
+                Collections.reverse(mUploads);
                 mAdapter = new ImageAdapter(SuccessStories.this, mUploads, mPicasso);
                 mRecyclerView.setAdapter(mAdapter);
                 mProgressCircle.setVisibility(View.INVISIBLE);
