@@ -107,6 +107,7 @@ public class KalyanMatkaDay extends AppCompatActivity {
         mLayout = findViewById(R.id.kalyan_matka_day);
 
         BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
+        mBottomNavigation.setItemIconTintList(null);
         mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);

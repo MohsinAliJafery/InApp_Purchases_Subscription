@@ -16,7 +16,7 @@
         android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:padding="5dp"
         android:gravity="center"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorSnackbar"/>
 
 <TextView
     android:layout_width="match_parent"

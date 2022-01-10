@@ -140,7 +140,6 @@ public class KalyanMatkaResults extends AppCompatActivity {
             ThreeDots.setImageResource(R.drawable.rajdhani_three_dots);
             please_wait_KMG_shall_be_updated_soon.setTextColor(R.color.colorBackground);
             progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorBackground), PorterDuff.Mode.SRC_IN);
-
         }
 
 

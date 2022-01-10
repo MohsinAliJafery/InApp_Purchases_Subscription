@@ -21,7 +21,7 @@
         android:textColor="@color/colorGolden"
         android:textAllCaps="true"
         android:text="Kalyan Matka King"
-        android:padding="17dp"
+        android:padding="19dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
         android:textSize="27sp"
         android:textStyle="bold|italic"
@@ -179,7 +179,7 @@
                     android:id="@+id/Results"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:background="@layout/box_shadow_with_radius"
+                    android:background="@layout/golden_background_with_border"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -191,6 +191,8 @@
                         android:background="@color/colorSnackbar"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         app:layout_constraintBottom_toTopOf="@id/kalyan"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +213,9 @@
                         android:id="@+id/kalyan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FF7F50"
+                        android:background="@color/colorPrimary"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -223,8 +227,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/comic_sans_ms_bold_italic"
                             android:text="KALYAN"
-                            android:textColor="#F8F9F9 "
-                            android:textSize="27sp"
+                            android:textColor="@color/colorSnackbar"
+                            android:textSize="25sp"
                             android:textStyle="bold|italic" />
 
                         <TextView
@@ -232,8 +236,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Loading..."
-                            android:textColor="#F8F9F9"
-                            android:textSize="25sp"
+                            android:textColor="@color/colorSnackbar"
+                            android:textSize="23sp"
                             android:textStyle="bold|italic" />
 
                     </LinearLayout>
@@ -241,7 +245,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#E74C3C"
+                        android:background="@color/colorBlack"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/kalyan"
@@ -252,8 +258,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/comic_sans_ms_bold_italic"
                             android:text="KALYAN NIGHT"
-                            android:textColor="#F8F9F9 "
-                            android:textSize="27sp"
+                            android:textColor="@color/colorSnackbar"
+                            android:textSize="25sp"
                             android:textStyle="bold|italic" />
 
                         <TextView
@@ -261,8 +267,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Loading..."
-                            android:textColor="#F8F9F9 "
-                            android:textSize="25sp"
+                            android:textColor="@color/colorSnackbar"
+                            android:textSize="23sp"
                             android:textStyle="bold|italic" />
 
                     </LinearLayout>
@@ -284,12 +290,13 @@
                     android:singleLine="true"
                     android:text="Loading..."
                     android:textAllCaps="true"
-                    android:textColor="@color/colorGolden"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="23sp"
                     android:textStyle="bold|italic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/Results" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/getting_things_ready"
@@ -297,6 +304,7 @@
                     android:layout_height="150dp"
                     app:layout_constraintBottom_toTopOf="@id/all_buttons"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/public_information">
 
@@ -325,7 +333,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/all_buttons"
                     android:layout_width="match_parent"
@@ -351,16 +358,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_game" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/debit_card"
-                        android:layout_marginLeft="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/special_game"
-                        app:layout_constraintStart_toStartOf="@+id/special_game"
-                        app:layout_constraintTop_toTopOf="@+id/special_game" />
-
-
                     <Button
                         android:id="@+id/special_game"
                         android:layout_width="250dp"
@@ -370,12 +367,22 @@
                         android:text="Loading..."
                         android:textColor="@color/colorGolden"
                         android:textSize="17sp"
-
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
+
+
+                    <ImageView
+                        android:id="@+id/img_special_game"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/debit_card"
+                        app:layout_constraintBottom_toBottomOf="@+id/special_game"
+                        app:layout_constraintEnd_toStartOf="@+id/special_game"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/special_game" />
 
 
                     <Button
@@ -410,6 +417,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/purchase_special_game"/>
 
                     <ImageView
+                        android:id="@+id/img_kalyan_matka"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/debit_card"
@@ -436,9 +444,10 @@
                         app:layout_constraintTop_toBottomOf="@+id/kalyan_matka" />
 
                     <ImageView
+                        android:id="@+id/img_kalyan_night"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/free3"
+                        android:src="@drawable/paid_content"
                         app:layout_constraintBottom_toBottomOf="@+id/kalyan_night"
                         app:layout_constraintEnd_toStartOf="@+id/kalyan_night"
                         app:layout_constraintStart_toStartOf="parent"
@@ -462,9 +471,10 @@
                         app:layout_constraintTop_toBottomOf="@+id/kalyan_night" />
 
                     <ImageView
+                        android:id="@+id/img_rajdhani"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/free3"
+                        android:src="@drawable/paid_content"
                         app:layout_constraintBottom_toBottomOf="@+id/rajdhani"
                         app:layout_constraintEnd_toStartOf="@+id/rajdhani"
                         app:layout_constraintStart_toStartOf="parent"
@@ -563,8 +573,8 @@
 
                 <ImageView
                     android:id="@+id/one_day_game"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/one_day_game"
                     app:layout_constraintBottom_toBottomOf="@+id/Results"
                     app:layout_constraintEnd_toStartOf="@+id/Results"
@@ -573,8 +583,8 @@
 
                 <ImageView
                     android:id="@+id/seven_day_game"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/seven_days_game"
                     app:layout_constraintBottom_toTopOf="@+id/getting_things_ready"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -592,9 +602,9 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemRippleColor="@color/colorPrimary"
+        app:itemRippleColor="@color/colorSnackbar"
         app:itemTextColor="@color/colorBlack"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/noColor"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation" />

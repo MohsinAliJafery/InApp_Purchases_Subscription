@@ -66,7 +66,7 @@ public class ChattingActivity extends AppCompatActivity {
         private ContentLoadingProgressBar progressBar;
 
         FirebaseUser mFirebaseUser;
-        DatabaseReference mDatabaseReference;
+        DatabaseReference mDatabaseReference, mDatabaseChatReference, mDatabaseStatusRef;
 
         ValueEventListener mSeenListener;
         private String AdminId;
@@ -76,6 +76,8 @@ public class ChattingActivity extends AppCompatActivity {
         boolean notify = false;
         private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
+
+    private ValueEventListener ReadUserListner, ReadMessagesListner;
         @SuppressLint("WrongViewCast")
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
@@ -119,9 +121,11 @@ public class ChattingActivity extends AppCompatActivity {
             mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
                         readMessage(mUserID, AdminId, user.getImageUrl());
                         progressBar.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -130,7 +134,6 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             });
 
-            // Change Id From Admin to UserID
 
             SendMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -160,13 +163,14 @@ public class ChattingActivity extends AppCompatActivity {
         }
 
         private void seenMessage(final String AdminId){
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference("Chats");
-            mSeenListener = mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            mDatabaseChatReference = FirebaseDatabase.getInstance().getReference("Chats");
+            mSeenListener = mDatabaseChatReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot mSnapshot: snapshot.getChildren()){
+                    if(snapshot.exists()){
+                    for (DataSnapshot mSnapshot : snapshot.getChildren()) {
                         Chat chat = mSnapshot.getValue(Chat.class);
-                        if(chat.getReceiver().equals(mUserID) && chat.getSender().equals(AdminId)){
+                        if (chat.getReceiver().equals(mUserID) && chat.getSender().equals(AdminId)) {
 
                             HashMap<String, Object> mHashmap = new HashMap<>();
                             mHashmap.put("seen", true);
@@ -174,6 +178,8 @@ public class ChattingActivity extends AppCompatActivity {
 
                         }
                     }
+
+                }
                 }
 
                 @Override
@@ -239,15 +245,15 @@ public class ChattingActivity extends AppCompatActivity {
         private void readMessage(final String MyID, final String AdminId, final String ImageUrl){
 
 
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference("Chats");
-            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabaseChatReference = FirebaseDatabase.getInstance().getReference("Chats");
+            ReadMessagesListner = mDatabaseChatReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for(DataSnapshot mSnapshot: snapshot.getChildren()){
+                    if(snapshot.exists()){
+                    for (DataSnapshot mSnapshot : snapshot.getChildren()) {
                         Chat chat = mSnapshot.getValue(Chat.class);
-                        if(chat.getReceiver().equals(MyID) && chat.getSender().equals(AdminId)
-                                || chat.getReceiver().equals(AdminId) && chat.getSender().equals(MyID)){
+                        if (chat.getReceiver().equals(MyID) && chat.getSender().equals(AdminId)
+                                || chat.getReceiver().equals(AdminId) && chat.getSender().equals(MyID)) {
                             mChat.add(chat);
                             Log.d("chat", "yes");
                             seenMessage(AdminId);
@@ -257,6 +263,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     }
                 }
+            }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -267,10 +274,10 @@ public class ChattingActivity extends AppCompatActivity {
 
         private void status(String status){
 
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
+            mDatabaseStatusRef = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
             HashMap<String, Object> mHashmap = new HashMap<>();
             mHashmap.put("Status", status);
-            mDatabaseReference.updateChildren(mHashmap);
+            mDatabaseStatusRef.updateChildren(mHashmap);
 
         }
 
@@ -280,9 +287,9 @@ public class ChattingActivity extends AppCompatActivity {
             status("online");
         }
 
-        @Override
-        protected void onPause() {
-            super.onPause();
-            status("offline");
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mDatabaseChatReference.removeEventListener(ReadMessagesListner);
     }
+}

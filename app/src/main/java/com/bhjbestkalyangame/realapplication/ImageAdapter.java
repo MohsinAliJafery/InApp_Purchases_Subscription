@@ -33,7 +33,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Upload uploadCurrent = mUploads.get(position);
         holder.Title.setText(uploadCurrent.getTitle());
-        holder.Description.setText(uploadCurrent.getDescription());
+        holder.Description.setText("Dated : "+uploadCurrent.getDescription());
 
         mPicasso.get()
                 .load(uploadCurrent.getImageUrl())

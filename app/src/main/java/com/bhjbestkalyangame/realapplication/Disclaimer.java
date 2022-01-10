@@ -57,6 +57,7 @@ public class Disclaimer extends AppCompatActivity {
         SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, MODE_PRIVATE);
 
         counter = mSharedPreferences.getInt("count", 1);
+        Log.d("counterg", "onCreate: "+counter);
 
         mTitle = findViewById(R.id.title);
 
@@ -73,14 +74,15 @@ public class Disclaimer extends AppCompatActivity {
         message = "Welcome to our new app. Now you get to play Kalyan Night & Rajdhani for free." +
                 " Simply watch a video & earn coins. Win! Win! Win!";
 
-        FcmNotificationsSender mFcmNotificationSender = new FcmNotificationsSender(token,
-                title, message, getApplicationContext(), Disclaimer.this);
+
 
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(counter <= 1) {
+                    FcmNotificationsSender mFcmNotificationSender = new FcmNotificationsSender(token,
+                            title, message, getApplicationContext(), Disclaimer.this);
                     mFcmNotificationSender.SendNotifications();
                 }
 

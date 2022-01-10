@@ -70,9 +70,7 @@ public class KalyanMatkaNight extends AppCompatActivity {
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
     SharedPreferences preferences;
     int CoinsLimit;
-
     int mTotalCoins;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +97,8 @@ public class KalyanMatkaNight extends AppCompatActivity {
         CoinsLimit = PreviousActivity.getIntExtra("CoinsLimit", 0);
         ValidOrInvalid = PreviousActivity.getBooleanExtra("ValidOrInvalid", false);
 
-
         BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
+        mBottomNavigation.setItemIconTintList(null);
         mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
 
         mNetwork = haveNetworkConnection();

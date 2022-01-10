@@ -109,7 +109,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private FirebaseAuth mAuth;
      private FirebaseUser currentUser;
      private String Valid;
-    ValueEventListener mSeenListener;
+    ValueEventListener mKalyanMatkaResultListner;
      private ImageView mOneDayGame, mSevenDayGame;
 
      private ScrollView mScrollView;
@@ -130,7 +130,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
      private ImageView ArrowUp, ArrowDown;
 
-     private ImageView Logout;
+     private ImageView Logout, ImgSpecialGame, ImgKalyanMatka;
 
      CircleImageView ProfileImage;
      Button PurchaseSpecialGame, SpecialGame, Rajdhani;
@@ -168,6 +168,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         SucessStories = findViewById(R.id.success_stories);
         PurchaseSpecialGame = findViewById(R.id.purchase_special_game);
         SpecialGame = findViewById(R.id.special_game);
+        ImgSpecialGame = findViewById(R.id.img_special_game);
         SpecialPurchase = findViewById(R.id.special_purchase);
         Rajdhani = findViewById(R.id.rajdhani);
         ArrowUp = findViewById(R.id.arrowUp);
@@ -176,11 +177,11 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         Logout = findViewById(R.id.logout);
         ProfileImage = findViewById(R.id.profile_image);
 
+        ImgKalyanMatka = findViewById(R.id.img_kalyan_matka);
 
         BottomNavigationView mBottomNavigation = findViewById(R.id.bottom_navigation);
+        mBottomNavigation.setItemIconTintList(null);
         mBottomNavigation.setOnNavigationItemSelectedListener(mBottomNavigationListener);
-
-
 
         mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -263,8 +264,10 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 int value = snapshot.getValue(Integer.class);
                 if(value == 1){
                     Free = true;
+                    ImgKalyanMatka.setImageResource(R.drawable.paid_content);
                 }else{
                     Free = false;
+                    ImgKalyanMatka.setImageResource(R.drawable.debit_card);
                 }
             }
 
@@ -443,7 +446,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 //        Public Information Buy The Owner
 
         DatabaseReference mPublicInformation = mDatabase.getReference("public_information").child("message");
-        mPublicInformation.addValueEventListener(new ValueEventListener() {
+        mPublicInformation.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -463,7 +466,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 //        Kalyan Result
 
         DatabaseReference mKalyanResults = mDatabase.getReference("kalyan");
-        mKalyanResults.child("kalyan_result").addValueEventListener(new ValueEventListener() {
+        mKalyanResults.child("kalyan_result").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -480,7 +483,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         });
 
-        mKalyanResults.child("kalyan_night_result").addValueEventListener(new ValueEventListener() {
+        mKalyanResults.child("kalyan_night_result").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -809,6 +812,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                     GetTicket.setEnabled(true);
 
                     KalyanMatka.setEnabled(true);
+                    ImgKalyanMatka.setEnabled(true);
                     Rajdhani.setEnabled(true);
                     KalyanNight.setEnabled(true);
                     
@@ -838,6 +842,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                             }
                         } else {
                             KalyanMatka.setEnabled(true);
+                            ImgKalyanMatka.setEnabled(true);
                             KalyanNight.setEnabled(true);
                             Rajdhani.setEnabled(true);
 
@@ -881,6 +886,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
                 GetTicket.setEnabled(true);
 
                 KalyanMatka.setEnabled(true);
+                ImgKalyanMatka.setEnabled(true);
                 KalyanNight.setEnabled(true);
                 Rajdhani.setEnabled(true);
 
@@ -1108,6 +1114,7 @@ private void configureGoogleSignIn() {
                                 GettingThingsReadyProgressBar.setVisibility(View.GONE);
 
                                 KalyanMatka.setEnabled(true);
+                                ImgKalyanMatka.setEnabled(true);
                                 KalyanNight.setEnabled(true);
                                 Rajdhani.setEnabled(true);
 
@@ -1203,10 +1210,13 @@ private void configureGoogleSignIn() {
                     if(SpecialGameVisibility.equals("1")){
                         SpecialGame.setVisibility(View.VISIBLE);
                         PurchaseSpecialGame.setVisibility(View.VISIBLE);
+                        ImgSpecialGame.setVisibility(View.VISIBLE);
                         SpecialGameAvailability = true;
                     }else{
                         SpecialGame.setVisibility(View.GONE);
+                        ImgSpecialGame.setVisibility(View.GONE);
                         PurchaseSpecialGame.setVisibility(View.GONE);
+
                         SpecialGameAvailability = false;
 
                     }
@@ -1297,11 +1307,12 @@ private void configureGoogleSignIn() {
 
     private void status(String status){
 
+    if(currentUser != null) {
         DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("all_users_data").child(currentUser.getUid());
         HashMap<String, Object> mHashmap = new HashMap<>();
         mHashmap.put("Status", status);
         mDatabaseReference.updateChildren(mHashmap);
-
+    }
     }
 
     @Override

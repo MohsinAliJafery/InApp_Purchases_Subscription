@@ -165,6 +165,7 @@ public class PurchaseSpecialGame extends AppCompatActivity implements PurchasesU
                     intent.putExtra("date", date);
                     startActivity(intent);
                     finish();
+                    finish();
 
                 }else{
                     Log.d("mytag", "consume not ok");

@@ -11,9 +11,10 @@
 
 
     <item
-        android:title="HISTORY"
+        android:title="PAST GAMES"
         android:id="@+id/success_stories"
         android:iconTint="#FFEB3C"
-        android:icon="@drawable/ic_baseline_amp_stories_24"/>
+        android:icon="@drawable/ic_baseline_library_add_check_24"/>
+
 
 </menu>

@@ -17,13 +17,13 @@ class SuperNoAdapter extends BaseAdapter {
 
         Context mContext;
         List<String> values;
-        String kalyanType, Game;
+        String KalyanType, Game;
         int j;
 
-    public SuperNoAdapter(Context mContext, List<String> values, String kalyanType, String Game) {
+    public SuperNoAdapter(Context mContext, List<String> values, String KalyanType, String Game) {
         this.mContext = mContext;
         this.values = values;
-        this.kalyanType = kalyanType;
+        this.KalyanType = KalyanType;
         this.Game = Game;
     }
 
@@ -64,8 +64,15 @@ class SuperNoAdapter extends BaseAdapter {
 
 
             if(i != values.size()) {
-
-                mGessNumber.setText("Super No. " + j);
+                if(KalyanType.equals("SingleOpenKalyan") || KalyanType.equals("SingleCloseKalyan") || KalyanType.equals("SingleOpenNight") || KalyanType.equals("SingleCloseNight") || KalyanType.equals("Rajdhani")){
+                    mGessNumber.setText("Single No. " + j);
+                }else if(KalyanType.equals("JodiKalyan") || KalyanType.equals("JodiNight")){
+                    mGessNumber.setText("Jodi No. " + j);
+                }else if(KalyanType.equals("PanelKalyan") || KalyanType.equals("PanelNight")){
+                    mGessNumber.setText("Panel No. " + j);
+                }else{
+                    mGessNumber.setText("Luck No. " + j);
+                }
                 LuckyNumber.setText(values.get(i));
 
             }else {
@@ -78,10 +85,17 @@ class SuperNoAdapter extends BaseAdapter {
             TextView mGessNumber = view.findViewById(R.id.luckynumber_gess_number);
 
 
-            if(i != values.size()) {
+            if(i  != values.size()) {
 
-                // LinearLayout mLayout = view.findViewById(R.id.lucky_background);
-                mGessNumber.setText("Super No. " + j);
+                if(KalyanType.equals("SingleOpenKalyan") || KalyanType.equals("SingleCloseKalyan") || KalyanType.equals("SingleOpenNight") || KalyanType.equals("SingleCloseNight") || KalyanType.equals("Rajdhani")){
+                    mGessNumber.setText("Single No. " + j);
+                }else if(KalyanType.equals("JodiKalyan") || KalyanType.equals("JodiNight")){
+                    mGessNumber.setText("Jodi No. " + j);
+                }else if(KalyanType.equals("PanelKalyan") || KalyanType.equals("PanelNight")){
+                    mGessNumber.setText("Panel No. " + j);
+                }else{
+                    mGessNumber.setText("Luck No. " + j);
+                }
                 LuckyNumber.setText(values.get(i));
 
             }else{
