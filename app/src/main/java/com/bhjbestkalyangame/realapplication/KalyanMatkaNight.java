@@ -416,8 +416,13 @@ public class KalyanMatkaNight extends AppCompatActivity {
 
 
                         case R.id.coins:
-                            if(!currentUser.getEmail().equals("mohsinalijafery@gmail.com") || !currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
-                                    !currentUser.getEmail().equals("haiderg123355@gmail.com") || !currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                            if(currentUser.getEmail().equals("mohsinalijafery@gmail.com") || currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
+                                    currentUser.getEmail().equals("haiderg123355@gmail.com") || currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                                Snackbar.make(mLayout, "You don't have permission to watch Ads.", Snackbar.LENGTH_LONG)
+                                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                        .show();
+                            }else{
                                 intent = new Intent(KalyanMatkaNight.this, GetMoreCoins.class);
                                 startActivity(intent);
                             }

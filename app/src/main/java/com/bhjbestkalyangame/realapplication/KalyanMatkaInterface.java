@@ -1267,17 +1267,7 @@ private void configureGoogleSignIn() {
                     switch (item.getItemId()){
 
                         case R.id.facebook:
-                            Snackbar.make(mLayout, "Do you want to visit our Facebook page?", Snackbar.LENGTH_LONG)
-                                    .setTextColor(getResources().getColor(R.color.colorGolden))
-                                    .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
-                                    .setAction("Yes", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            startActivity(getOpenFacebookIntent());
-                                        }
-                                    })
-                                    .setActionTextColor(getResources().getColor(R.color.colorRed))
-                                    .show();
+                            startActivity(getOpenFacebookIntent());
                             break;
 
                         case R.id.success_stories:
@@ -1291,8 +1281,13 @@ private void configureGoogleSignIn() {
                             break;
 
                         case R.id.coins:
-                            if(!currentUser.getEmail().equals("mohsinalijafery@gmail.com") || !currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
-                                    !currentUser.getEmail().equals("haiderg123355@gmail.com") || !currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                            if(currentUser.getEmail().equals("mohsinalijafery@gmail.com") || currentUser.getEmail().equals("baqirhussainjafri@gmail.com") ||
+                                    currentUser.getEmail().equals("haiderg123355@gmail.com") || currentUser.getEmail().equals("bhjcodemaster@gmail.com")){
+                                Snackbar.make(mLayout, "You don't have permission to watch Ads.", Snackbar.LENGTH_LONG)
+                                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                                        .show();
+                            }else{
                                 intent = new Intent(KalyanMatkaInterface.this, GetMoreCoins.class);
                                 startActivity(intent);
                             }

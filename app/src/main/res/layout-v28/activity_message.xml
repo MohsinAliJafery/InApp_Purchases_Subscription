@@ -40,6 +40,15 @@
                 android:textSize="23dp" />
         </androidx.appcompat.widget.Toolbar>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorSnackbar"
+            android:padding="10dp"
+            android:background="@layout/chat_important_background"
+            android:text="Do you want to ask someting? Well, don't worry we are here to help you with your problem."
+                   />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -47,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/bar_layout"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="135dp"
         android:layout_marginBottom="59dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
