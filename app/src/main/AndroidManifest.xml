@@ -17,9 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SpecialGameCongratulations" />
-        <activity
-        android:name=".SendNotificationToUsers"
-         />
         <activity android:name=".PurchaseSpecialGame" />
         <activity android:name=".SuccessStories" />
         <activity android:name=".ChattingActivity" />
@@ -29,7 +26,6 @@
         <activity android:name=".SubscriptionPurchaseCongratulations" />
         <activity android:name=".ProductPurchaseCongratulations" />
         <activity android:name=".GetNewTicket" />
-        <activity android:name=".UsersLogin" />
         <activity android:name=".InAppSubscription" />
         <activity android:name=".InAppProducts" />
         <activity android:name=".GetCoinsActivity" />
@@ -53,13 +49,12 @@
 
         <service
             android:name=".Service.FirebaseMessagingService"
-            tools:ignore="ExportedService"
+            android:exported="true"
             android:permission="TODO">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

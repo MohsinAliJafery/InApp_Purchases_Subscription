@@ -85,20 +85,4 @@ public class SuccessStories extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        FirebaseRecyclerAdapter<Upload, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Upload, ViewHolder>( Upload.class,
-//                R.layout.image_item,
-//                ViewHolder.class,
-//                mRef) {
-//            @Override
-//            protected void populateViewHolder(ViewHolder viewHolder, Upload upload, int i) {
-//                viewHolder.setDetails(getApplicationContext(), upload.getTitle(), upload.getDescription(), upload.getImageUrl());
-//            }
-//        };
-//
-//        mRecyclerView.setAdapter(firebaseRecyclerAdapter);
-//    }
 }

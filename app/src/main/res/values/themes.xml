@@ -9,19 +9,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AlertDialog.AppCompat.Light">
-
-        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
-
-    </style>
-
-    <style name="NegativeButtonStyle">
-        <item name="android:textColor">#BF0909</item>
-    </style>
-
-    <style name="PositiveButtonStyle">
-        <item name="android:textColor">#BF0909</item>
-    </style>
-
 </resources>

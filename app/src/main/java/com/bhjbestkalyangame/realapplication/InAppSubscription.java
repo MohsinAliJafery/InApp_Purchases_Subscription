@@ -24,7 +24,11 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.bhjbestkalyangame.realapplication.Utils.BillingClientSetup;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,6 +57,10 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
     private TextView SingleRecyclerViewIndicator;
     ScrollingPagerIndicator recyclerIndicator;
     private ConstraintLayout mLayout;
+    private DatabaseReference mReference;
+    private FirebaseDatabase mDatabase;
+    private FirebaseUser currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +76,9 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
         SingleRecyclerViewIndicator = findViewById(R.id.single_item_recyclerview_indicator);
         setUpBillingClient();
         date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        mDatabase = FirebaseDatabase.getInstance();
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {
@@ -106,6 +118,21 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
             public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
                 if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK){
 
+
+
+                    mReference = mDatabase.getReference("all_subscribers").child(currentUser.getUid());
+
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("date", date);
+                    hashMap.put("name", currentUser.getDisplayName());
+                    hashMap.put("email", currentUser.getEmail());
+
+                    mReference.child("subscribes").push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
                     progressBar.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent(InAppSubscription.this, SubscriptionPurchaseCongratulations.class);
                     intent.putExtra("date", date);
@@ -242,4 +269,9 @@ public class InAppSubscription extends AppCompatActivity implements PurchasesUpd
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }

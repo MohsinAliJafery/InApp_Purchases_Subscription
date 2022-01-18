@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Resultlayout"
     android:padding="7dp"
+    android:background="@color/noColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".KalyanMatkaResults">
@@ -26,7 +27,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/sub_title"
         android:layout_width="match_parent"
@@ -45,7 +45,6 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"/>
-
 
     <TextView
         android:id="@+id/today_date"
@@ -93,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sub_title"
-        android:paddingBottom="170dp"
+        android:paddingBottom="196dp"
         android:horizontalSpacing="3dp"
         android:verticalSpacing="3dp"
         android:stretchMode="columnWidth"
@@ -127,6 +126,15 @@
         app:layout_constraintEnd_toEndOf="@+id/gridview_success"
         app:layout_constraintStart_toStartOf="@+id/gridview_success"
         app:layout_constraintTop_toBottomOf="@+id/sub_title" />
+
+    <ImageView
+        android:id="@+id/available"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:src="@drawable/available_on_playstore"
+        app:layout_constraintBottom_toTopOf="@+id/three_dots"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/three_dots"

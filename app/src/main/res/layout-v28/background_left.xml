@@ -6,7 +6,7 @@
         android:topLeftRadius="0dp"
         android:radius="10dp"/>
 
-    <solid android:color="@color/colorGoogle"/>
+    <solid android:color="@color/colorSnackbar"/>
 
 
 </shape>

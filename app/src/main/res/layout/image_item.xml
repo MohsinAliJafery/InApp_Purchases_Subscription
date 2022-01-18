@@ -4,14 +4,14 @@
     android:layout_margin="7dp"
     android:layout_marginBottom="14dp"
     android:padding="5dp"
-    android:background="@layout/past_record_view_layout"
+    android:background="@layout/pass_games_title_bar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,39 +22,66 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:textAllCaps="true"
             android:padding="10dp"
-            android:background="@layout/kalyan_night_title_bar_layout"
-            android:textStyle="bold"
-            android:text="Victory Kalyan Night 21st June 2021"
-            android:textColor="@color/colorSnackbar"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/story_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/colorSnackbar"
-            android:padding="5dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
+            android:background="@color/colorBlack"
+            android:text="Kalyan Night"
             android:textAllCaps="true"
-            android:text="Alot of people won this..."
-            android:textSize="12sp" />
+            android:textColor="@color/colorSnackbar"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/layout_sub_titles"
+            android:layout_width="match_parent"
+            android:layout_below="@id/story_title"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/story_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/story_title"
+                android:gravity="center"
+                android:background="@color/colorBlack"
+                android:padding="3dp"
+                android:layout_weight="1"
+                android:text="Dated : 12-2-19"
+                android:textColor="@color/colorSnackbar"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/story_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/story_title"
+                android:layout_gravity="center_horizontal"
+                android:layout_toRightOf="@id/story_description"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="P a s s"
+                android:textAllCaps="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+
+        </LinearLayout>
+
+
 
 
         <ImageView
             android:id="@+id/image_view_upload"
-            android:background="@layout/past_record_image_background"
             android:layout_width="match_parent"
             android:layout_height="159dp"
-            android:layout_marginTop="2dp"
-            android:src="@drawable/idea"
-            android:scaleType="fitXY"
-            />
+            android:layout_below="@id/layout_sub_titles"
+            android:background="@layout/past_record_image_background"
+            android:scaleType="fitXY" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

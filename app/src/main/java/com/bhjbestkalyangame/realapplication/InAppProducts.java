@@ -161,6 +161,7 @@ public class InAppProducts extends AppCompatActivity implements PurchasesUpdated
                     startActivity(intent);
                     finish();
 
+
                 }else{
                     Log.d("mytag", "consume not ok");
                     setUpBillingClient();

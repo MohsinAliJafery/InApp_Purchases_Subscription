@@ -6,12 +6,14 @@
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable-v24/ic_send_primary_24dp.xml" value="0.14" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/background_left.xml" value="0.12447916666666667" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/background_right.xml" value="0.2203125" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/box_shadow.xml" value="0.2203125" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/general_border_with_shadow.xml" value="0.2203125" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/ic_baseline_amp_stories_24.xml" value="0.17291666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/ic_baseline_library_add_check_24.xml" value="0.22" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/ic_baseline_speaker_notes_off_24.xml" value="0.2203125" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/ic_baseline_thumb_up_24.xml" value="0.17291666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/ic_chat_black_24dp.xml" value="0.2064814814814815" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/drawable/primary_background_for_login.xml" value="0.2203125" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/activity_message.xml" value="0.22" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/activity_send_notification_to_users.xml" value="0.18115942028985507" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/background_left.xml" value="0.20416666666666666" />
@@ -19,14 +21,16 @@
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/chat_item_right.xml" value="0.25" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/gridview_rajdhani_border.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/kalyan_nigth_game_all_button_background.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/pass_games_title_bar_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/rajdhani_lucky_number_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout-v28/rajdhani_lucky_number_title_background.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_disclaimer.xml" value="0.22" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_congratulating_reward.xml" value="0.121875" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_disclaimer.xml" value="0.25" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_get_more_coins.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_inapp_products.xml" value="0.19814814814814816" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_inapp_subscription.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_kalyan_matka_day.xml" value="0.25" />
-        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_kalyan_matka_interface.xml" value="0.22" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_kalyan_matka_interface.xml" value="0.25" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_kalyan_matka_night.xml" value="0.25" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_kalyan_matka_rajdhani.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_kalyan_matka_results.xml" value="0.25" />
@@ -35,19 +39,22 @@
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_special_game_congratulations.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_splash_screen.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_subscription_purchase_congratulations.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_success_stories.xml" value="0.18" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_success_stories.xml" value="0.22" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_users_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/activity_watch_video_to_get_reward.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/background_for_input_type_message.xml" value="0.18" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/box_shadow_with_radius.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/button_for_rajdhani.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/chat_important_background.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/chat_item_left.xml" value="0.2" />
-        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/chat_item_right.xml" value="0.10833333333333334" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/chat_item_right.xml" value="0.17" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/get_more_coins_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/golden_background_with_border.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/grid_view_kalyan_night_border.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/gridview_border.xml" value="0.12" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/gridview_kalyan_border.xml" value="0.15092592592592594" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/gridview_kalyan_night_border.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/image_item.xml" value="0.25" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/image_item.xml" value="0.33" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/kalyan_game_all_button_background.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/kalyan_lucky_number_title_background.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/kalyan_night_lucky_number_layout.xml" value="0.18055555555555555" />
@@ -65,6 +72,8 @@
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/rajdhani_title_bar_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/rajdhani_title_layout_file.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/result_top_bar_background.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/sign_in_with_google_background.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/special_game_background_for_button.xml" value="0.22" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/special_game_bottom_left_pointed_layout.xml" value="0.22" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/white_background_with_primary_text_color.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mohsin Ali Jafery/AndroidStudioProjects/InApp_Purchases_Subscription/app/src/main/res/layout/yellow_background_with_two_pointed_sides.xml" value="0.1" />

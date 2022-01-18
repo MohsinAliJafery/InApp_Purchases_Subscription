@@ -33,15 +33,18 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Upload uploadCurrent = mUploads.get(position);
         holder.Title.setText(uploadCurrent.getTitle());
-        holder.Description.setText("Dated : "+uploadCurrent.getDescription());
+        holder.Description.setText(uploadCurrent.getDescription());
+
+        if(uploadCurrent.getSubTitle().equals("") || uploadCurrent.getSubTitle() == null){
+           holder.StorySubTitle.setVisibility(View.GONE);
+        }else{
+            holder.StorySubTitle.setText(uploadCurrent.getSubTitle());
+            holder.StorySubTitle.setVisibility(View.VISIBLE);
+        }
 
         mPicasso.get()
                 .load(uploadCurrent.getImageUrl())
                 .into(holder.ImageView);
-
-//          .placeholder(R.mipmap.ic_launcher)
-//                .fit()
-//                .centerCrop()
     }
 
     @Override
@@ -49,7 +52,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mUploads.size();
     }
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-        public TextView Title, Description;
+        public TextView Title, Description, StorySubTitle;
         public ImageView ImageView;
         public ImageViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +60,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             Title = itemView.findViewById(R.id.story_title);
             Description = itemView.findViewById(R.id.story_description);
             ImageView = itemView.findViewById(R.id.image_view_upload);
+            StorySubTitle = itemView.findViewById(R.id.story_sub_title);
         }
     }
 }

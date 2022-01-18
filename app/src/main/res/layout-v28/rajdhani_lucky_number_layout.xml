@@ -18,12 +18,24 @@
         android:gravity="center"
         android:textColor="@color/colorSnackbar"/>
 
+    <ImageView
+        android:id="@+id/icon"
+        android:visibility="gone"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:maxHeight="40dp"
+        android:src="@drawable/icon"
+        />
+
+
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/luckynumber_textview"
         android:padding="5dp"
         android:fontFamily="@font/comic_sans_ms_bold_italic"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:gravity="center"
         android:text="1"
         android:textSize="50dp"

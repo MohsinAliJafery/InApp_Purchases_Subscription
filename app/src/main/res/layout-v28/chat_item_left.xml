@@ -8,17 +8,18 @@
         android:id="@+id/profile_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/admin" />
+        android:src="@drawable/girl" />
 
     <TextView
         android:id="@+id/show_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
+        android:textIsSelectable="true"
         android:layout_toRightOf="@id/profile_image"
         android:background="@layout/background_left"
         android:padding="8dp"
-        android:textColor="@color/noColor"
+        android:textColor="@color/colorBlack"
         android:layout_marginTop="10dp"
         android:text="Hi, what's up?"
         android:textSize="17dp" />

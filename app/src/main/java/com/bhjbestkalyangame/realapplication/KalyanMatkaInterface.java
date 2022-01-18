@@ -2,6 +2,7 @@
 package com.bhjbestkalyangame.realapplication;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -105,12 +106,12 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
      private boolean mNetwork;
      String KalyanNightMessage;
      private FirebaseDatabase mDatabase;
-     private DatabaseReference mReference, SpecialGameReference, SpecialGameInfoReference;
+     private DatabaseReference mReference, SpecialGameReference, SpecialGameInfoReference, mGamesDetail;
      private FirebaseAuth mAuth;
      private FirebaseUser currentUser;
      private String Valid;
     ValueEventListener mKalyanMatkaResultListner;
-     private ImageView mOneDayGame, mSevenDayGame;
+     private ImageView mOneDayGame, mSevenDayGame, mClearData;
 
      private ScrollView mScrollView;
      private boolean IsProductAvailable, IsSpecialProductAvailable, IsKalyanNightPurchasedWithCoins;
@@ -130,7 +131,7 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
      private ImageView ArrowUp, ArrowDown;
 
-     private ImageView Logout, ImgSpecialGame, ImgKalyanMatka;
+     private ImageView Logout, ImgSpecialGame, ImgKalyanMatka, ImgRajdhani;
 
      CircleImageView ProfileImage;
      Button PurchaseSpecialGame, SpecialGame, Rajdhani;
@@ -176,6 +177,8 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
         mScrollView = findViewById(R.id.button_constraint);
         Logout = findViewById(R.id.logout);
         ProfileImage = findViewById(R.id.profile_image);
+        ImgRajdhani = findViewById(R.id.img_rajdhani);
+        mClearData = findViewById(R.id.clear_data);
 
         ImgKalyanMatka = findViewById(R.id.img_kalyan_matka);
 
@@ -714,6 +717,30 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         });
 
+        mClearData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Snackbar.make(mLayout, "Do you want to clear your app data?", Snackbar.LENGTH_LONG)
+                        .setTextColor(getResources().getColor(R.color.colorGolden))
+                        .setBackgroundTint(getResources().getColor(R.color.colorSnackbar))
+                        .setActionTextColor(getResources().getColor(R.color.colorRed))
+                        .setAction("Yes", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    Runtime runtime = Runtime.getRuntime();
+                                    runtime.exec("pm clear com.bhjbestkalyangame.realapplication");
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .show();
+
+            }
+        });
+
 
         PurchaseSpecialGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -759,13 +786,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         });
 
-        OnlyForBHJ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(KalyanMatkaInterface.this, SendNotificationToUsers.class);
-                startActivity(intent);
-            }
-        });
 
         SucessStories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -775,29 +795,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
             }
         });
 
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.logout:
-                   FirebaseAuth.getInstance().signOut();
-                   Intent intent = new Intent(KalyanMatkaInterface.this, SplashScreenActivity.class);
-                   startActivity(intent);
-                   finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
     }
 
     protected void setUpBillingClient() {
@@ -965,7 +962,6 @@ public class KalyanMatkaInterface extends AppCompatActivity implements Purchases
 
 
 //    Google Signin
-
 private void configureGoogleSignIn() {
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("908573784472-jlif64rfu4vgqmaupc0ghlc68kj4td2k.apps.googleusercontent.com")
@@ -1174,7 +1170,6 @@ private void configureGoogleSignIn() {
                             if(IsSpecialProductAvailable){
 
                                 SpecialGameMessage = "You've already purchased the special game!";
-//                                PurchaseSpecialGame.setVisibility(View.GONE);
                                 SpecialPurchase.setText("Purchased");
                             }
 
@@ -1244,6 +1239,28 @@ private void configureGoogleSignIn() {
         Mobiledate = dateFormat.format(calendar.getTime());
         mDate = findViewById(R.id.today_date);
         mDate.setText(Mobiledate);
+
+        mGamesDetail = mDatabase.getReference("game_details");
+        mGamesDetail.child("rajdhani").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String value = snapshot.getValue(String.class);
+                    if(value.equals("yes")){
+                        Rajdhani.setVisibility(View.VISIBLE);
+                        ImgRajdhani.setVisibility(View.VISIBLE);
+                    }else{
+                        Rajdhani.setVisibility(View.GONE);
+                        ImgRajdhani.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         }
 

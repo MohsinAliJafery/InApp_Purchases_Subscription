@@ -39,9 +39,8 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingBottom="7dp"
-        android:text="Viewing this app is at your own risk. All of the content shown in this app is based on Numerology and Astrology for information purposes only. We are not associated with any illegal business or Gamblers. We warn you that Matka or Gambling may be banned in your country or illegal. Also we are not responsible for any loss or scams. We respect all countries rules and laws. If you don't agree with this; Please quit our application."
+        android:text="Viewing this app is at your own risk. All of the content shown in this app is based on Numerology and Astrology for information purposes only. We are not associated with any illegal business or Gamblers. Gambling can kill you or can get your all money wasted; so be vigilient. We warn you that Matka or Gambling may be banned in your country or illegal. Also we are not responsible for any loss or scams. We respect all countries rules and laws. If you don't agree with this; Please quit our application."
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 

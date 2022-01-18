@@ -50,8 +50,6 @@
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="@+id/title" />
 
-
-
     <TextView
         android:id="@+id/today_date"
         android:layout_width="wrap_content"
@@ -337,8 +335,8 @@
                     android:id="@+id/all_buttons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:paddingBottom="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/getting_things_ready">
@@ -362,16 +360,17 @@
                         android:id="@+id/special_game"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:background="@layout/yellow_background_with_two_pointed_sides"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
                         android:text="Loading..."
+                        android:enabled="true"
                         android:textColor="@color/colorGolden"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <ImageView
@@ -414,7 +413,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/purchase_special_game"/>
+                        app:layout_constraintTop_toBottomOf="@+id/purchase_special_game" />
 
                     <ImageView
                         android:id="@+id/img_kalyan_matka"
@@ -430,7 +429,7 @@
                         android:id="@+id/kalyan_night"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:background="@layout/black_background_for_button"
                         android:enabled="false"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
@@ -465,6 +464,7 @@
                         android:textColor="@color/colorSnackbar"
                         android:textSize="17sp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.497"
                         app:layout_constraintStart_toStartOf="parent"
@@ -475,6 +475,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/paid_content"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@+id/rajdhani"
                         app:layout_constraintEnd_toStartOf="@+id/rajdhani"
                         app:layout_constraintStart_toStartOf="parent"
@@ -485,7 +486,7 @@
                         android:id="@+id/get_a_ticket"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:background="@layout/premium_background_for_button"
                         android:enabled="false"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
@@ -501,9 +502,10 @@
                         android:id="@+id/become_a_vip_member"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:background="@layout/premium_background_for_button"
                         android:enabled="false"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
                         android:text="Vip Membership"
                         android:textColor="@color/colorBlack"
@@ -521,9 +523,9 @@
                         android:background="@layout/get_more_coins_layout"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
                         android:text="Get More Coins"
-                        android:visibility="gone"
                         android:textColor="@color/noColor"
                         android:textSize="17dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member" />
@@ -537,9 +539,9 @@
                         android:background="@layout/get_more_coins_layout"
                         android:fontFamily="@font/comic_sans_ms_bold_italic"
                         android:text="Only for BHJ"
-                        android:visibility="gone"
                         android:textColor="@color/noColor"
                         android:textSize="17dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/get_more_coins" />
@@ -560,11 +562,23 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="140dp"
-                        android:visibility="invisible"
                         android:src="@drawable/down_arrow"
+                        android:visibility="invisible"
                         app:layout_constraintEnd_toStartOf="@+id/kalyan_matka"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                    <ImageView
+                        android:id="@+id/clear_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/error_during_purchase"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/become_a_vip_member" />
 
 
 
@@ -595,6 +609,8 @@
 
         </ScrollView>
 
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -602,11 +618,12 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/noColor"
         app:itemRippleColor="@color/colorSnackbar"
         app:itemTextColor="@color/colorBlack"
-        android:background="@color/noColor"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation" />
+        app:menu="@menu/bottom_navigation"
+        tools:layout_editor_absoluteX="7dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

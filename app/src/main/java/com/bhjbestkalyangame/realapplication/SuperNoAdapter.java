@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -61,6 +62,7 @@ class SuperNoAdapter extends BaseAdapter {
             }
             TextView LuckyNumber = view.findViewById(R.id.luckynumber_textview);
             TextView mGessNumber = view.findViewById(R.id.luckynumber_gess_number);
+            ImageView icon = view.findViewById(R.id.icon);
 
 
             if(i != values.size()) {
@@ -78,12 +80,14 @@ class SuperNoAdapter extends BaseAdapter {
             }else {
                 mGessNumber.setText("End");
                 LuckyNumber.setText("...");
+//                LuckyNumber.setVisibility(View.GONE);
+//                icon.setVisibility(View.VISIBLE);
             }
 
         }else{
             TextView LuckyNumber = view.findViewById(R.id.luckynumber_textview);
             TextView mGessNumber = view.findViewById(R.id.luckynumber_gess_number);
-
+            ImageView icon = view.findViewById(R.id.icon);
 
             if(i  != values.size()) {
 
@@ -101,6 +105,8 @@ class SuperNoAdapter extends BaseAdapter {
             }else{
                 mGessNumber.setText("End");
                 LuckyNumber.setText("...");
+//                LuckyNumber.setVisibility(View.GONE);
+//                icon.setVisibility(View.VISIBLE);
             }
         }
 
