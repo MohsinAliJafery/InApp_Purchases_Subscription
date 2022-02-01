@@ -250,6 +250,7 @@ public class ChattingActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
+                        mChat.clear();
                     for (DataSnapshot mSnapshot : snapshot.getChildren()) {
                         Chat chat = mSnapshot.getValue(Chat.class);
                         if (chat.getReceiver().equals(MyID) && chat.getSender().equals(AdminId)
@@ -274,10 +275,12 @@ public class ChattingActivity extends AppCompatActivity {
 
         private void status(String status){
 
-            mDatabaseStatusRef = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
-            HashMap<String, Object> mHashmap = new HashMap<>();
-            mHashmap.put("Status", status);
-            mDatabaseStatusRef.updateChildren(mHashmap);
+            if(mUserID == null && mUserID.equals("")){
+                mDatabaseStatusRef = FirebaseDatabase.getInstance().getReference("all_users_data").child(mUserID);
+                HashMap<String, Object> mHashmap = new HashMap<>();
+                mHashmap.put("Status", status);
+                mDatabaseStatusRef.updateChildren(mHashmap);
+            }
 
         }
 

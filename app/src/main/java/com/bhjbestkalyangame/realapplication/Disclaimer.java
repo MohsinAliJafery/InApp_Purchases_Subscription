@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,7 @@ public class Disclaimer extends AppCompatActivity {
     private static final int REQ_CODE_VERSION_UPDATE = 530;
     private AppUpdateManager appUpdateManager;
     private InstallStateUpdatedListener installStateUpdatedListener;
-    Button Continue;
+    Button Continue, PrivacyPolicy;
     private ConstraintLayout mDisclaimer;
     TextView mTitle;
     FirebaseFunctions firebaseFunctions;
@@ -53,6 +54,7 @@ public class Disclaimer extends AppCompatActivity {
         setContentView(R.layout.activity_disclaimer);
 
         Continue = findViewById(R.id.continue_click);
+        PrivacyPolicy = findViewById(R.id.privacy_policy);
         mTitle = findViewById(R.id.title);
         SharedPreferences mSharedPreferences = getSharedPreferences(MyCredit, MODE_PRIVATE);
 
@@ -76,6 +78,8 @@ public class Disclaimer extends AppCompatActivity {
 
 
 
+
+
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,9 +98,16 @@ public class Disclaimer extends AppCompatActivity {
                 finish();
             }
         });
+
+        PrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("https://crazywhimsmadness.blogspot.com/2022/01/kalyan-matka-king-khiladi-bhaiya.html"));
+                startActivity(intent);
+            }
+        });
+
         checkForAppUpdate();
-
-
     }
     @Override
     protected void onResume() {
